@@ -35,6 +35,13 @@ class AuthRepository(
         return ResultMy.Success(Unit).asEmptyDataResult()
     }
 
+    suspend fun sendVerificationCode(): EmptyResult<DataError.Network>{
+        return ResultMy.Success(Unit).asEmptyDataResult()
+    }
+
+    suspend fun checkCode(code: String): EmptyResult<DataError.Network>{
+        return ResultMy.Success(Unit).asEmptyDataResult()
+    }
 
 
 }

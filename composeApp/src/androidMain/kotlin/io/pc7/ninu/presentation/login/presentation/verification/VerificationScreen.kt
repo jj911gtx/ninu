@@ -30,6 +30,9 @@ import core.presentation.components.main.buttons.DefaultButtonText
 import core.presentation.theme.NINUTheme
 import core.presentation.theme.custom.colorScheme
 import core.presentation.components.main.buttons.ButtonTopLeftBack
+import io.pc7.ninu.presentation.login.VerificationAction
+import io.pc7.ninu.presentation.login.VerificationState
+import io.pc7.ninu.presentation.login.VerificationViewModel
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -52,7 +55,7 @@ private fun VerificationScreen(
     state: VerificationState,
     action: (VerificationAction) -> Unit,
 
-) {
+    ) {
 
     Column {
         ButtonTopLeftBack(

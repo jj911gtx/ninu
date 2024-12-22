@@ -4,6 +4,7 @@ package io.pc7.ninu.presentation.login
 import io.pc7.ninu.data.util.checkEmailPattern
 import io.pc7.ninu.domain.model.input.MyInput
 import io.pc7.ninu.domain.model.input.isInputEmpty
+import io.pc7.ninu.presentation.util.ViewModelBase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -14,17 +15,14 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    coroutineScope: CoroutineScope? = null
+    coroutineScope: CoroutineScope?
+): ViewModelBase<LoginState, LoginAction,LoginEvent>(
+    coroutineScope,
+    LoginState()
 ) {
-    private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
 
-    private val _state = MutableStateFlow(LoginState())
-    val state: StateFlow<LoginState> get() = _state
 
-    private val eventChannel = Channel<LoginEvent>()
-    val events = eventChannel.receiveAsFlow()
-
-    fun action(action: LoginAction) {
+    override fun action(action: LoginAction) {
         when(action){
             is LoginAction.OnEmailUpdate -> updateEmail(action.email)
             LoginAction.OnEmailRemoveFocus -> _state.update { it.copy(email = it.email.setDisplayErrors()) }
