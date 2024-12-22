@@ -1,29 +1,26 @@
-package ninu.login.presentation.newPassword
+package io.pc7.ninu.presentation.login
 
 
-import core.presentation.model.input.MyInput
-import core.presentation.model.input.isInputEmpty
+import io.pc7.ninu.data.network.error.DataError
+import io.pc7.ninu.data.network.repository.AuthRepository
+import io.pc7.ninu.domain.model.Resource
+import io.pc7.ninu.domain.model.handle
+import io.pc7.ninu.domain.model.input.MyInput
+import io.pc7.ninu.domain.model.input.isInputEmpty
+import io.pc7.ninu.presentation.util.ViewModelBase
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class NewPasswordViewModel(
-    coroutineScope: CoroutineScope? = null
+    coroutineScope: CoroutineScope,
+    private val authRepository: AuthRepository
+): ViewModelBase<NewPasswordState, NewPasswordAction, NewPasswordEvent>(
+    coroutineScope,
+    NewPasswordState()
 ) {
-    private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
 
-    private val _state = MutableStateFlow(NewPasswordState())
-    val state: StateFlow<NewPasswordState> get() = _state
-
-    private val eventChannel = Channel<NewPasswordEvent>()
-    val events = eventChannel.receiveAsFlow()
-
-    fun action(action: NewPasswordAction) {
+    override fun action(action: NewPasswordAction) {
         when(action){
             NewPasswordAction.Confirm -> confirmUpdate()
             NewPasswordAction.OnConfirmNewPasswordRemoveFocus -> _state.update { it.copy(confirmPassword = it.confirmPassword.setDisplayErrors()) }
@@ -41,7 +38,17 @@ class NewPasswordViewModel(
         val confirmPassword = _state.value.confirmPassword.value
         if(checkAllPasswords(password, confirmPassword)){
             viewModelScope.launch {
+                updateState { it.copy(respond = Resource.Loading) }
+                authRepository.updatePassword(password).handle(
+                    onSuccess = {
+                        updateState { it.copy(respond = null) }
+                        eventChannel.send(NewPasswordEvent.ChangeSuccessful)
+                    },
+                    onError = { error ->
+                        updateState { it.copy(respond = Resource.Result(error)) }
+                    }
 
+                )
             }
         }
     }
@@ -62,7 +69,7 @@ class NewPasswordViewModel(
         }
 
         _state.update { it.copy(password = it.password.setErrors(errors)) }
-        return errors.isEmpty()
+        return errors.isNotEmpty()
     }
 
     private fun updateConfirmPassword(confirmPassword: String){
@@ -78,7 +85,7 @@ class NewPasswordViewModel(
         }
 
         _state.update { it.copy(confirmPassword = it.confirmPassword.setErrors(errors)) }
-        return errors.isEmpty()
+        return errors.isNotEmpty()
     }
 
     private fun checkEnableButton(){
@@ -128,14 +135,15 @@ class NewPasswordViewModel(
 }
 
 data class NewPasswordState(
-    val password: MyInput<String> = MyInput(""),
-    val confirmPassword: MyInput<String> = MyInput(""),
-    val buttonEnabled: Boolean = false
+    val password: MyInput<String> = MyInput("11111111"),
+    val confirmPassword: MyInput<String> = MyInput("11111111"),
+    val buttonEnabled: Boolean = false,
+    val respond: Resource<DataError.Network>? = null
 )
 
 
 sealed class NewPasswordEvent {
-
+    data object ChangeSuccessful: NewPasswordEvent()
 }
 
 sealed class NewPasswordAction {

@@ -1,4 +1,4 @@
-package ninu.register.presentation.registration
+package io.pc7.ninu.presentation.other
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -24,9 +24,9 @@ import io.pc7.ninu.presentation.theme.NINUTheme
 
 
 @Composable
-fun RegistrationCompletedScreen(
+fun SuccessScreen(
     navNext: () -> Unit,
-
+    buttonText: String= "Start using",
 ) {
 
     BoxWithConstraints(
@@ -64,7 +64,7 @@ fun RegistrationCompletedScreen(
 
         DefaultButtonText(
             onClick = navNext,
-            text = "Start using",
+            text = buttonText,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
         )
@@ -77,6 +77,6 @@ fun RegistrationCompletedScreen(
 @Composable
 private fun RegistrationCompletedScreenPreview() {
     NINUTheme {
-        io.pc7.ninu.presentation.other.SuccessScreen({})
+        SuccessScreen({})
     }
 }

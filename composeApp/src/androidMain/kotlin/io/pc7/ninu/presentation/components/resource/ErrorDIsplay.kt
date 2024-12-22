@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
+import core.presentation.theme.custom.colorScheme
 import io.pc7.ninu.data.network.error.DataError
 import io.pc7.ninu.data.network.error.Error
 
@@ -54,7 +55,8 @@ fun Error.Display(
 
 
             else -> "Error"
-        }
+        },
+        color = colorScheme.errorMedium
     )
     
 

@@ -75,7 +75,7 @@ fun UserInfoInputScreen(
             NINUTextField(
                 value = state.username,
                 onUpdate = {action(UserInfoInputAction.OnUsernameChange(it))},
-                placeholderText = "Email",
+                placeholderText = "Username",
                 prefix = {
                     Icon(
                         painter = painterResource(id = R.drawable.icon_verified_user),

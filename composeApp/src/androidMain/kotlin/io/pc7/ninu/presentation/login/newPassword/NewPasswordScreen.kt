@@ -1,4 +1,4 @@
-package ninu.login.presentation.newPassword
+package io.pc7.ninu.presentation.login.newPassword
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -20,28 +20,37 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import core.presentation.components.main.ScrollableColumn
-import core.presentation.components.main.buttons.DefaultButtonText
-import core.presentation.components.main.input.text.NINUTextField
-import core.presentation.theme.NINUTheme
 import io.pc7.ninu.R
-import core.presentation.components.main.buttons.ButtonTopLeftBack
+import io.pc7.ninu.presentation.components.main.ScrollableColumn
+import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack
+import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
+import io.pc7.ninu.presentation.components.main.input.text.NINUTextField
+import io.pc7.ninu.presentation.components.util.ObserveAsEvents
+import io.pc7.ninu.presentation.theme.NINUTheme
+import io.pc7.ninu.presentation.login.NewPasswordAction
+import io.pc7.ninu.presentation.login.NewPasswordEvent
+import io.pc7.ninu.presentation.login.NewPasswordState
+import io.pc7.ninu.presentation.login.NewPasswordViewModel
 import org.koin.androidx.compose.koinViewModel
-
 
 @Composable
 fun NewPasswordScreen(
+    navBack: () -> Unit,
+    navNext: () -> Unit,
     viewModel: NewPasswordViewModel = koinViewModel<NewPasswordViewModelAndroid>().viewModel
 ) {
 
+    ObserveAsEvents(flow = viewModel.events) {event ->
+        when(event){
+            NewPasswordEvent.ChangeSuccessful -> navNext()
+        }
+    }
 
     NewPasswordScreen(
         state = viewModel.state.collectAsState().value,
-        action = {viewModel.action(it)}
+        action = {viewModel.action(it)},
+        navBack = navBack
     )
-
-
-
 }
 
 
@@ -49,10 +58,11 @@ fun NewPasswordScreen(
 private fun NewPasswordScreen(
     state: NewPasswordState,
     action: (NewPasswordAction) -> Unit,
+    navBack: () -> Unit
 ) {
     Column {
         ButtonTopLeftBack(
-            onClick = { /*TODO*/ }, text = "New password",
+            onClick = navBack, text = "New password",
             modifier = Modifier
                 .align(Alignment.Start)
         )
@@ -170,7 +180,8 @@ private fun NewPasswordScreenPreview() {
     NINUTheme {
         NewPasswordScreen(
             state = NewPasswordState(),
-            action = {}
+            action = {},
+            navBack = {}
         )
 
     }

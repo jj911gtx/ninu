@@ -12,6 +12,4 @@ class RegistrationViewModelAndroid(
         coroutineScope = viewModelScope,
         repository = repository
     )
-
-
 }

@@ -7,7 +7,8 @@ import kotlinx.datetime.*
 
 fun LocalDate.toTextString(): String{
 
-    return "${month.tolocalizedString().capitalize()} $dayOfMonth $year"
+    return "${month.tolocalizedString()
+        .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }} $dayOfMonth $year"
 }
 
 fun Month.tolocalizedString(): String{

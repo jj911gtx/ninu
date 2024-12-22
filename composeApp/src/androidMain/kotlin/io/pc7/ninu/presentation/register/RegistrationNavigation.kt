@@ -10,7 +10,7 @@ import io.pc7.ninu.presentation.activities.LoginActivity
 import io.pc7.ninu.presentation.activities.RegistrationActivity
 import io.pc7.ninu.presentation.register.registration.RegistrationScreen
 import io.pc7.ninu.presentation.register.userInfo.UserInfoInputScreen
-import ninu.register.presentation.registration.RegistrationCompletedScreen
+import io.pc7.ninu.presentation.other.SuccessScreen
 
 
 
@@ -23,7 +23,7 @@ fun RegistrationNavigation(
     val context = LocalContext.current
     NavHost(
         navController = navController,
-        startDestination = "Register"
+        startDestination = "UserInfo"
     ) {
         composable("Register"){
             RegistrationScreen(
@@ -45,7 +45,7 @@ fun RegistrationNavigation(
         }
 
         composable("Completed"){
-            RegistrationCompletedScreen(
+            SuccessScreen(
                 navNext = navBack
             )
         }

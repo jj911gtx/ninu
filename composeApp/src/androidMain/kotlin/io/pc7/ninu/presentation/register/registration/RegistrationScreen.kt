@@ -73,9 +73,7 @@ private fun RegistrationScreen(
     action: (RegistrationAction) -> Unit,
     navBack: () -> Unit,
 ) {
-
     val focusManager = LocalFocusManager.current
-
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -91,7 +89,6 @@ private fun RegistrationScreen(
         Spacer(modifier = Modifier.weight(1f))
         ScrollableColumn(
             modifier = Modifier
-
         ) {
 
 

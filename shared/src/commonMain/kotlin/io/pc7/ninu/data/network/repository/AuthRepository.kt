@@ -35,13 +35,21 @@ class AuthRepository(
         return ResultMy.Success(Unit).asEmptyDataResult()
     }
 
-    suspend fun sendVerificationCode(): EmptyResult<DataError.Network>{
+    suspend fun sendVerificationCode(email: String): EmptyResult<DataError.Network>{
+        delay(1000)
         return ResultMy.Success(Unit).asEmptyDataResult()
     }
 
     suspend fun checkCode(code: String): EmptyResult<DataError.Network>{
+        delay(1000)
+        return ResultMy.Success(Unit).asEmptyDataResult()
+    }
+
+    suspend fun updatePassword(password: String): EmptyResult<DataError.Network>{
         return ResultMy.Success(Unit).asEmptyDataResult()
     }
 
 
 }
+
+val createError: EmptyResult<DataError.Network> = ResultMy.Error(DataError.Network.NO_INTERNET).asEmptyDataResult()

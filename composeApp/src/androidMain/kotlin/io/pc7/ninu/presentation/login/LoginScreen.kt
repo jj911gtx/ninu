@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,6 +47,8 @@ import io.pc7.ninu.presentation.activities.LoginActivity
 import io.pc7.ninu.presentation.activities.RegistrationActivity
 import io.pc7.ninu.presentation.components.SocialMediaFooter
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack
+import io.pc7.ninu.presentation.components.resource.Display
+import io.pc7.ninu.presentation.components.util.ObserveAsEvents
 import io.pc7.ninu.presentation.components.util.rememberKeyboardVisibility
 import io.pc7.ninu.presentation.theme.NINUTheme
 import org.koin.androidx.compose.koinViewModel
@@ -52,17 +57,24 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun LoginScreen(
     navBack: () -> Unit,
+    navNext: () -> Unit,
+    navResetPassword: (String) -> Unit,
     viewModel: LoginViewModel = koinViewModel<LoginViewModelAndroid>().viewModel
 ) {
+
+    ObserveAsEvents(flow = viewModel.events) {event ->
+        when(event){
+            LoginEvent.LoginSuccessful -> navNext()
+        }
+    }
 
 
     LoginScreen(
         state = viewModel.state.collectAsState().value,
         action = { viewModel.action(it) },
-        navBack = navBack
+        navBack = navBack,
+        resetPassword = navResetPassword
     )
-
-
 }
 
 
@@ -71,12 +83,12 @@ private fun LoginScreen(
     state: LoginState,
     action: (LoginAction) -> Unit,
     navBack: () -> Unit,
-
+    resetPassword: (String) -> Unit,
 ) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-
+        verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -89,7 +101,6 @@ private fun LoginScreen(
 
         val focusManager = LocalFocusManager.current
 
-        Spacer(modifier = Modifier.weight(1f))
         ScrollableColumn(
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
@@ -152,6 +163,17 @@ private fun LoginScreen(
                 },
                 onUnfocus = {action(LoginAction.OnPasswordRemoveFocus)}
             )
+            state.loginState?.let {
+                Box(modifier = Modifier
+                    .clickable(onClick = {
+                        resetPassword(state.email.value)
+                    })
+                ){
+                    it.Display {
+
+                    }
+                }
+            }
 
 
 
@@ -204,37 +226,90 @@ private fun LoginScreen(
 
 
             }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .clickable {
+                        action(LoginAction.OnFailLoginChange)
+                    }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(10.dp))
+                        .size(30.dp)
+                        .then(
+                            if (state.failLogin) {
+                                Modifier
+                                    .background(colorScheme.primaryLight)
+                            } else {
+                                Modifier
+                                    .border(
+                                        1.dp,
+                                        color = colorScheme.primaryLight,
+                                        shape = RoundedCornerShape(10.dp)
+                                    )
+                                    .background(Color.Transparent)
+                            }
+                        )
+
+
+                ) {
+                    if(state.failLogin){
+                        Icon(painter = painterResource(id = R.drawable.icon_check_bold), contentDescription = null,
+                            tint = colorScheme.white,
+                            modifier = Modifier
+                                .padding(7.dp)
+                                .fillMaxSize()
+                        )
+                    }
+
+                }
+
+                Text(
+                    text = "fail login",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = colorScheme.white
+                )
+
+
+            }
         }
 
+        Spacer(modifier = Modifier.height(1.dp))
 
-        Spacer(modifier = Modifier.weight(2f))
-
-        DefaultButtonText(  //login button
-            modifier = Modifier
-                .padding(bottom = 20.dp)
-                .align(Alignment.CenterHorizontally),
-            onClick = {
-                action(LoginAction.OnLogin)
-            },
-            text = "Log in",
-            isEnabled = state.email.errors.isEmpty()
-                    && state.password.errors.isEmpty()
-        )
-
-        val keyboardState by rememberKeyboardVisibility()
-
-        val context = LocalContext.current
-        if(!keyboardState){
-            SocialMediaFooter(
-                onLoginRegisterClick = {
-                    val loginActivity = context as LoginActivity
-                    val intent = Intent(context, RegistrationActivity::class.java)
-                    context.startActivity(intent)
-                    loginActivity.finish()
+        Column(
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
+            DefaultButtonText(  //login button
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally),
+                onClick = {
+                    action(LoginAction.OnLogin)
                 },
-                loginPage = true
+                text = "Log in",
+                isEnabled = state.email.errors.isEmpty()
+                        && state.password.errors.isEmpty()
             )
+
+            val keyboardState by rememberKeyboardVisibility()
+
+            val context = LocalContext.current
+            if(!keyboardState){
+                SocialMediaFooter(
+                    onLoginRegisterClick = {
+                        val loginActivity = context as LoginActivity
+                        val intent = Intent(context, RegistrationActivity::class.java)
+                        context.startActivity(intent)
+                        loginActivity.finish()
+                    },
+                    loginPage = true
+                )
+            }
         }
+
 
 
 
@@ -249,7 +324,8 @@ private fun LoginScreenPreview() {
         LoginScreen(
             state = LoginState(),
             action = {},
-            navBack = {}
+            navBack = {},
+            resetPassword = {}
         )
     }
 }

@@ -9,6 +9,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 
 abstract class ViewModelBase<State, Action, Event,>(
     coroutineScope: CoroutineScope?,
@@ -28,5 +29,9 @@ abstract class ViewModelBase<State, Action, Event,>(
     open fun action(action: Action) {}
 
 
-
+    protected inline fun updateState(update: (State) -> State) {
+        _state.update { currentState ->
+            update(currentState)
+        }
+    }
 }
