@@ -3,7 +3,7 @@ package io.pc7.ninu.presentation.util
 import android.app.Activity
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import io.pc7.ninu.domain.model.Language
+import io.pc7.ninu.domain.model.util.Language
 import java.util.Locale
 
 fun Activity.changeLanguage(language: Language) {

@@ -2,18 +2,12 @@ package io.pc7.ninu.presentation.register.register
 
 import io.pc7.ninu.data.network.repository.AuthRepository
 import io.pc7.ninu.data.util.checkEmailPattern
-import io.pc7.ninu.data.util.flow.common
-import io.pc7.ninu.domain.model.Resource
-import io.pc7.ninu.domain.model.ResultMy
-import io.pc7.ninu.domain.model.handle
+import io.pc7.ninu.domain.model.util.Resource
+import io.pc7.ninu.domain.model.util.ResultMy
+import io.pc7.ninu.domain.model.util.handle
 import io.pc7.ninu.domain.model.input.isInputEmpty
 import io.pc7.ninu.presentation.util.ViewModelBase
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 

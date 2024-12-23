@@ -1,5 +1,6 @@
 package io.pc7.ninu.presentation.util.permission
 
+import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,8 +19,6 @@ import androidx.compose.ui.window.Dialog
 
 @Composable
 fun ManageBluetoothPermissionDisplay(
-    onAllPermissionsGranted: () -> Unit,
-    onDismiss: () -> Unit
 ) {
     fun statePermissions(): MutableList<MutableState<PermissionRationalState>> {
         val savedPermissions = mutableListOf<MutableState<PermissionRationalState>>()
@@ -36,16 +35,17 @@ fun ManageBluetoothPermissionDisplay(
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
     ) { perms ->
-        var allGranted = true
         permissions.forEachIndexed { index, permission ->
             if (perms[permission.value.permission.permission] == false) {
                 permissions[index].value = permission.value.copy(showRational = true)
-                allGranted = false
             }
         }
-        if (allGranted) {
-            onAllPermissionsGranted()
-        }
+//        if (allGranted) {
+//            onAllPermissionsGranted()
+//        }
+    }
+    LaunchedEffect(Unit) {
+        permissionLauncher.requestPermissions()
     }
 
 
@@ -75,10 +75,10 @@ private fun ActivityResultLauncher<Array<String>>.requestPermissions(
 
 ) {
 
-    val requiredPermissions = getBTPermissionsForBuildSDK()
+    val requiredPermissions = getBTPermissionsForBuildSDK().map { it.permission } + Manifest.permission.CAMERA
 
 
     if (requiredPermissions.isNotEmpty()) {
-        launch(requiredPermissions.toList().map { it.permission }.toTypedArray())
+        launch(requiredPermissions.toTypedArray()/*requiredPermissions.toList().map { it.permission }.toTypedArray()*/)
     }
 }

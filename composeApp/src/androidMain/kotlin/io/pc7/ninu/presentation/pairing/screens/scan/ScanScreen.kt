@@ -72,16 +72,6 @@ private fun ScanScreen(
     var showPermissionDialog by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
-    ManageBluetoothPermissionDisplay(
-        onAllPermissionsGranted = {
-            showPermissionDialog = false
-            action(ScanAction.OnProceed)
-        },
-        onDismiss = {
-            showPermissionDialog = false
-        }
-    )
-
 
     PairingDefaultScreen(
         backText = "Device info",
@@ -118,7 +108,7 @@ private fun ScanScreen(
         bracketText = "Scan the serial number that is usually located at the bottom of your NINU device.",
         onClickHelp = { /*TODO*/ },
         buttonOnCLick = {
-            showPermissionDialog = true
+            action(ScanAction.OnProceed)
         },
         buttonText =  "Proceed",
         isButtonEnabled = state.serialNumber.value.isNotEmpty(),

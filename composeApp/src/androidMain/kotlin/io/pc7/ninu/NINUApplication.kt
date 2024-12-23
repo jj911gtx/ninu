@@ -2,9 +2,11 @@ package io.pc7.ninu
 
 import android.app.Application
 import android.content.res.Configuration
+import io.pc7.ninu.di.bluetoothDi
 import io.pc7.ninu.di.dataDi
 import io.pc7.ninu.di.loginDi
 import io.pc7.ninu.di.pairingDi
+import io.pc7.ninu.di.presentationDi
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -36,7 +38,9 @@ class NINUApplication: Application() {
                 loginDi,
                 pairingDi,
                 dataDi,
+                bluetoothDi,
 
+                presentationDi,
 
 
             )

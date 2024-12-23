@@ -2,9 +2,9 @@ package io.pc7.ninu.data.network.repository
 
 import io.ktor.client.HttpClient
 import io.pc7.ninu.data.network.error.DataError
-import io.pc7.ninu.domain.model.EmptyResult
-import io.pc7.ninu.domain.model.ResultMy
-import io.pc7.ninu.domain.model.asEmptyDataResult
+import io.pc7.ninu.domain.model.util.EmptyResult
+import io.pc7.ninu.domain.model.util.ResultMy
+import io.pc7.ninu.domain.model.util.asEmptyDataResult
 import kotlinx.coroutines.delay
 import kotlinx.datetime.LocalDate
 
@@ -35,17 +35,17 @@ class AuthRepository(
         return ResultMy.Success(Unit).asEmptyDataResult()
     }
 
-    suspend fun sendVerificationCode(email: String): EmptyResult<DataError.Network>{
+    suspend fun sendVerificationCode(email: String): EmptyResult<DataError.Network> {
         delay(1000)
         return ResultMy.Success(Unit).asEmptyDataResult()
     }
 
-    suspend fun checkCode(code: String): EmptyResult<DataError.Network>{
+    suspend fun checkCode(code: String): EmptyResult<DataError.Network> {
         delay(1000)
         return ResultMy.Success(Unit).asEmptyDataResult()
     }
 
-    suspend fun updatePassword(password: String): EmptyResult<DataError.Network>{
+    suspend fun updatePassword(password: String): EmptyResult<DataError.Network> {
         return ResultMy.Success(Unit).asEmptyDataResult()
     }
 

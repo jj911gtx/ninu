@@ -1,4 +1,4 @@
-package io.pc7.ninu.domain.model
+package io.pc7.ninu.domain.model.util
 
 enum class Language {
     English,
@@ -12,7 +12,7 @@ enum class Language {
     }
 
     companion object{
-        fun toLanguage(languageCode: String): Language{
+        fun toLanguage(languageCode: String): Language {
             return when(languageCode){
                 "sl" -> Slovenia
                 "en" -> English

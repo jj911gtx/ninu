@@ -1,4 +1,4 @@
-package io.pc7.ninu.domain.model
+package io.pc7.ninu.domain.model.util
 
 import io.pc7.ninu.data.network.error.Error
 

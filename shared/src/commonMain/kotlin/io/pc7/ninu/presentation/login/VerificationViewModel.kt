@@ -3,21 +3,15 @@ package io.pc7.ninu.presentation.login
 
 import io.pc7.ninu.data.network.error.DataError
 import io.pc7.ninu.data.network.repository.AuthRepository
-import io.pc7.ninu.domain.model.EmptyResult
-import io.pc7.ninu.domain.model.Resource
-import io.pc7.ninu.domain.model.ResultMy
-import io.pc7.ninu.domain.model.handle
-import io.pc7.ninu.domain.model.input.MyInput
+import io.pc7.ninu.domain.model.util.Resource
+import io.pc7.ninu.domain.model.util.ResultMy
+import io.pc7.ninu.domain.model.util.handle
 import io.pc7.ninu.presentation.util.ViewModelBase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 

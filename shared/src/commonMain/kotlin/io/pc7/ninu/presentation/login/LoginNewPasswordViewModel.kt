@@ -3,8 +3,8 @@ package io.pc7.ninu.presentation.login
 
 import io.pc7.ninu.data.network.error.DataError
 import io.pc7.ninu.data.network.repository.AuthRepository
-import io.pc7.ninu.domain.model.Resource
-import io.pc7.ninu.domain.model.handle
+import io.pc7.ninu.domain.model.util.Resource
+import io.pc7.ninu.domain.model.util.handle
 import io.pc7.ninu.domain.model.input.MyInput
 import io.pc7.ninu.domain.model.input.isInputEmpty
 import io.pc7.ninu.presentation.util.ViewModelBase

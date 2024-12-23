@@ -29,9 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import core.presentation.theme.custom.colorScheme
 import io.pc7.ninu.data.network.error.DataError
-import io.pc7.ninu.domain.model.Resource
-import io.pc7.ninu.domain.model.ResultMy
-import io.pc7.ninu.domain.model.input.MyInput
+import io.pc7.ninu.domain.model.util.Resource
+import io.pc7.ninu.domain.model.util.ResultMy
 import io.pc7.ninu.presentation.components.LoadingDialog
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack

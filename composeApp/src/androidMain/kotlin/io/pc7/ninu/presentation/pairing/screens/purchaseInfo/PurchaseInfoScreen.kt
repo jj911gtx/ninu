@@ -31,6 +31,7 @@ import core.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 import io.pc7.ninu.data.mapper.toStringSlash
 import io.pc7.ninu.domain.model.input.MyInput
+import io.pc7.ninu.presentation.components.GrayBracketWithText
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
 import io.pc7.ninu.presentation.components.main.card.CardBracket
 import io.pc7.ninu.presentation.components.main.card.XCard
@@ -70,12 +71,12 @@ private fun PurchaseInfoScreen(
     PairingDefaultScreen(
         backText = "Pairing",
         navBack = navBack,
-        bracketContentWithTxt = {
-            Image(painter = painterResource(id = R.drawable.device), contentDescription = "Device",
-                modifier = Modifier
-                    .size(200.dp)
-            )
-        },
+//        bracketContentWithTxt = {
+//            Image(painter = painterResource(id = R.drawable.device), contentDescription = "Device",
+//                modifier = Modifier
+//                    .size(200.dp)
+//            )
+//        },
         baseBracketContent = {
             when(state.deviceConnected){
                 true -> {
@@ -104,7 +105,6 @@ private fun PurchaseInfoScreen(
                             .fillMaxWidth()
                             .background(colorScheme.custom3D3D3D)
                             .padding(horizontal = 30.dp, vertical = 30.dp)
-
                         ,
 //                        horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(30.dp, Alignment.Top)
@@ -112,7 +112,6 @@ private fun PurchaseInfoScreen(
                         Item(
                             title = "Device Serial Number",
                             text = "j70kh7ikbasf900asf84jsf"
-
                         )
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(20.dp)
@@ -129,10 +128,20 @@ private fun PurchaseInfoScreen(
                     }
                 }
                 false -> {
-                    Text(text = "hfhfh")
+                    GrayBracketWithText(
+                        content = {
+                            Column {
+                                Image(painter = painterResource(id = R.drawable.device), contentDescription = "Device",
+                                    modifier = Modifier.size(200.dp))
+                            }
+                        },
+                        text = "Press and hold power button on your NINU device."
+                    )
+
                 }
             }
         } ,
+
         bracketText = "Press and hold power button on your NINU device.",
         onClickHelp = { /*TODO*/ },
         buttonOnCLick = { /*TODO*/ },
