@@ -82,6 +82,10 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
     debugImplementation(compose.uiTooling)
+
+    implementation("com.google.mlkit:barcode-scanning:17.3.0")
 }
 

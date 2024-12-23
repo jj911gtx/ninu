@@ -1,11 +1,10 @@
 package io.pc7.ninu
 
 import android.app.Application
-import android.content.Context
 import android.content.res.Configuration
 import io.pc7.ninu.di.dataDi
 import io.pc7.ninu.di.loginDi
-import io.pc7.ninu.di.registrationDi
+import io.pc7.ninu.di.pairingDi
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -35,7 +34,7 @@ class NINUApplication: Application() {
             androidContext(this@NINUApplication)
             modules(
                 loginDi,
-                registrationDi,
+                pairingDi,
                 dataDi,
 
 
