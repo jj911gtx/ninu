@@ -1,9 +1,9 @@
-package io.pc7.ninu.presentation.perfumeMain
+package io.pc7.ninu.presentation.perfumeDetailsGeneral
 
 
+import io.pc7.ninu.data.network.model.navigation.NavigatePerfumeMain
 import io.pc7.ninu.data.network.repository.PerfumeRepository
 import io.pc7.ninu.domain.model.input.MyInput
-import io.pc7.ninu.domain.model.perfume.Fragrance
 import io.pc7.ninu.domain.model.util.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,11 +19,9 @@ import kotlinx.coroutines.launch
 
 class PerfumeMainViewModel(
     coroutineScope: CoroutineScope?,
-    val fragrances: Array<Fragrance>,
-    inIntensity: Int?,
+    navigatePerfumeMain: NavigatePerfumeMain,
     private val perfumeRepository: PerfumeRepository
 ){
-    private val intensity = inIntensity ?: 2
 
     private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
 
@@ -45,7 +43,15 @@ class PerfumeMainViewModel(
         }
     }
 
+    private val id: Int?
     init {
+        navigatePerfumeMain.name?.let {
+            _state.update { it.copy(
+                name = it.name.update(navigatePerfumeMain.name) ,
+                staticName = true
+            ) }
+        }
+        id = navigatePerfumeMain.id
         viewModelScope.launch {
             _state.update {
                 it.copy(
@@ -63,7 +69,6 @@ class PerfumeMainViewModel(
             delay(1000)
             eventChannel.send(PerfumeMainEvent.SaveRespond(true))
             _state.update { it.copy(save = null) }
-
         }
     }
 
@@ -80,6 +85,7 @@ class PerfumeMainViewModel(
                 isFavourite = false,
                 greatFor = Resource.Loading,
                 feelHow = Resource.Loading,
+                staticName = false
             )
     }
 

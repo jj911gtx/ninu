@@ -63,7 +63,7 @@ fun XCard(
                 tint = colorScheme.primaryLighter,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .size(25.dp)
+                    .size(30.dp)
                     .padding(bottom = 10.dp)
                     .clickable(onClick = onXClick)
             )

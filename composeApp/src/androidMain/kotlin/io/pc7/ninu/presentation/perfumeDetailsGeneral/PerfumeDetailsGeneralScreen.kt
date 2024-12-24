@@ -1,4 +1,4 @@
-package io.pc7.ninu.presentation.perfumeMainScreen
+package io.pc7.ninu.presentation.perfumeDetailsGeneral
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -68,6 +69,7 @@ fun PerfumeDetailsGeneralScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 modifier = Modifier.fillMaxWidth()
+                    .padding(10.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -80,18 +82,19 @@ fun PerfumeDetailsGeneralScreen(
                             .size(20.dp)
                     )
                     Spacer(modifier = Modifier.weight(1f))
-                    Text(
-                        text = number.toString(),
-                        color = colorScheme.white,
-                        style = MaterialTheme.typography.headlineLarge
-                    )
+//                    Text(
+//                        text = number.toString(),
+//                        color = colorScheme.white,
+//                        style = MaterialTheme.typography.headlineLarge
+//                    )
                 }
                 content()
             }
         }
 
         Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.padding(horizontal = 20.dp)
         ) {
 
             UnderCardRowFavourite(
@@ -106,11 +109,11 @@ fun PerfumeDetailsGeneralScreen(
                 onClick = onEditMix
             )
 
-            UnderCardRow(
-                icon = R.drawable.icon_delete,
-                text = "Delete",
-                onClick = onDelete
-            )
+//            UnderCardRow(
+//                icon = R.drawable.icon_delete,
+//                text = "Delete",
+//                onClick = onDelete
+//            )
         }
 
         Spacer(modifier = Modifier.weight(1f))

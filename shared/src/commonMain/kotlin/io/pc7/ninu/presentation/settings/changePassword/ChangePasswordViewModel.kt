@@ -24,21 +24,25 @@ class ChangePasswordViewModel(
 
     fun action(action: ChangePasswordAction) {
         when(action){
-            is ChangePasswordAction.OnConfirmNewPasswordUpdate -> {
-                _state.update { it.copy(currentPassword = it.currentPassword.update(action.value)) }
-                confirmNewPasswordErrors()
-            }
-            is ChangePasswordAction.OnConfirmNewPasswordUnfocus -> _state.update { it.copy(currentPassword = it.currentPassword.setDisplayErrors()) }
             is ChangePasswordAction.OnCurrentPasswordUpdate -> {
-                _state.update { it.copy(newPassword = it.newPassword.update(action.value)) }
+                _state.update { it.copy(currentPassword = it.currentPassword.update(action.value)) }
                 currentPasswordErrors()
             }
-            is ChangePasswordAction.OnCurrentPasswordUnfocus -> _state.update { it.copy(newPassword = it.newPassword.setDisplayErrors()) }
+            is ChangePasswordAction.OnCurrentPasswordUnfocus -> _state.update { it.copy(currentPassword = it.currentPassword.setDisplayErrors()) }
+
             is ChangePasswordAction.OnNewPasswordUpdate -> {
-                _state.update { it.copy(confirmNewPassword = it.confirmNewPassword.update(action.value)) }
+                _state.update { it.copy(newPassword = it.newPassword.update(action.value)) }
                 newPasswordError()
             }
-            is ChangePasswordAction.OnNewPasswordUnfocus -> _state.update { it.copy(confirmNewPassword = it.confirmNewPassword.setDisplayErrors()) }
+            is ChangePasswordAction.OnNewPasswordUnfocus -> _state.update { it.copy(newPassword = it.newPassword.setDisplayErrors()) }
+
+            is ChangePasswordAction.OnConfirmNewPasswordUpdate -> {
+                _state.update { it.copy(confirmNewPassword = it.confirmNewPassword.update(action.value)) }
+                confirmNewPasswordErrors()
+            }
+            is ChangePasswordAction.OnConfirmNewPasswordUnfocus -> _state.update { it.copy(confirmNewPassword = it.confirmNewPassword.setDisplayErrors()) }
+
+
 
             ChangePasswordAction.ConfirmChange -> updatePassword()
 

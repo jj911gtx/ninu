@@ -1,5 +1,6 @@
 package io.pc7.ninu.presentation.main.navigation
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,14 +21,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.activities.LoginActivity
+import io.pc7.ninu.presentation.activities.PairingActivity
+import io.pc7.ninu.presentation.activities.RegistrationActivity
 import io.pc7.ninu.presentation.components.ProfileImage
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
+import io.pc7.ninu.presentation.settings.SettingsNavigationRoutes
 import io.pc7.ninu.presentation.theme.NINUTheme
 import kotlinx.coroutines.launch
 
@@ -39,10 +45,24 @@ fun SideNavigationBar(
 ) {
 
     val coroutine = rememberCoroutineScope()
-    val onClickItem = {
-        coroutine.launch {
-            drawerState.close()
-        }
+
+    @Composable
+    fun NavBarItemText(
+        text: String,
+        onClick: () -> Unit,
+    ) {
+        Text(text = text,
+            style = MaterialTheme.typography.titleMedium,
+            color = colorScheme.secondaryLight2,
+            modifier = Modifier
+                .clip(RoundedCornerShape(10.dp))
+                .clickable{
+                    coroutine.launch {
+                        drawerState.close()
+                    }
+                    onClick()
+                }
+        )
     }
 
 //    Surface {
@@ -59,8 +79,7 @@ fun SideNavigationBar(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier
                     .clickable{
-                        onClickItem()
-                        navController.navigate(MainNavigationRoutes.Profile)
+//                        navController.navigate(MainNavigationRoutes.Profile)
                     }
             ) {
                 ProfileImage(size = 100.dp)
@@ -86,35 +105,39 @@ fun SideNavigationBar(
 
 
 
-//            Column(
-//                modifier = Modifier
-//                    .weight(1f),
-//                verticalArrangement = Arrangement.spacedBy(30.dp),
-//
-//            ) {
-//                val context = LocalContext.current
-//                NavBarItemText(
-//                    text = "Pairing",
-//                    onClick = {
-//                        val intent = Intent(context, PairingActivity::class.java)
-//                        context.startActivity(intent)
-//                    }
-//                )
-//                NavBarItemText(
-//                    text = "Login",
-//                    onClick = {
-//                        val intent = Intent(context, LoginActivity::class.java)
-//                        context.startActivity(intent)
-//                    }
-//                )
-//                NavBarItemText(
-//                    text = "Registration",
-//                    onClick = {
-//                        val intent = Intent(context, RegistrationActivity::class.java)
-//                        context.startActivity(intent)
-//                    }
-//                )
-//
+            Column(
+                modifier = Modifier
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(30.dp),
+
+            ) {
+                val context = LocalContext.current
+                NavBarItemText(
+                    text = "Pairing",
+                    onClick = {
+                        val intent = Intent(context, PairingActivity::class.java)
+                        context.startActivity(intent)
+                    }
+                )
+                NavBarItemText(
+                    text = "Login",
+                    onClick = {
+                        val intent = Intent(context, LoginActivity::class.java)
+                        context.startActivity(intent)
+                    }
+                )
+                NavBarItemText(
+                    text = "Registration",
+                    onClick = {
+                        val intent = Intent(context, RegistrationActivity::class.java)
+                        context.startActivity(intent)
+                    }
+                )
+                NavBarItemText(
+                    text = "Settings",
+                    onClick = { navController.navigate(SettingsNavigationRoutes.Main) }
+                )
+
 //                NavBarItemText(
 //                    text = "Settings",
 //                    onClick = {
@@ -195,23 +218,11 @@ fun SideNavigationBar(
 
 
 //        }
-//    }
+    }
     
 }
 
-@Composable
-fun ColumnScope.NavBarItemText(
-    text: String,
-    onClick: () -> Unit,
-) {
-    Text(text = text,
-        style = MaterialTheme.typography.titleMedium,
-        color = colorScheme.secondaryLight2,
-        modifier = Modifier
-            .clip(RoundedCornerShape(10.dp))
-            .clickable(onClick = onClick)
-    )
-}
+
 
 
 @Preview

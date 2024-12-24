@@ -1,4 +1,4 @@
-package io.pc7.ninu.presentation.perfumeMain
+package io.pc7.ninu.presentation.perfumeDetailsGeneral
 
 sealed class PerfumeMainAction {
     data class OnUpdateName(val name: String): PerfumeMainAction()

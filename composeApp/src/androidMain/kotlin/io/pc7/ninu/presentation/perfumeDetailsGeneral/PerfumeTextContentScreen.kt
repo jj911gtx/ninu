@@ -1,11 +1,9 @@
-package io.pc7.ninu.presentation.perfumeMainScreen
+package io.pc7.ninu.presentation.perfumeDetailsGeneral
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -13,71 +11,66 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import core.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
-import io.pc7.ninu.presentation.components.main.input.text.NINUTextField
-import io.pc7.ninu.presentation.components.util.ObserveAsEvents
-import io.pc7.ninu.presentation.perfumeMain.PerfumeMainAction
-import io.pc7.ninu.presentation.perfumeMain.PerfumeMainEvent
-import io.pc7.ninu.presentation.perfumeMain.PerfumeMainState
-import io.pc7.ninu.presentation.perfumeMain.PerfumeMainViewModel
 import io.pc7.ninu.presentation.theme.NINUTheme
 
 
+//@Composable
+//fun PerfumeTextContentScreen(
+//    navBack: () -> Unit,
+//    viewModel: PerfumeMainViewModel,
+//    navToLab: () -> Unit,
+//    navHome: () -> Unit
+//) {
+//
+//
+//    val context = LocalContext.current
+//    ObserveAsEvents(flow = viewModel.events) {event ->
+//        when(event){
+//            is PerfumeMainEvent.SaveRespond -> {
+//                Toast.makeText(
+//                    context,
+//                    when(event.success){
+//                        true -> "Write Successful"
+//                        false -> "Write error"
+//                    },
+//                    Toast.LENGTH_LONG
+//                ).show()
+//                if(event.success){
+//                    navHome()
+//                }
+//            }
+//        }
+//    }
+//
+//    PerfumeTextContentScreen(
+//        state = viewModel.state.collectAsState().value,
+//        action = { viewModel.action(it) },
+//        navBack = navBack,
+//        navToLab = navToLab
+//    )
+//
+//
+//
+//}
 @Composable
-fun PerfumeMainScreen(
-    navBack: () -> Unit,
-    viewModel: PerfumeMainViewModel,
-    navToLab: () -> Unit,
-    navHome: () -> Unit
-) {
-
-
-    val context = LocalContext.current
-    ObserveAsEvents(flow = viewModel.events) {event ->
-        when(event){
-            is PerfumeMainEvent.SaveRespond -> {
-                Toast.makeText(
-                    context,
-                    when(event.success){
-                        true -> "Write Successful"
-                        false -> "Write error"
-                    },
-                    Toast.LENGTH_LONG
-                ).show()
-                if(event.success){
-                    navHome()
-                }
-            }
-        }
-    }
-
-    PerfumeMainScreen(
-        state = viewModel.state.collectAsState().value,
-        action = { viewModel.action(it) },
-        navBack = navBack,
-        navToLab = navToLab
-    )
-
-
-
-}
-@Composable
-private fun PerfumeMainScreen(
+fun PerfumeTextContentScreen(
     state: PerfumeMainState,
     action: (PerfumeMainAction) -> Unit,
     navBack: () -> Unit,
     navToLab: () -> Unit,
+    buttonText: String,
+    content: @Composable () -> Unit,
 ) {
+
 
 
     PerfumeDetailsGeneralScreen(
@@ -89,56 +82,14 @@ private fun PerfumeMainScreen(
         onEditMix = navToLab,
         onDelete = { action(PerfumeMainAction.OnClickDelete) },
         buttonEnabled = state.name.value.isNotEmpty(),
-        buttonText = "Load scent",
+        buttonText = buttonText,
         onButtonClick = {
             action(PerfumeMainAction.OnClickSave)
         },
 
     ){
-        Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            Text(
-                text = "Save your fusion",
-                color = colorScheme.primaryLightest,
-                style = MaterialTheme.typography.bodyMedium
-            )
 
-            NINUTextField(
-                value =state.name,
-                onUpdate = { action(PerfumeMainAction.OnUpdateName(it)) },
-                placeholderText = "Name your fragrance"
-
-            )
-
-        }
-
-        Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            Text(text = "Chose icon", color = colorScheme.primaryLightest,
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                listOf(
-                    R.drawable.icon_briefcase,
-                    R.drawable.icon_baggage_claim,
-                    R.drawable.icon_bed,
-                    R.drawable.icon_apple,
-                    R.drawable.icon_car,
-                    R.drawable.icon_ball,
-                ).forEach {
-                    IconDisplay(
-                        iconId = it,
-                        onClick = {action(PerfumeMainAction.OnSelectIcon(it))},
-                        isSelected = state.selectedIcon == it
-                    )
-                }
-            }
-        }
+        content()
 
         Paragraph(
             title = "Great for",
@@ -216,15 +167,17 @@ private fun IconDisplay(
 }
 
 
-@Preview(widthDp = 200)
+@Preview()
 @Composable
 private fun LabSaveScreenPreview() {
     NINUTheme {
-        PerfumeMainScreen(
+        PerfumeTextContentScreen(
             state = PerfumeMainViewModel.initializeState(),
             action = {},
             navBack = { /*TODO*/ },
-            navToLab = {}
+            navToLab = {},
+            buttonText = "Save",
+            content = {}
         )
     }
 }

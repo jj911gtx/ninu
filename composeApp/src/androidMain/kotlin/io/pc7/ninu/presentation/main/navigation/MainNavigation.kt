@@ -7,14 +7,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import io.pc7.ninu.data.network.model.navigation.NavigatePerfumeMain
 import io.pc7.ninu.domain.model.perfume.Fragrance
 import io.pc7.ninu.presentation.activities.PairingActivity
 import io.pc7.ninu.presentation.lab.LabMainScreen
 import io.pc7.ninu.presentation.main.HomeScreen
-import io.pc7.ninu.presentation.perfumeMainScreen.PerfumeMainScreen
-import io.pc7.ninu.presentation.perfumeMainScreen.PerfumeMainViewModelAndroid
-import kotlinx.serialization.Contextual
-import kotlinx.serialization.Serializable
+import io.pc7.ninu.presentation.perfumeDetails.PerfumeMainScreen
+import io.pc7.ninu.presentation.perfumeDetails.PerfumeMainViewModelAndroid
+import io.pc7.ninu.presentation.perfumeSave.PerfumeSaveScreen
+import io.pc7.ninu.presentation.perfumeSelection.PerfumeSelectionScreen
+import io.pc7.ninu.presentation.perfumeSelection.WhereToViewModeAndroid
+import io.pc7.ninu.presentation.settings.settingsNavigation
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import kotlin.reflect.typeOf
@@ -53,10 +56,35 @@ fun MainNavigation(
             LabMainScreen(
                 navBack = {navController.navigateUp()},
                 navNext = { fragrances: Array<Fragrance>, intensity: Int ->
-                    navController.navigate(MainNavigationRoutes.Perfume(fragrances = fragrances, intensity = intensity))
+                    navController.navigate(MainNavigationRoutes.PerfumeSave(fragrances = fragrances))
                 },
             )
         }
+        composable<MainNavigationRoutes.PerfumeSave>(
+            typeMap = mapOf(
+                typeOf<Array<Fragrance>>() to CustomNavType.fragranceArrayType,
+            )
+        ) {
+            val fragrances = it.toRoute<MainNavigationRoutes.PerfumeSave>()
+            PerfumeSaveScreen(
+                navBack = {navController.navigateUp()},
+                viewModel = koinViewModel<PerfumeMainViewModelAndroid>(parameters = { parametersOf(NavigatePerfumeMain(
+                    fragrances = fragrances.fragrances,
+                    id = 1,
+                    name = ""
+                ), ) }).viewModel,
+                navToLab = {navController.navigateUp()},
+                navHome = {navController.navigate(MainNavigationRoutes.HomeScreen){
+                    popUpTo<MainNavigationRoutes.HomeScreen>()
+                }
+
+              },
+
+            )
+        }
+
+
+        settingsNavigation(navController)
 //
 //        composable<MainNavigationRoutes.Onboarding> {
 //            OnboardingScreen()
@@ -89,15 +117,36 @@ fun MainNavigation(
 //            StatisticsScreen()
 //        }
 //
-        composable<MainNavigationRoutes.Perfume>(
+
+        composable<MainNavigationRoutes.WhereTo>{
+            PerfumeSelectionScreen(
+                viewModel = koinViewModel<WhereToViewModeAndroid>().viewModel,
+                navToPerfume = { fragrances: MainNavigationRoutes.PerfumeDetails ->
+                    navController.navigate(fragrances)
+                }
+            )
+        }
+//        composable<MainNavigationRoutes.FeelHow>{
+//            PerfumeSelectionScreen(viewModel = koinViewModel<FeelHowViewModelAndroid>().viewModel,
+//                navToPerfume = { fragrances: Array<Fragrance> ->
+//                    navController.navigate(MainNavigationRoutes.Perfume(fragrances = fragrances))
+//                }
+//            )
+//        }
+
+        composable<MainNavigationRoutes.PerfumeDetails>(
             typeMap = mapOf(
                 typeOf<Array<Fragrance>>() to CustomNavType.fragranceArrayType,
             )
         ) {
-            val perfume = it.toRoute<MainNavigationRoutes.Perfume>()
+            val perfume = it.toRoute<MainNavigationRoutes.PerfumeDetails>()
             PerfumeMainScreen(
                 navBack = { navController.navigateUp() },
-                viewModel = koinViewModel<PerfumeMainViewModelAndroid>(parameters = { parametersOf(perfume.fragrances, perfume.intensity) }).viewModel,
+                viewModel = koinViewModel<PerfumeMainViewModelAndroid>(parameters = { parametersOf(NavigatePerfumeMain(
+                    fragrances = perfume.fragrances,
+                    id = perfume.id,
+                    name = perfume.name
+                ), ) }).viewModel,
                 navToLab = { navController.navigate(MainNavigationRoutes.Lab) },
                 navHome = {
                     navController.navigate(MainNavigationRoutes.HomeScreen){
