@@ -1,7 +1,6 @@
 package feature.pairing.screens.purchaseInfo
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -22,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +28,7 @@ import core.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 import io.pc7.ninu.data.mapper.toStringSlash
 import io.pc7.ninu.domain.model.input.MyInput
-import io.pc7.ninu.presentation.components.GrayBracketWithText
+import io.pc7.ninu.presentation.components.other.GrayBracketWithText
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
 import io.pc7.ninu.presentation.components.main.card.CardBracket
 import io.pc7.ninu.presentation.components.main.card.XCard
@@ -100,13 +97,9 @@ private fun PurchaseInfoScreen(
                     }
                     Column(
                         modifier = Modifier
-                            .clip(RoundedCornerShape(20.dp))
                             .aspectRatio(1f)
                             .fillMaxWidth()
-                            .background(colorScheme.custom3D3D3D)
-                            .padding(horizontal = 30.dp, vertical = 30.dp)
                         ,
-//                        horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(30.dp, Alignment.Top)
                     ) {
                         Item(
@@ -135,7 +128,8 @@ private fun PurchaseInfoScreen(
                                     modifier = Modifier.size(200.dp))
                             }
                         },
-                        text = "Press and hold power button on your NINU device."
+                        text = "Press and hold power button on your NINU device.",
+
                     )
 
                 }
@@ -147,7 +141,7 @@ private fun PurchaseInfoScreen(
         buttonOnCLick = { /*TODO*/ },
         buttonText = "Register",
         isButtonEnabled = true,
-        onBracketCLick = {},
+        onBracketClick = {},
 
 
     ) {

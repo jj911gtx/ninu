@@ -45,50 +45,54 @@ private fun ProfileScreen(
 ) {
 
 
-    ScrollableColumn(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        ButtonTopLeftBack(onClick = navBack, text = "My profile")
-
-
-        ProfileImage(
-            size = 200.dp,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-        )
-
-
-        Text(text = state.name)
-
-        Text(text = "Change profile photo",
-            style = MaterialTheme.typography.bodyMedium,
-            color = colorScheme.secondaryLight2,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
+    Column {
+        ButtonTopLeftBack(onClick = navBack, text = "My profile", modifier = Modifier.align(Alignment.Start))
+        ScrollableColumn(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
 
 
-        ProfileColumnItem(
-            title = "Email",
-            value = state.email,
-            onClick = {}
-        )
-        ProfileColumnItem(
-            title = "Name",
-            value = state.name,
-            onClick = {}
-        )
-        ProfileColumnItem(
-            title = "Username",
-            value = state.username,
-            onClick = {}
-        )
-        ProfileColumnItem(
-            title = "Date of birth",
-            value = state.dateOfBirth.toString(),
-            onClick = {}
-        )
+            ProfileImage(
+                size = 200.dp,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+            )
+
+
+            Text(text = state.name)
+
+            Text(text = "Change profile photo",
+                style = MaterialTheme.typography.bodyMedium,
+                color = colorScheme.secondaryLight2,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+
+
+
+            ProfileColumnItem(
+                title = "Email",
+                value = state.email,
+                onClick = {}
+            )
+            ProfileColumnItem(
+                title = "Name",
+                value = state.name,
+                onClick = {}
+            )
+            ProfileColumnItem(
+                title = "Username",
+                value = state.username,
+                onClick = {}
+            )
+            ProfileColumnItem(
+                title = "Date of birth",
+                value = state.dateOfBirth.toString(),
+                onClick = {}
+            )
+        }
     }
+
 }
 
 

@@ -137,6 +137,10 @@ fun SideNavigationBar(
                     text = "Settings",
                     onClick = { navController.navigate(SettingsNavigationRoutes.Main) }
                 )
+                NavBarItemText(
+                    text = "Statistics",
+                    onClick = { navController.navigate(MainNavigationRoutes.Statistics) }
+                )
 
 //                NavBarItemText(
 //                    text = "Settings",

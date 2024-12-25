@@ -131,12 +131,11 @@ class NewPasswordViewModel(
             confirmPassword = _state.value.confirmPassword.value,
         )
     }
-
 }
 
 data class NewPasswordState(
-    val password: MyInput<String> = MyInput("11111111"),
-    val confirmPassword: MyInput<String> = MyInput("11111111"),
+    val password: MyInput<String> = MyInput(""),
+    val confirmPassword: MyInput<String> = MyInput(""),
     val buttonEnabled: Boolean = false,
     val respond: Resource<DataError.Network>? = null
 )

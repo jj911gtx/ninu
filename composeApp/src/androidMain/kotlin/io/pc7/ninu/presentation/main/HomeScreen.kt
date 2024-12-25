@@ -28,6 +28,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import core.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
+import io.pc7.ninu.domain.model.perfume.NINUSelection
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButton
 import io.pc7.ninu.presentation.components.other.BatteryComponent
 import io.pc7.ninu.presentation.components.other.CircleBracketOutlinedColor
@@ -51,6 +56,7 @@ import io.pc7.ninu.presentation.main.components.InfoBracket
 import io.pc7.ninu.presentation.main.components.InfoBracketType
 import io.pc7.ninu.presentation.main.components.LinePagerIndicator
 import io.pc7.ninu.presentation.theme.NINUTheme
+import io.pc7.ninu.presentation.util.mapper.toColor
 import ninu.other.home.HomeScreenViewModelAndroid
 import org.koin.androidx.compose.koinViewModel
 
@@ -58,24 +64,34 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreen(
     pair: () -> Unit,
+    navToEditFavouritesScreen: () -> Unit,
     viewModel: HomeScreenViewModel = koinViewModel<HomeScreenViewModelAndroid>().viewModel,
 ) {
 
-
-    if(false){
-        HomeScreen(
-            state = viewModel.state.collectAsState().value,
-            action = {viewModel.action(it)},
-
-        )
+    var changeScreen by remember {
+        mutableStateOf(false)
     }
-    else{
-        HomeScreenConnect(
-            state = viewModel.state.collectAsState().value,
-            action = {viewModel.action(it)},
-            pair = pair
-        )
+    Column {
+        Button(onClick = { changeScreen = !changeScreen }) {
+            Text(text = "Change Screen")
+        }
+        if(changeScreen){
+            HomeScreen(
+                state = viewModel.state.collectAsState().value,
+                action = {viewModel.action(it)},
+                navToEditFavouritesScreen = navToEditFavouritesScreen
+            )
+        }
+        else{
+            HomeScreenConnect(
+                state = viewModel.state.collectAsState().value,
+                action = {viewModel.action(it)},
+                pair = pair
+            )
+        }
     }
+
+
 
 
 }
@@ -85,7 +101,7 @@ fun HomeScreen(
 private fun HomeScreen(
     state: HomeScreenState,
     action: (HomeScreenAction) -> Unit,
-
+    navToEditFavouritesScreen: () -> Unit,
 ) {
 
     LazyColumn(
@@ -153,23 +169,23 @@ private fun HomeScreen(
                     .fillMaxWidth()
             ) {
                 NINUSelectionItem(
-                    number = 1
+                    number = NINUSelection.N1
                 )
                 NINUSelectionItem(
-                    number = 2
+                    number = NINUSelection.N2
                 )
                 NINUSelectionItem(
-                    number = 3
+                    number = NINUSelection.N3
                 )
                 NINUSelectionItem(
-                    number = null
+                    number = NINUSelection.N
                 )
             }
         }
 
         item {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = navToEditFavouritesScreen,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorScheme.primary
                 ),
@@ -275,7 +291,7 @@ private fun HomeScreenConnect(
 
 @Composable
 private fun RowScope.NINUSelectionItem(
-    number: Int? = null,
+    number: NINUSelection,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -284,18 +300,12 @@ private fun RowScope.NINUSelectionItem(
             .weight(1f)
     ) {
         CircleBracketOutlinedColor(
-            text = if(number == null) "N" else number.toString(),
-            borderColor = when(number){
-                1 -> Color.Yellow
-                2 -> Color.Cyan
-                3 -> Color.Blue
-                else -> colorScheme.white
-
-            },
+            text = number.toString(),
+            borderColor = number.toColor()
         )
-        Text(text = if(number != null)
-                    "NINU selection ${number}"
-                else "Last UPLOADED",
+        Text(text = if(number != NINUSelection.N)
+                        "NINU selection $number"
+                    else "Last UPLOADED",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.displaySmall,
             color = colorScheme.white
@@ -312,7 +322,8 @@ private fun HomeScreenConnectPreview() {
     NINUTheme {
         HomeScreen(
             state = HomeScreenViewModel.initialize(),
-            action = {}
+            action = {},
+            navToEditFavouritesScreen = {}
         )
     }
 }

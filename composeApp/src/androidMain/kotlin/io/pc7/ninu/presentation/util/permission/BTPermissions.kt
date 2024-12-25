@@ -13,9 +13,9 @@ enum class BTPermissionsAPIOld(override val permission: String, override val des
 }
 
 @RequiresApi(Build.VERSION_CODES.S)
-enum class BTPermissionsAPINew(override val permission: String, override val description: String = ""):
+enum class BTPermissionsAPINew(override val permission: String, override val description: String):
     Permissions {
-    BLUETOOTH_CONNECT(Manifest.permission.BLUETOOTH_CONNECT),
+    BLUETOOTH_CONNECT(Manifest.permission.BLUETOOTH_CONNECT, "To connect with bluetooth"),
 }
 
 

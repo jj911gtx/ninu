@@ -81,21 +81,18 @@ fun SettingsListScreen(
 //                text = "Legal & Regulatory",
 //                onClick = { navController.navigate(SettingsNavigationRoutes.LegalRegulatory) }
 //            )
-            SettingsItem(
-                icon = R.drawable.icon_log_out,
-                text = "Log out",
-                onClick = {
-                    TODO()
-                },
-                color = colorScheme.secondaryLight
-            )
 
-
+//            SettingsItem(
+//                icon = R.drawable.icon_log_out,
+//                text = "Log out",
+//                onClick = {
+//                    TODO()
+//                },
+//                color = colorScheme.secondaryLight
+//            )
 
 
         }
-
-
     }
 }
 

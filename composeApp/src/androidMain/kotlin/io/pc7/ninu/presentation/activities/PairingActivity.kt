@@ -17,7 +17,6 @@ import io.pc7.ninu.presentation.components.util.BackgroundHandling
 import io.pc7.ninu.presentation.pairing.PairingNavigation
 import io.pc7.ninu.presentation.theme.NINUTheme
 import io.pc7.ninu.presentation.theme.SCREEN_PADDING
-import io.pc7.ninu.presentation.util.permission.ManageBluetoothPermissionDisplay
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.activityRetainedScope
 import org.koin.core.scope.Scope

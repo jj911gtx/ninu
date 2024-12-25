@@ -40,7 +40,7 @@ abstract class PerfumeSelectionViewModel(
             is Action.SelectItem -> {
                 updateState { it.copy(selectedItem = action.perfume) }
                 viewModelScope.launch(Dispatchers.IO) {
-                    delay(10)//TODO
+                    delay(400)
                     val perfume = action.perfume
                     eventChannel.send(Event.Navigate(NavigatePerfumeMain(
                         fragrances = perfume.fragrances.map { it.toFragrance() }.toTypedArray(),
@@ -119,7 +119,7 @@ abstract class PerfumeSelectionViewModel(
 
 data class PerfumeSelectionState(
     val errors: Error? = null,
-    val perfumes: Resource<ResultMy<PerfumesSelections, DataError.Network>> = Resource.Result(ResultMy.Success(
+    val perfumes: Resource<ResultMy<PerfumesSelections, DataError.Network>> = /*Resource.Result(ResultMy.Success(
         PerfumesSelections(
         perfumes = List(3){List(10){ index ->
             PerfumeSelectionDisplay(
@@ -128,10 +128,9 @@ data class PerfumeSelectionState(
                     enough = true, sku = 1, percentage = 20
                 )
                 }
-
             )
         } }
-    ))),//Resource.Loading,
+    ))),*/Resource.Loading,
     val selectedItem: PerfumeSelectionDisplay? = null
 ){
 

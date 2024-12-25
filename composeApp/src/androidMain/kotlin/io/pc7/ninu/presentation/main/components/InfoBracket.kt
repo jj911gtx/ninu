@@ -157,39 +157,29 @@ fun InfoBracket(
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
-                if(readMore){
-                    Button(
-                        onClick = { /*TODO*/ },
-                        shape = RoundedCornerShape(5.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-
-                    ) {
-                        Text(
-                            text = "Read more",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.labelMedium,
-                            modifier = Modifier
-                                .padding(vertical = 5.dp)
-                                .fillMaxWidth()
-
-                        )
-                    }
-                }
+//                if(readMore){
+//                    Button(
+//                        onClick = { /*TODO*/ },
+//                        shape = RoundedCornerShape(5.dp),
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//
+//                    ) {
+//                        Text(
+//                            text = "Read more",
+//                            textAlign = TextAlign.Center,
+//                            style = MaterialTheme.typography.labelMedium,
+//                            modifier = Modifier
+//                                .padding(vertical = 5.dp)
+//                                .fillMaxWidth()
+//
+//                        )
+//                    }
+//                }
 
             }
-
-
         }
-
-
-
-
     }
-
-
-
-
 }
 
 

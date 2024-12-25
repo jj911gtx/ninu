@@ -76,11 +76,11 @@ fun PerfumeTextContentScreen(
     PerfumeDetailsGeneralScreen(
         navBack = navBack,
         icon = R.drawable.icon_ball,
-        number = 2,
+//        number = 2,
         favouriteState = state.isFavourite,
         onFavouriteChage = { action(PerfumeMainAction.OnClickFavourite) },
         onEditMix = navToLab,
-        onDelete = { action(PerfumeMainAction.OnClickDelete) },
+//        onDelete = { action(PerfumeMainAction.OnClickDelete) },
         buttonEnabled = state.name.value.isNotEmpty(),
         buttonText = buttonText,
         onButtonClick = {

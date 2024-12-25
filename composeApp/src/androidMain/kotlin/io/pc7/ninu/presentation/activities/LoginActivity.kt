@@ -12,7 +12,6 @@ import io.pc7.ninu.presentation.components.util.BackgroundHandling
 import io.pc7.ninu.presentation.login.LoginNavigation
 import io.pc7.ninu.presentation.theme.NINUTheme
 import io.pc7.ninu.presentation.theme.SCREEN_PADDING
-import io.pc7.ninu.presentation.util.permission.ManageBluetoothPermissionDisplay
 
 
 class LoginActivity: ComponentActivity() {
@@ -22,7 +21,6 @@ class LoginActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent{
-            ManageBluetoothPermissionDisplay()
             BackgroundHandling()
             NINUTheme{
                 Surface(

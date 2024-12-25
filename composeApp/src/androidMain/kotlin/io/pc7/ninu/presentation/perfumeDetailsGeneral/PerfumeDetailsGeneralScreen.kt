@@ -41,12 +41,12 @@ import io.pc7.ninu.presentation.theme.NINUTheme
 fun PerfumeDetailsGeneralScreen(
     navBack: () -> Unit,
     icon: Int,
-    number: Int,
+//    number: Int,
 
     favouriteState: Boolean,
     onFavouriteChage: () -> Unit,
     onEditMix: () -> Unit,
-    onDelete: () -> Unit,
+//    onDelete: () -> Unit,
 
     buttonEnabled: Boolean,
     onButtonClick: () -> Unit,
@@ -241,11 +241,9 @@ private fun PerfumeDetailsScreenPreview() {
         PerfumeDetailsGeneralScreen(
             navBack = {},
             icon = R.drawable.icon_apple,
-            number = 2,
             favouriteState = false,
             onFavouriteChage = {},
             onEditMix = {},
-            onDelete = {},
             buttonEnabled = true,
             onButtonClick = {},
             buttonText = "Save",

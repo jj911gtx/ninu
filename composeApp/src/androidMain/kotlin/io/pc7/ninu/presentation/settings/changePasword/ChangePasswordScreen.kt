@@ -89,7 +89,7 @@ private fun ChangePasswordScreen(
         }
         DefaultButtonText(
             onClick = { action(ChangePasswordAction.ConfirmChange) },
-            text = "Verify",
+            text = "Change",
             isEnabled = state.currentPassword.errors.isEmpty()
                     && state.newPassword.errors.isEmpty()
                     && state.confirmNewPassword.errors.isEmpty(),

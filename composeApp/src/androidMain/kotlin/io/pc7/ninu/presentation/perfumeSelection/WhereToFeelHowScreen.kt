@@ -10,9 +10,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -40,6 +43,7 @@ import io.pc7.ninu.domain.model.util.Resource
 import io.pc7.ninu.domain.model.util.ResultMy
 import io.pc7.ninu.presentation.components.resource.Display
 import io.pc7.ninu.presentation.main.navigation.MainNavigationRoutes
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -73,19 +77,27 @@ fun WhereToFeelHowScreen(
             contentDescription = null,
             tint = colorScheme.white
         )
-        Row(
+        val coroutineScope = rememberCoroutineScope()
+        val listState = rememberLazyListState()
+
+        LazyRow(
+            state = listState,
             horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
-            headers.forEachIndexed() { index, it ->
-                Header(text = it.title,
+            itemsIndexed(headers) { index, it ->
+                Header(
+                    text = it.title,
                     selected = pagerState.currentPage == index,
                     onClick = {
                         it.onClick()
-                        coroutine.launch {
-                            pagerState.animateScrollToPage(index)
+                        coroutineScope.launch {
+                            coroutineScope.launch {
+                                listState.animateScrollToItem(index)
+                            }
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
                         }
                     }
                 )
@@ -93,7 +105,6 @@ fun WhereToFeelHowScreen(
         }
         Spacer(modifier = Modifier.height(20.dp))
         items.Display { itemsResult ->
-
                 HorizontalPager(
                     state = pagerState,
                 ) { pageIndex ->
@@ -113,7 +124,7 @@ fun WhereToFeelHowScreen(
                         itemsIndexed(itemsResult.perfumes[pageIndex]){ index, item ->
 
                             item.Display(selected = state.selectedItem != null && state.selectedItem == item,
-                                onClick = {action(PerfumeSelectionViewModel.Action.SelectItem(item))}
+                                onClick = {action(PerfumeSelectionViewModel.Action.SelectItem(item))},
                             )
                         }
 

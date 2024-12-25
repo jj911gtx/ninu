@@ -1,4 +1,4 @@
-package core.presentation.theme.custom
+package io.pc7.ninu.presentation.theme.custom
 
 import androidx.compose.ui.graphics.Color
 

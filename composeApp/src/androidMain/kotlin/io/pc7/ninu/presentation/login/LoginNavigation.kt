@@ -66,8 +66,11 @@ fun LoginNavigation(
 
         composable<LoginNavRoutes.PasswordChangeSuccess>(){
             SuccessScreen(
-                navNext = {}, //TODO navigate to login screen
-
+                navNext = {
+                    navController.navigate(LoginNavRoutes.Login){
+                        popUpTo<LoginNavRoutes.Login>()
+                    }
+                },
             )
         }
 

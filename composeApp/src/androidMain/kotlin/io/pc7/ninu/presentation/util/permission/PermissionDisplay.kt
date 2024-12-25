@@ -18,7 +18,8 @@ import androidx.compose.ui.window.Dialog
 
 
 @Composable
-fun ManageBluetoothPermissionDisplay(
+fun ManagePermissionPermissionDisplay(
+    permissionsToRequest: ActivityResultLauncher<Array<String>>
 ) {
     fun statePermissions(): MutableList<MutableState<PermissionRationalState>> {
         val savedPermissions = mutableListOf<MutableState<PermissionRationalState>>()
@@ -28,9 +29,7 @@ fun ManageBluetoothPermissionDisplay(
         return savedPermissions
     }
 
-    val permissions = remember {
-        statePermissions()
-    }
+    val permissions = remember { statePermissions() }
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
@@ -45,7 +44,7 @@ fun ManageBluetoothPermissionDisplay(
 //        }
     }
     LaunchedEffect(Unit) {
-        permissionLauncher.requestPermissions()
+        permissionsToRequest.requestPermissions()
     }
 
 
@@ -71,9 +70,7 @@ fun ManageBluetoothPermissionDisplay(
 
 
 
-private fun ActivityResultLauncher<Array<String>>.requestPermissions(
-
-) {
+private fun ActivityResultLauncher<Array<String>>.requestPermissions() {
 
     val requiredPermissions = getBTPermissionsForBuildSDK().map { it.permission } + Manifest.permission.CAMERA
 

@@ -36,7 +36,16 @@ fun BackgroundHandling(
 
 fun Activity.setStatusBar(){
     window.statusBarColor = colorScheme.black.toArgb()
-    window.navigationBarColor = colorScheme.black.toArgb()
+    setBottomBar(true)
+//    window.navigationBarColor = colorScheme.black.toArgb()
+}
+
+fun Activity.setBottomBar(black: Boolean){
+    window.navigationBarColor = if(black){
+        colorScheme.black.toArgb()
+    }else{
+        colorScheme.primary.toArgb()
+    }
 }
 
 @SuppressLint("UseCompatLoadingForDrawables")

@@ -27,8 +27,12 @@ object MainNavigationRoutes {
     @Serializable
     data object Lab
 
-//    @Serializable
-//    data object Profile
+    @Serializable
+    data object Statistics
+    @Serializable
+    data object PerfumeStatus
+    @Serializable
+    data object EditFavourites
 //
 //    @Serializable
 //    data object FAQ

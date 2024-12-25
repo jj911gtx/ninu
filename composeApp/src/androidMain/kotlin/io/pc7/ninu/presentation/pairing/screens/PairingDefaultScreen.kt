@@ -7,11 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.pc7.ninu.presentation.components.GrayBracketWithText
+import io.pc7.ninu.presentation.components.other.GrayBracketWithText
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.ButtonNeedHelp
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
+import io.pc7.ninu.presentation.components.other.GrayBracket
 import io.pc7.ninu.presentation.components.util.rememberKeyboardVisibility
 
 
@@ -22,7 +23,7 @@ fun PairingDefaultScreen(
     bracketContentWithTxt: (@Composable () -> Unit)? = null,
     bracketText: String,
     baseBracketContent: (@Composable () -> Unit)? = null,
-    onBracketCLick: () -> Unit,
+    onBracketClick: (() -> Unit)?,
 
     onClickHelp: () -> Unit,
     buttonOnCLick: () -> Unit,
@@ -31,7 +32,7 @@ fun PairingDefaultScreen(
 
     content: @Composable () -> Unit,
 
-) {
+    ) {
 
 
     ScrollableColumn(
@@ -46,11 +47,17 @@ fun PairingDefaultScreen(
 
         if(!rememberKeyboardVisibility().value){
             if(baseBracketContent != null){
-                baseBracketContent()
+                GrayBracket(
+                    onClick = onBracketClick
+                ) {
+                    baseBracketContent()
+                }
+
 
             }else{
                 bracketContentWithTxt?.let {
                     GrayBracketWithText(
+                        onClick = onBracketClick,
                         content = bracketContentWithTxt,
                         text = bracketText
                     )

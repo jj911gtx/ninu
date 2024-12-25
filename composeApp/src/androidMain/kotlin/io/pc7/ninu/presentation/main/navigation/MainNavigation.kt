@@ -10,14 +10,22 @@ import androidx.navigation.toRoute
 import io.pc7.ninu.data.network.model.navigation.NavigatePerfumeMain
 import io.pc7.ninu.domain.model.perfume.Fragrance
 import io.pc7.ninu.presentation.activities.PairingActivity
+import io.pc7.ninu.presentation.favourites.EditFavouritesScreen
+import io.pc7.ninu.presentation.favourites.EditFavouritesViewModel
+import io.pc7.ninu.presentation.favourites.EditFavouritesViewModelAndroid
 import io.pc7.ninu.presentation.lab.LabMainScreen
 import io.pc7.ninu.presentation.main.HomeScreen
 import io.pc7.ninu.presentation.perfumeDetails.PerfumeMainScreen
 import io.pc7.ninu.presentation.perfumeDetails.PerfumeMainViewModelAndroid
 import io.pc7.ninu.presentation.perfumeSave.PerfumeSaveScreen
+import io.pc7.ninu.presentation.perfumeSelection.FeelHowViewModelAndroid
 import io.pc7.ninu.presentation.perfumeSelection.PerfumeSelectionScreen
 import io.pc7.ninu.presentation.perfumeSelection.WhereToViewModeAndroid
 import io.pc7.ninu.presentation.settings.settingsNavigation
+import io.pc7.ninu.presentation.statistics.PerfumeStatusScreen
+import io.pc7.ninu.presentation.statistics.PerfumeStatusViewModelAndroid
+import io.pc7.ninu.presentation.statistics.StatisticsScreen
+import io.pc7.ninu.presentation.statistics.StatisticsViewModeAndroid
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 import kotlin.reflect.typeOf
@@ -36,17 +44,14 @@ fun MainNavigation(
         startDestination = MainNavigationRoutes.HomeScreen
     ){
 
-        composable<MainNavigationRoutes.HomeScreen> {
-
-        }
-
 
         composable<MainNavigationRoutes.HomeScreen>{
             HomeScreen(
                 pair = {
                     val intent = Intent(context, PairingActivity::class.java)
                     context.startActivity(intent)
-                }
+                },
+                navToEditFavouritesScreen = {navController.navigate(MainNavigationRoutes.EditFavourites)}
             )
         }
 
@@ -126,13 +131,38 @@ fun MainNavigation(
                 }
             )
         }
-//        composable<MainNavigationRoutes.FeelHow>{
-//            PerfumeSelectionScreen(viewModel = koinViewModel<FeelHowViewModelAndroid>().viewModel,
-//                navToPerfume = { fragrances: Array<Fragrance> ->
-//                    navController.navigate(MainNavigationRoutes.Perfume(fragrances = fragrances))
-//                }
-//            )
-//        }
+        composable<MainNavigationRoutes.FeelHow>{
+            PerfumeSelectionScreen(
+                viewModel = koinViewModel<FeelHowViewModelAndroid>().viewModel,
+                navToPerfume = { fragrances: MainNavigationRoutes.PerfumeDetails ->
+                    navController.navigate(fragrances)
+                }
+            )
+        }
+        composable<MainNavigationRoutes.EditFavourites>{
+            EditFavouritesScreen(
+                navBack = {navController.navigateUp()},
+                viewModel = koinViewModel<EditFavouritesViewModelAndroid>().viewModel,
+
+            )
+        }
+
+
+
+
+        composable<MainNavigationRoutes.Statistics>{
+            StatisticsScreen(
+                navBack = { navController.navigateUp() },
+                navToPerfumeStatus = { navController.navigate(MainNavigationRoutes.PerfumeStatus) },
+                viewModel = koinViewModel<StatisticsViewModeAndroid>().viewModel,
+            )
+        }
+        composable<MainNavigationRoutes.PerfumeStatus>{
+            PerfumeStatusScreen(
+                navBack = {navController.navigateUp()},
+                viewModel = koinViewModel<PerfumeStatusViewModelAndroid>().viewModel,
+            )
+        }
 
         composable<MainNavigationRoutes.PerfumeDetails>(
             typeMap = mapOf(

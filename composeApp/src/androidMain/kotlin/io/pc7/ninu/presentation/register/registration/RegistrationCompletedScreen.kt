@@ -1,4 +1,4 @@
-package ninu.register.presentation.registration
+package io.pc7.ninu.presentation.register.registration
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints

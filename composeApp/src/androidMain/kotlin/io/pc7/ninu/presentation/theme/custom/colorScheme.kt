@@ -1,7 +1,7 @@
 package core.presentation.theme.custom
 
 import androidx.compose.ui.graphics.Color
-import core.presentation.theme.custom.NINUColorScheme
+import io.pc7.ninu.presentation.theme.custom.NINUColorScheme
 
 
 val colorScheme = NINUColorScheme(
