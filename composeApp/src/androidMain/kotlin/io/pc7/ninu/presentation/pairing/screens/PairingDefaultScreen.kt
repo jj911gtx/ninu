@@ -20,10 +20,7 @@ import io.pc7.ninu.presentation.components.util.rememberKeyboardVisibility
 fun PairingDefaultScreen(
     backText: String,
     navBack: () -> Unit,
-    bracketContentWithTxt: (@Composable () -> Unit)? = null,
-    bracketText: String,
-    baseBracketContent: (@Composable () -> Unit)? = null,
-    onBracketClick: (() -> Unit)?,
+    bracketContent: @Composable () -> Unit,
 
     onClickHelp: () -> Unit,
     buttonOnCLick: () -> Unit,
@@ -32,7 +29,7 @@ fun PairingDefaultScreen(
 
     content: @Composable () -> Unit,
 
-    ) {
+) {
 
 
     ScrollableColumn(
@@ -46,23 +43,7 @@ fun PairingDefaultScreen(
         )
 
         if(!rememberKeyboardVisibility().value){
-            if(baseBracketContent != null){
-                GrayBracket(
-                    onClick = onBracketClick
-                ) {
-                    baseBracketContent()
-                }
-
-
-            }else{
-                bracketContentWithTxt?.let {
-                    GrayBracketWithText(
-                        onClick = onBracketClick,
-                        content = bracketContentWithTxt,
-                        text = bracketText
-                    )
-                }
-            }
+            bracketContent()
 
         }
 

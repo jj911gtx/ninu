@@ -1,7 +1,23 @@
 package io.pc7.ninu.presentation.pairing.screens.scan
 
+import android.util.Log
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,10 +27,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import core.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.components.main.input.text.NINUTextField
+import io.pc7.ninu.presentation.components.other.GrayBracketWithText
 import io.pc7.ninu.presentation.components.util.ObserveAsEvents
 import io.pc7.ninu.presentation.components.util.rememberKeyboardVisibility
 import io.pc7.ninu.presentation.pairing.scan.ScanAction
@@ -23,6 +48,9 @@ import io.pc7.ninu.presentation.pairing.scan.ScanState
 import io.pc7.ninu.presentation.pairing.scan.ScanViewModel
 import io.pc7.ninu.presentation.pairing.screens.PairingDefaultScreen
 import io.pc7.ninu.presentation.theme.NINUTheme
+import io.pc7.ninu.presentation.util.BarcodeAnalyzer
+import io.pc7.ninu.presentation.util.permission.managePermissionPermissionDisplay
+import io.pc7.ninu.presentation.util.permission.requestCameraPermission
 
 
 @Composable
@@ -53,19 +81,103 @@ private fun ScanScreen(
     action: (ScanAction) -> Unit,
     navBack: () -> Unit
 ) {
+
+
     val scope = rememberCoroutineScope()
 
-
+    var scanEnabled by remember { mutableStateOf(false) }
+    val permissionLauncher = managePermissionPermissionDisplay(
+        onAllPermissionsGranted = {scanEnabled = true}
+    )
 
     PairingDefaultScreen(
         backText = "Device info",
         navBack = navBack,
-        bracketContentWithTxt = {
-            var openBarcodeReader by remember { mutableStateOf(false) }
-            val sizeAnimation = animateDpAsState(
-                targetValue = if (openBarcodeReader) 350.dp else 0.dp,
-                animationSpec = tween(durationMillis = 400)
-            )
+        bracketContent = {
+            Box {
+                val localContext = LocalContext.current
+                val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+                val cameraProviderFuture = remember {
+                    ProcessCameraProvider.getInstance(localContext)
+                }
+                AnimatedVisibility(
+                    visible = scanEnabled,
+                    enter = fadeIn(animationSpec = tween(durationMillis = 1000)),
+                    exit = fadeOut(animationSpec = tween(durationMillis = 1000))
+                ) {
+
+                    AndroidView(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(20.dp))
+                            .aspectRatio(1f)
+                            .fillMaxWidth()
+                            .clickable { scanEnabled = false }
+                            .background(Color.Green),
+                        factory = { context ->
+                            val previewView = PreviewView(context)
+                            val preview = androidx.camera.core.Preview.Builder().build()
+                            val selector = CameraSelector.Builder()
+                                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                                .build()
+
+                            preview.surfaceProvider = previewView.surfaceProvider
+
+                            val imageAnalysis = ImageAnalysis.Builder().build()
+                            imageAnalysis.setAnalyzer(
+                                ContextCompat.getMainExecutor(context),
+                                BarcodeAnalyzer(context) { barcode ->
+                                    action(ScanAction.OnBarcodeDetect(barcode))
+                                    cameraProviderFuture.get().unbindAll()
+                                }
+                            )
+
+                            runCatching {
+                                cameraProviderFuture.get().bindToLifecycle(
+                                    lifecycleOwner,
+                                    selector,
+                                    preview,
+                                    imageAnalysis
+                                )
+                            }.onFailure {
+                                Log.e("CAMERA", "Camera bind error ${it.localizedMessage}", it)
+                            }
+
+                            previewView
+                        },
+                        update = { view ->
+                            // Handle any updates to the view here
+                        },
+                        onRelease = { view ->
+                            // Clean up resources
+                            cameraProviderFuture.get().unbindAll()
+                        }
+                    )
+                }
+
+                AnimatedVisibility(
+                    visible = !scanEnabled,
+                    enter = fadeIn(animationSpec = tween(durationMillis = 1000)),
+                    exit = fadeOut(animationSpec = tween(durationMillis = 1000))
+                ) {
+                    GrayBracketWithText(
+                        content = { },
+                        text = "Scan the serial number that is usually located at the bottom of your NINU device.",
+                        onClick = {
+                            permissionLauncher.requestCameraPermission()
+                        }
+                    )
+                }
+
+            }
+
+
+        },
+//        bracketContentWithTxt = {
+//            var openBarcodeReader by remember { mutableStateOf(false) }
+//            val sizeAnimation = animateDpAsState(
+//                targetValue = if (openBarcodeReader) 350.dp else 0.dp,
+//                animationSpec = tween(durationMillis = 400)
+//            )
 //            AnimatedVisibility(
 //                visible = openBarcodeReader,
 //                enter = fadeIn() + slideInVertically(initialOffsetY = { -it }),
@@ -88,17 +200,13 @@ private fun ScanScreen(
 //            Icon(painter = painterResource(id = R.drawable.icon_scan), contentDescription = "Scan",
 //                tint = colorScheme.white
 //            )
-        },
-        bracketText = "Scan the serial number that is usually located at the bottom of your NINU device.",
+//        },
         onClickHelp = { /*TODO*/ },
         buttonOnCLick = {
             action(ScanAction.OnProceed)
         },
         buttonText =  "Proceed",
         isButtonEnabled = state.serialNumber.value.isNotEmpty(),
-        onBracketClick = {
-            println("Clicked ahhahahaha")
-        }
     ){
         if(!rememberKeyboardVisibility().value){
             Text(

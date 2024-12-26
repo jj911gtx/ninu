@@ -21,7 +21,7 @@ fun PairingNavigation(
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = "Scan"
+        startDestination = "PurchaseInfo"
     ){
 
         composable("Scan") {

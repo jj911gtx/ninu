@@ -3,6 +3,7 @@ package io.pc7.ninu.presentation.components.other
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -36,6 +37,23 @@ fun GrayBracketWithText(
             color = colorScheme.white
         )
     }
+}
+
+
+@Composable
+fun ColumnScope.TextForGrayButton(
+    content: @Composable () -> Unit,
+    text: String,
+
+) {
+    content()
+    Text(
+        text = text,
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.bodyMedium,
+        color = colorScheme.white
+    )
+
 }
 
 

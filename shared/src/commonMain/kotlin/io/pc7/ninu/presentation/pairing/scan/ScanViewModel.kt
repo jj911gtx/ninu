@@ -28,6 +28,7 @@ class ScanViewModel(
         when (action) {
             is ScanAction.OnSerialNumberUpdate -> _state.update { it.copy(serialNumber = it.serialNumber.update(action.sn)) }
             ScanAction.OnProceed -> checkSerialnumber()
+            is ScanAction.OnBarcodeDetect -> _state.update { it.copy(serialNumber = it.serialNumber.update(action.barcode)) }
         }
     }
 

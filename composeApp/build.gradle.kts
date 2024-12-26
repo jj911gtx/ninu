@@ -28,6 +28,12 @@ kotlin {
 
             implementation(libs.ktor.client.core)
             implementation(libs.androidx.security.crypto.ktx)
+
+
+            implementation(libs.androidx.camera.lifecycle)
+            implementation(libs.androidx.camera.view)
+            implementation(libs.androidx.camera.core)
+            implementation(libs.androidx.camera.camera2)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -44,6 +50,7 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.core)
             implementation(libs.koin.androidx.compose)
+
 
 
 
@@ -82,8 +89,7 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.view)
+
     debugImplementation(compose.uiTooling)
 
     implementation("com.google.mlkit:barcode-scanning:17.3.0")

@@ -1,5 +1,7 @@
 package feature.pairing.screens.purchaseInfo
 
+import android.content.Intent
+import android.provider.MediaStore
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,16 +26,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat.startActivityForResult
 import core.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 import io.pc7.ninu.data.mapper.toStringSlash
 import io.pc7.ninu.domain.model.input.MyInput
-import io.pc7.ninu.presentation.components.other.GrayBracketWithText
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
 import io.pc7.ninu.presentation.components.main.card.CardBracket
 import io.pc7.ninu.presentation.components.main.card.XCard
 import io.pc7.ninu.presentation.components.main.input.datePicker.CalendarDatePicker
 import io.pc7.ninu.presentation.components.main.input.text.NINUinputFieldNoText
+import io.pc7.ninu.presentation.components.other.GrayBracket
+import io.pc7.ninu.presentation.components.other.GrayBracketWithText
+import io.pc7.ninu.presentation.components.other.NINUModalBottomSheetItem
+import io.pc7.ninu.presentation.components.other.NINUModalSheet
 import io.pc7.ninu.presentation.pairing.purchaseInfo.PurchaseInfoAction
 import io.pc7.ninu.presentation.pairing.purchaseInfo.PurchaseInfoState
 import io.pc7.ninu.presentation.pairing.purchaseInfo.PurchaseInfoViewModel
@@ -44,7 +50,7 @@ import io.pc7.ninu.presentation.theme.NINUTheme
 @Composable
 fun PurchaseInfoScreen(
     viewModel: PurchaseInfoViewModel,
-    navBack: () -> Unit
+    navBack: () -> Unit,
 ) {
 
     PurchaseInfoScreen(
@@ -74,7 +80,7 @@ private fun PurchaseInfoScreen(
 //                    .size(200.dp)
 //            )
 //        },
-        baseBracketContent = {
+        bracketContent = {
             when(state.deviceConnected){
                 true -> {
                     @Composable
@@ -95,28 +101,30 @@ private fun PurchaseInfoScreen(
                             )
                         }
                     }
-                    Column(
-                        modifier = Modifier
-                            .aspectRatio(1f)
-                            .fillMaxWidth()
-                        ,
-                        verticalArrangement = Arrangement.spacedBy(30.dp, Alignment.Top)
-                    ) {
-                        Item(
-                            title = "Device Serial Number",
-                            text = "j70kh7ikbasf900asf84jsf"
-                        )
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(20.dp)
+                    GrayBracket {
+                        Column(
+                            modifier = Modifier
+                                .aspectRatio(1f)
+                                .fillMaxWidth()
+                            ,
+                            verticalArrangement = Arrangement.spacedBy(30.dp, Alignment.Top)
                         ) {
                             Item(
-                                title = "Warranty",
-                                text = "2 years"
+                                title = "Device Serial Number",
+                                text = "j70kh7ikbasf900asf84jsf"
                             )
-                            Item(
-                                title = "Firmware versions",
-                                text = "1.4.1"
-                            )
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(20.dp)
+                            ) {
+                                Item(
+                                    title = "Warranty",
+                                    text = "2 years"
+                                )
+                                Item(
+                                    title = "Firmware versions",
+                                    text = "1.4.1"
+                                )
+                            }
                         }
                     }
                 }
@@ -135,15 +143,10 @@ private fun PurchaseInfoScreen(
                 }
             }
         } ,
-
-        bracketText = "Press and hold power button on your NINU device.",
         onClickHelp = { /*TODO*/ },
         buttonOnCLick = { /*TODO*/ },
         buttonText = "Register",
         isButtonEnabled = true,
-        onBracketClick = {},
-
-
     ) {
 
         var displayWhereBoughtOptions  by remember { mutableStateOf(false) }
@@ -155,68 +158,29 @@ private fun PurchaseInfoScreen(
             onClick = { displayWhereBoughtOptions = true },
         )
         if(displayWhereBoughtOptions){
-            ModalBottomSheet(
-                onDismissRequest = { displayWhereBoughtOptions = false },
-                containerColor = Color.Transparent
+            var selectedItem by remember { mutableStateOf<String?>(null) }
+            NINUModalSheet(
+                onDismiss = { displayWhereBoughtOptions = false },
+                onConfirm = {
+                    selectedItem?.let { action(PurchaseInfoAction.OnWhereBoughtUpdate(it)) }
+                    displayWhereBoughtOptions = false
+                }
             ) {
-                var selectedItem by remember { mutableStateOf<String?>(null) }
-                @Composable
-                fun Item(
-                    text: String,
-                    selected: Boolean,
-                ) {
-                    CardBracket(
-                        onClick = { selectedItem = text },
-                        selected = selected,
-                        selectedContainerColor = colorScheme.primaryMedium,
-                        unselectedContainerColor = colorScheme.primaryDarkest,
-                        cornerShape = 15.dp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = text,
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = colorScheme.white,
-                            modifier = Modifier
-                                .padding(15.dp)
-                        )
-                    }
-                }
-                XCard(
-                    modifier = Modifier.padding(horizontal = 10.dp)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(20.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(5.dp)
-                    ) {
-                        Item(
-                            text = "Online",
-                            selected =  selectedItem == "Online",
-                        )
-                        Item(
-                            text = "Gift",
-                            selected =  selectedItem == "Gift",
-                        )
-                        Item(
-                            text = "Store",
-                            selected =  selectedItem == "Store",
-                        )
-
-                        DefaultButtonText(
-                            onClick = {
-                                selectedItem?.let { action(PurchaseInfoAction.OnWhereBoughtUpdate(it)) }
-                                displayWhereBoughtOptions = false
-                            },
-                            text = "Confirm",
-                            modifier = Modifier
-                                .padding(top = 15.dp)
-                        )
-                    }
-
-                }
+                NINUModalBottomSheetItem(
+                    text = "Online",
+                    selected = selectedItem == "Online",
+                    onClick = { selectedItem = "Online" }
+                )
+                NINUModalBottomSheetItem(
+                    text = "Gift",
+                    selected =  selectedItem == "Gift",
+                    onClick = { selectedItem = "Gift" }
+                )
+                NINUModalBottomSheetItem(
+                    text = "Store",
+                    selected =  selectedItem == "Store",
+                    onClick = { selectedItem = "Store" }
+                )
 
             }
         }
@@ -240,8 +204,25 @@ private fun PurchaseInfoScreen(
         NINUinputFieldNoText(
             value = proofOfPurchase,
             placeholderText = "Proof of purchase",
-            onClick = {  },
+            onClick = {
+//                val SELECT_PICTURE = 1
+//                // ...
+//                val pickIntent = Intent()
+//                pickIntent.setType("image/*")
+//                pickIntent.setAction(Intent.ACTION_GET_CONTENT)
+//
+//                val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//
+//                val pickTitle = "Select or take a new Picture" // Or get from strings.xml
+//                val chooserIntent = Intent.createChooser(pickIntent, pickTitle)
+//                chooserIntent.putExtra(
+//                    Intent.EXTRA_INITIAL_INTENTS,
+//                    arrayOf(takePhotoIntent)
+//                )
+//                startActivityForResult(chooserIntent, SELECT_PICTURE)
+            },
         )
+
 
 
 

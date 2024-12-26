@@ -8,67 +8,75 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Dialog
+import io.pc7.ninu.presentation.components.dialog.PermissionDialog
 
 
 @Composable
-fun ManagePermissionPermissionDisplay(
-    permissionsToRequest: ActivityResultLauncher<Array<String>>
-) {
-    fun statePermissions(): MutableList<MutableState<PermissionRationalState>> {
-        val savedPermissions = mutableListOf<MutableState<PermissionRationalState>>()
-        getBTPermissionsForBuildSDK().forEach {
-            savedPermissions.add(mutableStateOf(PermissionRationalState(it, false)))
-        }
-        return savedPermissions
-    }
+fun managePermissionPermissionDisplay(
+    onAllPermissionsGranted: () -> Unit,
 
-    val permissions = remember { statePermissions() }
+): ActivityResultLauncher<Array<String>> {
+
+
+    val permissions = remember { cameraPermissions() }
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
     ) { perms ->
+        var allGranted = true
         permissions.forEachIndexed { index, permission ->
             if (perms[permission.value.permission.permission] == false) {
                 permissions[index].value = permission.value.copy(showRational = true)
+                allGranted = false
             }
         }
-//        if (allGranted) {
-//            onAllPermissionsGranted()
-//        }
-    }
-    LaunchedEffect(Unit) {
-        permissionsToRequest.requestPermissions()
+        if (allGranted) {
+            onAllPermissionsGranted()
+        }
     }
 
 
     permissions.forEachIndexed {index, permission ->
         if (permission.value.showRational) {
-            Dialog(onDismissRequest = {
-//                /*permissions[index] = */permission.value = permission
-            }) {
-                Column(
-                    modifier = Modifier.background(Color.White)
-                ) {
-                    val xx = permission.value.permission.permission
-                    Text(
-                        text = xx,
-                        color = Color.Black
-                    )
-                }
-            }
+            PermissionDialog(
+                onDismiss = { permissions[index].value = permissions[index].value.copy(showRational = false) },
+                permission = permission.value.permission
+            )
         }
     }
+
+    return permissionLauncher
 }
 
+fun ActivityResultLauncher<Array<String>>.requestCameraPermission() {
 
+    val requiredPermissions = arrayOf(Manifest.permission.CAMERA)
 
+    launch(requiredPermissions)
+
+}
+
+private fun bluetoothPermissions(): MutableList<MutableState<PermissionRationalState>> {
+    val savedPermissions = mutableListOf<MutableState<PermissionRationalState>>()
+    getBTPermissionsForBuildSDK().forEach {
+        savedPermissions.add(mutableStateOf(PermissionRationalState(it, false)))
+    }
+    return savedPermissions
+}
+
+fun cameraPermissions(): MutableList<MutableState<PermissionRationalState>> {
+    val savedPermissions = mutableListOf<MutableState<PermissionRationalState>>()
+    getCameraPermissions().forEach {
+        savedPermissions.add(mutableStateOf(PermissionRationalState(it, false)))
+    }
+    return savedPermissions
+}
 
 private fun ActivityResultLauncher<Array<String>>.requestPermissions() {
 

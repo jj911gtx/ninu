@@ -36,7 +36,6 @@ fun GrayBracket(
                     Modifier.clickable(onClick = onClick)
                 } ?: Modifier
             )
-
             .padding(horizontal = 30.dp)
 
         ,
