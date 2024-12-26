@@ -1,18 +1,22 @@
-package feature.pairing.screens.purchaseInfo
+package io.pc7.ninu.presentation.pairing.screens.purchaseInfo
 
-import android.content.Intent
-import android.provider.MediaStore
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import java.io.ByteArrayOutputStream
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,18 +26,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.FileProvider
 import core.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 import io.pc7.ninu.data.mapper.toStringSlash
 import io.pc7.ninu.domain.model.input.MyInput
-import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
-import io.pc7.ninu.presentation.components.main.card.CardBracket
-import io.pc7.ninu.presentation.components.main.card.XCard
 import io.pc7.ninu.presentation.components.main.input.datePicker.CalendarDatePicker
 import io.pc7.ninu.presentation.components.main.input.text.NINUinputFieldNoText
 import io.pc7.ninu.presentation.components.other.GrayBracket
@@ -45,6 +46,12 @@ import io.pc7.ninu.presentation.pairing.purchaseInfo.PurchaseInfoState
 import io.pc7.ninu.presentation.pairing.purchaseInfo.PurchaseInfoViewModel
 import io.pc7.ninu.presentation.pairing.screens.PairingDefaultScreen
 import io.pc7.ninu.presentation.theme.NINUTheme
+import java.io.File
+import java.io.FileOutputStream
+import android.os.Environment
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
 @Composable
@@ -61,6 +68,39 @@ fun PurchaseInfoScreen(
 }
 
 
+//fun saveByteArrayAsImage(context: Context, byteArray: ByteArray, filename: String) {
+//    try {
+//        val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+//
+//        val jpgFilename = if (!filename.endsWith(".jpg")) "$filename.jpg" else filename
+//        val file = File(context.filesDir, jpgFilename)
+//
+//        FileOutputStream(file).use { fos ->
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+//        }
+//        println(file.path)
+//
+//    } catch (e: Exception) {
+//        e.printStackTrace()
+//    }
+//}
+
+
+private fun createImageFile(context: Context): File {
+    // Create an image file name
+    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+    val imageFileName = "JPEG_${timeStamp}_"
+    val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    
+    return File.createTempFile(
+        imageFileName,  /* prefix */
+
+
+        
+        ".jpg",         /* suffix */
+        storageDir      /* directory */
+    )
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,6 +110,34 @@ private fun PurchaseInfoScreen(
     action: (PurchaseInfoAction) -> Unit,
     navBack: () -> Unit,
 ) {
+    val context = LocalContext.current
+    var photoUri by remember { mutableStateOf<Uri?>(null) }
+
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        uri?.let { selectedUri ->
+            context.contentResolver.openInputStream(selectedUri)?.use { inputStream ->
+                val bytes = inputStream.readBytes()
+//                saveByteArrayAsImage(context = context, byteArray = bytes, filename = "Taken Photo")
+                action(PurchaseInfoAction.OnProofOfPurchaseUpdate(bytes))
+            }
+        }
+    }
+
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success) {
+            photoUri?.let { uri ->
+                context.contentResolver.openInputStream(uri)?.use { inputStream ->
+                    val bytes = inputStream.readBytes()
+                    action(PurchaseInfoAction.OnProofOfPurchaseUpdate(bytes))
+                }
+            }
+        }
+    }
+
 
     PairingDefaultScreen(
         backText = "Pairing",
@@ -181,7 +249,6 @@ private fun PurchaseInfoScreen(
                     selected =  selectedItem == "Store",
                     onClick = { selectedItem = "Store" }
                 )
-
             }
         }
 
@@ -195,41 +262,82 @@ private fun PurchaseInfoScreen(
             value = dateOfPurchase,
             placeholderText = "Date of purchase",
             onClick = { showCalendar.value = true },
+            suffix = {
+                Icon(painter = painterResource(id = R.drawable.icon_calendar), contentDescription = null,
+                    tint = colorScheme.white,
+                    modifier = Modifier
+                        .size(20.dp)
+                )
+            }
         )
         CalendarDatePicker(onDateChanged = {action(PurchaseInfoAction.OnDateOfPurchaseUpdate(it))}, showDialog = showCalendar)
 
 
         val proofOfPurchaseState = state.proofOfPurchase
-        val proofOfPurchase = MyInput<String>(value = proofOfPurchaseState.value ?: "", errors = proofOfPurchaseState.errors, displayErrors = proofOfPurchaseState.displayErrors)
+        val proofOfPurchase = MyInput<String>(
+            value = if (proofOfPurchaseState.value != null) "Image selected" else "", 
+            errors = proofOfPurchaseState.errors, 
+            displayErrors = proofOfPurchaseState.displayErrors
+        )
+
+        var photoSelectOptionBottomSheetDisplay by remember { mutableStateOf(false) }
         NINUinputFieldNoText(
             value = proofOfPurchase,
             placeholderText = "Proof of purchase",
             onClick = {
-//                val SELECT_PICTURE = 1
-//                // ...
-//                val pickIntent = Intent()
-//                pickIntent.setType("image/*")
-//                pickIntent.setAction(Intent.ACTION_GET_CONTENT)
-//
-//                val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//
-//                val pickTitle = "Select or take a new Picture" // Or get from strings.xml
-//                val chooserIntent = Intent.createChooser(pickIntent, pickTitle)
-//                chooserIntent.putExtra(
-//                    Intent.EXTRA_INITIAL_INTENTS,
-//                    arrayOf(takePhotoIntent)
-//                )
-//                startActivityForResult(chooserIntent, SELECT_PICTURE)
+                photoSelectOptionBottomSheetDisplay = true
             },
+            suffix = {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)
+                ) {
+                    Icon(painter = painterResource(id = R.drawable.icon_image_plus), contentDescription = null,
+                        tint = colorScheme.white,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    proofOfPurchaseState.value?.let {
+                        Icon(painter = painterResource(id = R.drawable.bracket_check), contentDescription = null,
+                            tint = colorScheme.successMedium,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
+            }
         )
+        if(photoSelectOptionBottomSheetDisplay){
+            NINUModalSheet(
+                onDismiss = { photoSelectOptionBottomSheetDisplay = false },
+                onConfirm = null
+            ) {
+                NINUModalBottomSheetItem(
+                    text = "Take photo",
+                    onClick = {
+                        try {
+                            val photoFile = createImageFile(context)
+                            photoUri = FileProvider.getUriForFile(
+                                context,
+                                "io.pc7.ninu.fileprovider", // matches manifest
+                                photoFile
+                            )
+                            cameraLauncher.launch(photoUri!!)
+                            photoSelectOptionBottomSheetDisplay = false
+                        } catch (ex: IOException) {
+                            ex.printStackTrace()
+                        }
+                    }
+                )
+                NINUModalBottomSheetItem(
+                    text = "Choose photo",
+                    onClick = {
+                        galleryLauncher.launch("image/*")
+                        photoSelectOptionBottomSheetDisplay = false
+                    }
+                )
+            }
+        }
 
 
-
-
-        
     }
-    
-    
 }
 
 

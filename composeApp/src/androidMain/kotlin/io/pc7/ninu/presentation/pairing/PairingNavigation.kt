@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import feature.pairing.screens.purchaseInfo.PurchaseInfoScreen
+import io.pc7.ninu.presentation.pairing.screens.purchaseInfo.PurchaseInfoScreen
 import feature.pairing.screens.purchaseInfo.PurchaseInfoViewModelAndroid
 import io.pc7.ninu.presentation.pairing.screens.scan.ScanScreen
 import io.pc7.ninu.presentation.pairing.screens.scan.ScanViewModelAndroid

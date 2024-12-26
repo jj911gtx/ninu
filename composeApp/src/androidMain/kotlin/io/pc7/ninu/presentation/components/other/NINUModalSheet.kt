@@ -29,7 +29,7 @@ import io.pc7.ninu.presentation.components.main.card.XCard
 fun NINUModalSheet(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit,
+    onConfirm: (() -> Unit)?,
     content: @Composable ColumnScope.() -> Unit,
 ) {
 
@@ -50,16 +50,16 @@ fun NINUModalSheet(
             ) {
                 content()
 
-                DefaultButtonText(
-                    onClick = onConfirm,
-                    text = "Confirm",
-                    modifier = Modifier
-                        .padding(top = 15.dp)
-                )
+                onConfirm?.let {
+                    DefaultButtonText(
+                        onClick = onConfirm,
+                        text = "Confirm",
+                        modifier = Modifier
+                            .padding(top = 15.dp)
+                    )
+                }
             }
-
         }
-
     }
 }
 
@@ -67,7 +67,7 @@ fun NINUModalSheet(
 @Composable
 fun NINUModalBottomSheetItem(
     text: String,
-    selected: Boolean,
+    selected: Boolean = false,
     onClick: () -> Unit,
 ) {
     CardBracket(

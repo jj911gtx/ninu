@@ -7,6 +7,6 @@ import kotlinx.datetime.LocalDate
 data class UserInfoInputState(
     val username: MyInput<String> = MyInput(""),
     val dateOfBirth: MyInput<LocalDate?> = MyInput(null),
-    val profileImage: MyInput<Boolean> = MyInput(false)
+    val profileImage: MyInput<Unit?> = MyInput(null)
 
 )

@@ -23,7 +23,7 @@ fun RegistrationNavigation(
     val context = LocalContext.current
     NavHost(
         navController = navController,
-        startDestination = "Register"
+        startDestination = "UserInfo"
     ) {
         composable("Register"){
             RegistrationScreen(

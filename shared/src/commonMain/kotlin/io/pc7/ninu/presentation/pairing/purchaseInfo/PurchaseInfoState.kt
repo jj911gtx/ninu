@@ -6,6 +6,6 @@ import kotlinx.datetime.LocalDate
 data class PurchaseInfoState(
     val whereBought: MyInput<String> = MyInput(""),
     val dateOfPurchase: MyInput<LocalDate?> = MyInput(null),
-    val proofOfPurchase: MyInput<String?> = MyInput(null),
+    val proofOfPurchase: MyInput<Unit?> = MyInput(null),
     val deviceConnected: Boolean = false,
 )
