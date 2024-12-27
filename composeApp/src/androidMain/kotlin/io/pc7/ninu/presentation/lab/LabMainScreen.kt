@@ -53,6 +53,7 @@ import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
 import io.pc7.ninu.presentation.components.util.ObserveAsEvents
 import io.pc7.ninu.presentation.lab.graphs.CircularSlider
 import io.pc7.ninu.presentation.lab.graphs.DonutChart
+import io.pc7.ninu.presentation.lab.graphs.colors
 import io.pc7.ninu.presentation.lab.graphs.rememberCircularSliderState
 import io.pc7.ninu.presentation.lab.screen.LabMainAction
 import io.pc7.ninu.presentation.lab.screen.LabMainEvents
@@ -101,13 +102,6 @@ private fun LabMainScreen(
         }
     )
 
-    val colors = remember {
-        arrayOf(
-            colorScheme.secondaryDark1,
-            colorScheme.secondaryLight,
-            colorScheme.white,
-        )
-    }
 
 
     Box {
@@ -153,7 +147,7 @@ private fun LabMainScreen(
                             circularSliderState.value.selectPerfume(index)
                         },
                         selected = index == circularSliderState.value.editorData.value?.index,
-                        color = colors[index]
+                        color = colors[index].first
                     )
                 }
             }
@@ -175,7 +169,7 @@ private fun LabMainScreen(
                     DonutChart(
                         modifier = Modifier
                             .align(Alignment.Center),
-                        percentages = fragrances.mapIndexed() { index, item -> item.toDonutChartItem(colors[index].toArgb().toLong()) },
+                        percentages = fragrances.mapIndexed() { index, item -> item.toDonutChartItem(colors[index].first.toArgb().toLong(), colors[index].second.toArgb().toLong()) },
                         onArcClick = { donutItem ->
                             val cartridge = fragrances.find { it.sku == donutItem.id }
                             circularSliderState.value.selectPerfume(

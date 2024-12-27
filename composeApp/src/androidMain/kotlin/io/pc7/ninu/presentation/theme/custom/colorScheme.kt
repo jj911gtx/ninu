@@ -3,7 +3,7 @@ package io.pc7.ninu.presentation.theme.custom
 import androidx.compose.ui.graphics.Color
 import io.pc7.ninu.presentation.theme.custom.NINUColorScheme
 
-val x = Color(0xFF404040)
+val x = Color(0xFFE7AF9F)
 val colorScheme = NINUColorScheme(
     successDark = Color(0xff156755),
     successMedium = Color(0xff26BB9A),
