@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.pc7.ninu.R
 import io.pc7.ninu.domain.mapper.toDonutChartItem
+import io.pc7.ninu.domain.model.lab.DonutChartItem
 import io.pc7.ninu.domain.model.lab.LabFragrance
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.domain.model.perfume.PerfumeUseData
@@ -176,12 +177,17 @@ private fun Graph(
         }
 
         val cartridges = listOf(
-            LabFragrance(name = "Casual", percentage = 30, sku = 1),
-            LabFragrance(name = "Work", percentage = 50, sku = 2),
             LabFragrance(name = "Elegant", percentage = 20, sku = 3),
+            LabFragrance(name = "Work", percentage = 50, sku = 2),
+            LabFragrance(name = "Casual", percentage = 30, sku = 1),
+        )
+        val color = listOf(
+            cartridges[0].toDonutChartItem(color1 = colorScheme.white.toArgb().toLong(), color2 = 0xFFFFFFFF, ),
+            cartridges[1].toDonutChartItem(color1 = 0xFF70443B, color2 = 0xFFC5837D, ),
+            cartridges[2].toDonutChartItem(color1 = 0xFF784742, color2 = 0xFF784742, ),
         )
         DonutChart(
-            percentages = cartridges.mapIndexed {index, item -> item.toDonutChartItem(color1 = colors[index].first.toArgb().toLong(), color2 = colors[index].second.toArgb().toLong()) },
+            percentages = color,
             modifier = Modifier
                 .fillMaxSize(1f)
                 .padding(30.dp)
