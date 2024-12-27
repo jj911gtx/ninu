@@ -22,7 +22,7 @@
             android:windowSoftInputMode="adjustResize"
             android:exported="true"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"
-            android:name=".presentation.activities.RegistrationActivity">
+            android:name=".presentation.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,12 +36,12 @@
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"
             android:name=".presentation.activities.LoginActivity">
         </activity>
-<!--        <activity-->
-<!--            android:windowSoftInputMode="adjustResize"-->
-<!--            android:exported="true"-->
-<!--            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"-->
-<!--            android:name=".presentation.activities.RegistrationActivity">-->
-<!--        </activity>-->
+        <activity
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"
+            android:name=".presentation.activities.RegistrationActivity">
+        </activity>
         <activity
             android:windowSoftInputMode="adjustResize"
             android:exported="true"

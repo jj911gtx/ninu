@@ -1,43 +1,26 @@
 package io.pc7.ninu.presentation.statistics
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import core.presentation.theme.custom.colorScheme
-import io.pc7.ninu.presentation.components.main.ScrollableColumn
+import io.pc7.ninu.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.components.charts.BarChart
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack
 import io.pc7.ninu.presentation.components.main.card.CardBracket
 import io.pc7.ninu.presentation.statistics.components.BracketRowText
@@ -64,8 +47,9 @@ private fun PerfumeStatus(
     navBack: () -> Unit,
 ) {
 
-    ScrollableColumn(
-        verticalArrangement = Arrangement.spacedBy(1.dp)
+    Column(
+        verticalArrangement = Arrangement.spacedBy(1.dp),
+        modifier = Modifier
     ) {
         ButtonTopLeftBack(onClick = navBack,
             text = "Perfume status"
@@ -125,12 +109,13 @@ private fun PerfumeStatus(
 //
 //        }
         Spacer(modifier = Modifier.height(20.dp))
-        Spacer(modifier = Modifier.weight(1f))
+
 
         //Graph
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+
         ) {
             GraphColumn(
                 name = "spiritus",
@@ -158,14 +143,21 @@ fun RowScope.GraphColumn(
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.weight(1f)
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxHeight()
     ) {
+
         Text(
             text = name.uppercase(),
             style = MaterialTheme.typography.bodyMedium,
             color = colorScheme.white,
         )
-        extracted(percentage)
+        BarChart(
+            percentage = percentage / 100,
+            backgroundColor = colorScheme.primary,
+            modifier = Modifier.weight(1f)
+        )
         Text(
             text = "Opened date\n${"22.9.2022"}",
             style = MaterialTheme.typography.bodyMedium.copy(fontSize = (MaterialTheme.typography.bodyMedium.fontSize.value - 1).sp),
@@ -188,41 +180,6 @@ fun RowScope.GraphColumn(
     }
 }
 
-@Composable
-private fun extracted(percentage: Float) {
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp))
-            .background(colorScheme.primary)
-            .height(300.dp)
-
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(percentage / 100)
-                .clip(RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp))
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFFC5837D),
-                            Color(0xFF70443B)
-                        )
-                    )
-                )
-                .align(Alignment.BottomCenter)
-        )
-        Text(
-            text = "${percentage.toInt()}%",
-            style = MaterialTheme.typography.headlineLarge,
-            color = colorScheme.white,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 5.dp)
-        )
-
-    }
-}
 
 @Preview(widthDp = 100, heightDp = 400)
 @Composable

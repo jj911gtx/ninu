@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import io.pc7.ninu.R
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.theme.NINUTheme
 import kotlin.math.PI
 import kotlin.math.cos

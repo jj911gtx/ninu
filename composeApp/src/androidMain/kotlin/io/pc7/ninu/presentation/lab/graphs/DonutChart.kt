@@ -25,7 +25,7 @@ import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.domain.mapper.toDonutChartItem
 import io.pc7.ninu.domain.model.lab.DonutChartItem
 import io.pc7.ninu.presentation.lab.screen.LabMainViewModel

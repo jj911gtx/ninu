@@ -44,9 +44,9 @@ fun NINUTheme(
 
     MaterialTheme(
         colorScheme = colorScheme.copy(
-            surface = core.presentation.theme.custom.colorScheme.black,
-            onSurface = core.presentation.theme.custom.colorScheme.white,
-            onBackground = core.presentation.theme.custom.colorScheme.white,
+            surface = io.pc7.ninu.presentation.theme.custom.colorScheme.black,
+            onSurface = io.pc7.ninu.presentation.theme.custom.colorScheme.white,
+            onBackground = io.pc7.ninu.presentation.theme.custom.colorScheme.white,
         ),
         typography = NINUTypography,
         content = content

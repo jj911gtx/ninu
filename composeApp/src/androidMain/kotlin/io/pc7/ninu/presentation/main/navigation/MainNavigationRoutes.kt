@@ -33,6 +33,8 @@ object MainNavigationRoutes {
     data object PerfumeStatus
     @Serializable
     data object EditFavourites
+    @Serializable
+    data object FavouritePerfumeInfo
 //
 //    @Serializable
 //    data object FAQ

@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
 import io.pc7.ninu.presentation.components.main.card.XCard

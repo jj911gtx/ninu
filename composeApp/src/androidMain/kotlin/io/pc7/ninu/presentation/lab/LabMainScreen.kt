@@ -41,7 +41,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 import io.pc7.ninu.domain.mapper.toDonutChartItem
 import io.pc7.ninu.domain.model.lab.LabFragrance

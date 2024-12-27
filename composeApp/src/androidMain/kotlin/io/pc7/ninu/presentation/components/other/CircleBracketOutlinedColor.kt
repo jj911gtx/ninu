@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.res.ResourcesCompat
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.NINUTheme
 

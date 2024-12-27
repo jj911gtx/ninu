@@ -9,10 +9,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
 import io.pc7.ninu.presentation.components.main.input.text.NINUTextField
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 import io.pc7.ninu.presentation.activities.LoginActivity
 import io.pc7.ninu.presentation.activities.RegistrationActivity
@@ -94,7 +93,7 @@ private fun LoginScreen(
     ) {
         ButtonTopLeftBack(
             onClick = navBack,
-            text = "Create your account",
+            text = stringResource(R.string.create_your_account),
             modifier = Modifier
                 .align(Alignment.Start)
         )
@@ -107,7 +106,7 @@ private fun LoginScreen(
             NINUTextField(
                 value = state.email,
                 onUpdate = { action(LoginAction.OnEmailUpdate(it)) },
-                placeholderText = "Email",
+                placeholderText = stringResource(R.string.email),
                 keyboardType = KeyboardType.Email,
                 keyboardActions = KeyboardActions(
                     onNext = {
@@ -129,7 +128,7 @@ private fun LoginScreen(
             NINUTextField(
                 value = state.password,
                 onUpdate = { action(LoginAction.OnPasswordUpdate(it)) },
-                placeholderText = "Password",
+                placeholderText = stringResource(R.string.password),
                 textHide = !passwordVisible,
                 prefix = {
                     Icon(
@@ -219,7 +218,7 @@ private fun LoginScreen(
                 }
 
                 Text(
-                    text = "Remember me",
+                    text = stringResource(R.string.remember_me),
                     style = MaterialTheme.typography.labelMedium,
                     color = colorScheme.white
                 )
@@ -269,7 +268,7 @@ private fun LoginScreen(
                 }
 
                 Text(
-                    text = "fail login",
+                    text = "Fail login",
                     style = MaterialTheme.typography.labelMedium,
                     color = colorScheme.white
                 )
@@ -289,7 +288,7 @@ private fun LoginScreen(
                 onClick = {
                     action(LoginAction.OnLogin)
                 },
-                text = "Log in",
+                text = stringResource(R.string.login),
                 isEnabled = state.email.errors.isEmpty()
                         && state.password.errors.isEmpty()
             )

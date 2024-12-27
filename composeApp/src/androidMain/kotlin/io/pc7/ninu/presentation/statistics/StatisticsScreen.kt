@@ -31,7 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.domain.model.perfume.PerfumeUseData
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack

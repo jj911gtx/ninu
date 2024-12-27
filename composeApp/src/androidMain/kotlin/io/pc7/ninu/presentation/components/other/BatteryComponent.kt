@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 import io.pc7.ninu.presentation.components.util.getPathDataFromSvg
 import io.pc7.ninu.presentation.theme.NINUTheme

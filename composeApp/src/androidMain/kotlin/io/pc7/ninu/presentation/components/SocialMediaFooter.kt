@@ -18,9 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 
 
@@ -37,7 +38,7 @@ fun SocialMediaFooter(
 
     ) {
         Text(
-            text = "or continue with",
+            text = stringResource(R.string.or_continue_with),
             color = colorScheme.white,
             style = MaterialTheme.typography.titleLarge
         )
@@ -63,15 +64,14 @@ fun SocialMediaFooter(
 
 
         Row {
-            Text(text = if(loginPage) "Register here" else "Already have an account?",
+            Text(text = if(loginPage) stringResource(R.string.register_here) else stringResource(R.string.already_have_account),
                 style = MaterialTheme.typography.bodyLarge,
                 color = colorScheme.white
             )
-            Text(text = if(loginPage) " Register" else " Log in",
+            Text(text = if(loginPage) " ${stringResource(R.string.register)}" else " ${stringResource(R.string.login)}",
                 style = MaterialTheme.typography.titleMedium.copy(fontSize = 16.sp),
-                color = colorScheme.secondaryLight, //TODO
+                color = colorScheme.secondaryLight,
                 modifier = Modifier.clickable(onClick = onLoginRegisterClick)
-
             )
         }
     }

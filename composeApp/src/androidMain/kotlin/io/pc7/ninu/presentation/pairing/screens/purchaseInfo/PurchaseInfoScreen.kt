@@ -1,12 +1,6 @@
 package io.pc7.ninu.presentation.pairing.screens.purchaseInfo
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import java.io.ByteArrayOutputStream
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,8 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.FileProvider
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 import io.pc7.ninu.data.mapper.toStringSlash
 import io.pc7.ninu.domain.model.input.MyInput
@@ -47,9 +39,8 @@ import io.pc7.ninu.presentation.pairing.purchaseInfo.PurchaseInfoViewModel
 import io.pc7.ninu.presentation.pairing.screens.PairingDefaultScreen
 import io.pc7.ninu.presentation.theme.NINUTheme
 import java.io.File
-import java.io.FileOutputStream
 import android.os.Environment
-import java.io.IOException
+import io.pc7.ninu.presentation.components.other.TakeChosePhoto
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -93,17 +84,13 @@ private fun createImageFile(context: Context): File {
     val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     
     return File.createTempFile(
-        imageFileName,  /* prefix */
-
-
-        
-        ".jpg",         /* suffix */
-        storageDir      /* directory */
+        imageFileName,
+        ".jpg",
+        storageDir
     )
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PurchaseInfoScreen(
     state: PurchaseInfoState,
@@ -111,33 +98,6 @@ private fun PurchaseInfoScreen(
     navBack: () -> Unit,
 ) {
     val context = LocalContext.current
-    var photoUri by remember { mutableStateOf<Uri?>(null) }
-
-    val galleryLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri ->
-        uri?.let { selectedUri ->
-            context.contentResolver.openInputStream(selectedUri)?.use { inputStream ->
-                val bytes = inputStream.readBytes()
-//                saveByteArrayAsImage(context = context, byteArray = bytes, filename = "Taken Photo")
-                action(PurchaseInfoAction.OnProofOfPurchaseUpdate(bytes))
-            }
-        }
-    }
-
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicture()
-    ) { success ->
-        if (success) {
-            photoUri?.let { uri ->
-                context.contentResolver.openInputStream(uri)?.use { inputStream ->
-                    val bytes = inputStream.readBytes()
-                    action(PurchaseInfoAction.OnProofOfPurchaseUpdate(bytes))
-                }
-            }
-        }
-    }
-
 
     PairingDefaultScreen(
         backText = "Pairing",
@@ -280,12 +240,12 @@ private fun PurchaseInfoScreen(
             displayErrors = proofOfPurchaseState.displayErrors
         )
 
-        var photoSelectOptionBottomSheetDisplay by remember { mutableStateOf(false) }
+        val photoSelectOptionBottomSheetDisplay = remember { mutableStateOf(false) }
         NINUinputFieldNoText(
             value = proofOfPurchase,
             placeholderText = "Proof of purchase",
             onClick = {
-                photoSelectOptionBottomSheetDisplay = true
+                photoSelectOptionBottomSheetDisplay.value = true
             },
             suffix = {
                 Row(
@@ -304,37 +264,12 @@ private fun PurchaseInfoScreen(
                 }
             }
         )
-        if(photoSelectOptionBottomSheetDisplay){
-            NINUModalSheet(
-                onDismiss = { photoSelectOptionBottomSheetDisplay = false },
-                onConfirm = null
-            ) {
-                NINUModalBottomSheetItem(
-                    text = "Take photo",
-                    onClick = {
-                        try {
-                            val photoFile = createImageFile(context)
-                            photoUri = FileProvider.getUriForFile(
-                                context,
-                                "io.pc7.ninu.fileprovider", // matches manifest
-                                photoFile
-                            )
-                            cameraLauncher.launch(photoUri!!)
-                            photoSelectOptionBottomSheetDisplay = false
-                        } catch (ex: IOException) {
-                            ex.printStackTrace()
-                        }
-                    }
-                )
-                NINUModalBottomSheetItem(
-                    text = "Choose photo",
-                    onClick = {
-                        galleryLauncher.launch("image/*")
-                        photoSelectOptionBottomSheetDisplay = false
-                    }
-                )
-            }
-        }
+
+        TakeChosePhoto(
+            photoSelectOptionBottomSheetDisplay = photoSelectOptionBottomSheetDisplay,
+            onUpdate = {action(PurchaseInfoAction.OnProofOfPurchaseUpdate(it))}
+
+        )
 
 
     }

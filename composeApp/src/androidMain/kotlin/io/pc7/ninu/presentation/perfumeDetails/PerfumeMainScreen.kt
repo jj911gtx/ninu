@@ -12,10 +12,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import core.presentation.theme.custom.colorScheme
-import io.pc7.ninu.R
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.components.util.ObserveAsEvents
-import io.pc7.ninu.presentation.perfumeDetailsGeneral.PerfumeDetailsGeneralScreen
 import io.pc7.ninu.presentation.perfumeDetailsGeneral.PerfumeMainAction
 import io.pc7.ninu.presentation.perfumeDetailsGeneral.PerfumeMainEvent
 import io.pc7.ninu.presentation.perfumeDetailsGeneral.PerfumeMainState

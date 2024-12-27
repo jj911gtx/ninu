@@ -1,6 +1,5 @@
 package io.pc7.ninu.presentation.main
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,21 +34,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 import io.pc7.ninu.domain.model.perfume.NINUSelection
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButton
 import io.pc7.ninu.presentation.components.other.BatteryComponent
 import io.pc7.ninu.presentation.components.other.CircleBracketOutlinedColor
-import io.pc7.ninu.presentation.components.util.ObserveAsEvents
 import io.pc7.ninu.presentation.home.HomeScreenAction
-import io.pc7.ninu.presentation.home.HomeScreenEvent
 import io.pc7.ninu.presentation.home.HomeScreenState
 import io.pc7.ninu.presentation.home.HomeScreenViewModel
 import io.pc7.ninu.presentation.main.components.InfoBracket

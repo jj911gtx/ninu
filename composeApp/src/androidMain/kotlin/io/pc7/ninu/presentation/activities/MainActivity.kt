@@ -1,6 +1,5 @@
 package io.pc7.ninu.presentation.activities
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,7 +12,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.components.util.BackgroundHandling
 import io.pc7.ninu.presentation.main.navigation.BottomNavigationBar
 import io.pc7.ninu.presentation.theme.NINUTheme

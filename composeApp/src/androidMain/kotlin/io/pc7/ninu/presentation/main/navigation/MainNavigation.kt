@@ -13,6 +13,7 @@ import io.pc7.ninu.presentation.activities.PairingActivity
 import io.pc7.ninu.presentation.favourites.EditFavouritesScreen
 import io.pc7.ninu.presentation.favourites.EditFavouritesViewModel
 import io.pc7.ninu.presentation.favourites.EditFavouritesViewModelAndroid
+import io.pc7.ninu.presentation.favourites.PerfumeInfoScreen
 import io.pc7.ninu.presentation.lab.LabMainScreen
 import io.pc7.ninu.presentation.main.HomeScreen
 import io.pc7.ninu.presentation.perfumeDetails.PerfumeMainScreen
@@ -142,7 +143,15 @@ fun MainNavigation(
         composable<MainNavigationRoutes.EditFavourites>{
             EditFavouritesScreen(
                 navBack = {navController.navigateUp()},
+                navToPerfumeInfo = {navController.navigate(MainNavigationRoutes.FavouritePerfumeInfo)},
                 viewModel = koinViewModel<EditFavouritesViewModelAndroid>().viewModel,
+
+            )
+        }
+        composable<MainNavigationRoutes.FavouritePerfumeInfo>{
+            PerfumeInfoScreen(
+                navBack = {navController.navigateUp()},
+                navToLab = {}
 
             )
         }

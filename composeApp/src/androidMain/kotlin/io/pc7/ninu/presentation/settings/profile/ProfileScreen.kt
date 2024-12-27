@@ -1,6 +1,5 @@
 package io.pc7.ninu.presentation.settings.profile
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.components.ProfileImage
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack

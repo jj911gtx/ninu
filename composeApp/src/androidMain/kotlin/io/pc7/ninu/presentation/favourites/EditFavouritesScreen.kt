@@ -23,11 +23,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import core.presentation.theme.custom.colorScheme
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.domain.model.perfume.NINUSelection
 import io.pc7.ninu.domain.model.perfume.PerfumeUseData
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack
@@ -44,13 +43,15 @@ import kotlinx.datetime.LocalTime
 @Composable
 fun EditFavouritesScreen(
     navBack: () -> Unit,
+    navToPerfumeInfo: () -> Unit,
     viewModel: EditFavouritesViewModel
 ) {
 
     EditFavouritesScreen(
         state = viewModel.state.collectAsState().value,
         action = {viewModel.action(it)},
-        navBack = navBack
+        navBack = navBack,
+        navToPerfumeInfo = navToPerfumeInfo
     )
 
 }
@@ -59,20 +60,17 @@ fun EditFavouritesScreen(
 private fun EditFavouritesScreen(
     state: EditFavouritesState,
     action: (EditFavouritesAction) -> Unit,
-    navBack: () -> Unit
+    navBack: () -> Unit,
+    navToPerfumeInfo: () -> Unit,
 ) {
 
     var activeEdit by remember { mutableStateOf<Int?>(null) }
-
 
     Column {
         ButtonTopLeftBack(
             onClick = navBack,
             text = "Edit NINU selections"
         )
-
-
-
         Column(
             verticalArrangement = Arrangement.spacedBy(7.dp)
         ) {
@@ -98,6 +96,8 @@ private fun EditFavouritesScreen(
                     it.PerfumeBracket(isSelected = false, onSelect = {
                         if(activeEdit != null) {
                             activeEdit = null
+                        }else{
+                            navToPerfumeInfo()
                         }
                     })
                 }
@@ -162,7 +162,8 @@ private fun EditFavouritesScreenPreview() {
         EditFavouritesScreen(
             state = EditFavouritesState(),
             action = {},
-            navBack = { }
+            navBack = { },
+            navToPerfumeInfo = {}
         )
     }
 

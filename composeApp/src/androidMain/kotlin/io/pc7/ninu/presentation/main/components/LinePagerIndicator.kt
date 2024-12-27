@@ -15,8 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import core.presentation.theme.custom.colorScheme
-import io.pc7.ninu.presentation.main.components.slidingLineTransition
+import io.pc7.ninu.presentation.theme.custom.colorScheme
 
 @Composable
 fun BoxScope.LinePagerIndicator(pager: PagerState) {
