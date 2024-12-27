@@ -30,6 +30,7 @@ import io.pc7.ninu.R
 import androidx.navigation.NavController
 import io.pc7.ninu.presentation.components.navigation.isRoute
 import io.pc7.ninu.presentation.components.navigation.path
+import io.pc7.ninu.presentation.components.util.LaunchDisposeEffect
 import io.pc7.ninu.presentation.components.util.setBottomBar
 
 
@@ -43,15 +44,10 @@ fun BottomNavigationBar(
     val activity = LocalContext.current as Activity
 
     if(path.checkPathHasBottomBar()){
-        LaunchedEffect(Unit) {
-            activity.setBottomBar(false)
-        }
-        DisposableEffect(Unit) {
-            onDispose {
-                activity.setBottomBar(true)
-            }
-        }
-
+        LaunchDisposeEffect(
+            launched = { activity.setBottomBar(false) },
+            disposed = { activity.setBottomBar(true) }
+        )
         BottomAppBar(
             containerColor = colorScheme.primary,
         ) {

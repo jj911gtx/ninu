@@ -29,15 +29,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.pc7.ninu.R
+import io.pc7.ninu.domain.mapper.toDonutChartItem
+import io.pc7.ninu.domain.model.lab.LabFragrance
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.domain.model.perfume.PerfumeUseData
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack
 import io.pc7.ninu.presentation.components.main.card.CardBracket
+import io.pc7.ninu.presentation.lab.graphs.colors
 import io.pc7.ninu.presentation.statistics.components.BracketRowText
 import io.pc7.ninu.presentation.statistics.components.DonutChart
 import io.pc7.ninu.presentation.statistics.components.PerfumeBracket
@@ -171,8 +175,13 @@ private fun Graph(
             }
         }
 
+        val cartridges = listOf(
+            LabFragrance(name = "Casual", percentage = 30, sku = 1),
+            LabFragrance(name = "Work", percentage = 50, sku = 2),
+            LabFragrance(name = "Elegant", percentage = 20, sku = 3),
+        )
         DonutChart(
-            percentages = listOf(20f,50f, 30f),
+            percentages = cartridges.mapIndexed {index, item -> item.toDonutChartItem(color1 = colors[index].first.toArgb().toLong(), color2 = colors[index].second.toArgb().toLong()) },
             modifier = Modifier
                 .fillMaxSize(1f)
                 .padding(30.dp)
@@ -180,7 +189,8 @@ private fun Graph(
             @Composable
             fun Item(
                 name: String,
-                percentage: Int
+                percentage: Int,
+                color: Color,
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -188,7 +198,7 @@ private fun Graph(
                 ) {
                     Box(modifier = Modifier
                         .clip(CircleShape)
-                        .background(Color.White)//TODO
+                        .background(color = color)
                         .size(15.dp)
                     )
                     Text(text = name,
@@ -203,9 +213,9 @@ private fun Graph(
             Column(
                 verticalArrangement = Arrangement.spacedBy(7.dp)
             ) {
-                Item(name = "Elegant", percentage = 13)
-                Item(name = "Work", percentage = 13)
-                Item(name = "Casual", percentage = 13)
+                Item(name = "Elegant", percentage = 20, color = colorScheme.white)
+                Item(name = "Work", percentage = 50, color = Color(0xFFC5837D))
+                Item(name = "Casual", percentage = 30, color = colorScheme.secondaryDark)
             }
         }
     }

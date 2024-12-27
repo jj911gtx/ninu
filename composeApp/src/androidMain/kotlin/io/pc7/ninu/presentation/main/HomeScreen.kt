@@ -1,5 +1,6 @@
 package io.pc7.ninu.presentation.main
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -45,6 +48,10 @@ import io.pc7.ninu.domain.model.perfume.NINUSelection
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButton
 import io.pc7.ninu.presentation.components.other.BatteryComponent
 import io.pc7.ninu.presentation.components.other.CircleBracketOutlinedColor
+import io.pc7.ninu.presentation.components.util.LaunchDisposeEffect
+import io.pc7.ninu.presentation.components.util.removeBackgroundImage
+import io.pc7.ninu.presentation.components.util.setBackgroundImage
+import io.pc7.ninu.presentation.components.util.setBottomBar
 import io.pc7.ninu.presentation.home.HomeScreenAction
 import io.pc7.ninu.presentation.home.HomeScreenState
 import io.pc7.ninu.presentation.home.HomeScreenViewModel
@@ -55,6 +62,10 @@ import io.pc7.ninu.presentation.theme.NINUTheme
 import io.pc7.ninu.presentation.util.mapper.toColor
 import ninu.other.home.HomeScreenViewModelAndroid
 import org.koin.androidx.compose.koinViewModel
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 
 
 @Composable
@@ -63,6 +74,14 @@ fun HomeScreen(
     navToEditFavouritesScreen: () -> Unit,
     viewModel: HomeScreenViewModel = koinViewModel<HomeScreenViewModelAndroid>().viewModel,
 ) {
+
+    val activity = LocalContext.current as Activity
+
+    LaunchDisposeEffect(
+        launched = { activity.setBackgroundImage()},
+        disposed = { activity.removeBackgroundImage()}
+    )
+
 
     var changeScreen by remember {
         mutableStateOf(false)
@@ -99,19 +118,19 @@ private fun HomeScreen(
     action: (HomeScreenAction) -> Unit,
     navToEditFavouritesScreen: () -> Unit,
 ) {
+    val activity = LocalContext.current as Activity
+
+    // Set the background image when the HomeScreen is composed
 
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp)
-        ,
+            .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         item {
-            Box(
-
-            ) {
+            Box {
                 Row(
                     modifier = Modifier
                         .align(Alignment.TopCenter)
@@ -129,15 +148,12 @@ private fun HomeScreen(
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
-                                .padding(horizontal = 15.dp)
-//                                .padding(1.dp),
-                                    ,
+                                .padding(horizontal = 15.dp),
                             horizontalArrangement = Arrangement.spacedBy(5.dp)
                         ) {
                             BatteryComponent(
                                 percentage = percentage,
-                                modifier = Modifier
-                                    .size(30.dp)
+                                modifier = Modifier.size(30.dp)
                             )
 
                             Text(
@@ -145,16 +161,16 @@ private fun HomeScreen(
                                 color = colorScheme.white
                             )
                         }
-
                     }
                 }
-                Image(painter = painterResource(id = R.drawable.device), contentDescription = null,
+                Image(
+                    painter = painterResource(id = R.drawable.device),
+                    contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(1f)
                 )
             }
-
         }
 
 

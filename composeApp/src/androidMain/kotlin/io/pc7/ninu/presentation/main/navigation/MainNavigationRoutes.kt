@@ -26,6 +26,11 @@ object MainNavigationRoutes {
 
     @Serializable
     data object Lab
+    @Serializable
+    data class LabSaveMidPoint(
+        val fragrances: Array<Fragrance>,
+    )
+
 
     @Serializable
     data object Statistics

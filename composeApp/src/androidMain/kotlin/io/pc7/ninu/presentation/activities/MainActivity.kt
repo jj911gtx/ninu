@@ -3,7 +3,9 @@ package io.pc7.ninu.presentation.activities
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
@@ -11,10 +13,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
-import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.components.util.BackgroundHandling
+import io.pc7.ninu.presentation.components.util.removeBackgroundImage
+import io.pc7.ninu.presentation.components.util.setBackgroundImage
 import io.pc7.ninu.presentation.main.navigation.BottomNavigationBar
 import io.pc7.ninu.presentation.theme.NINUTheme
 import io.pc7.ninu.presentation.main.navigation.SideNavigationBar
@@ -31,6 +35,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+        removeBackgroundImage()
         setContent {
             BackgroundHandling()
 ////            ManageBluetoothPermissionDisplay()
@@ -59,6 +65,15 @@ class MainActivity : ComponentActivity() {
                     ) { padding ->
 
                         Box(modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    0.0f to Color.Black.copy(alpha = 0.6f),
+                                    0.48f to Color.Transparent,
+                                    1.0f to Color.Black.copy(alpha = 0.6f)
+                                )
+                            )
+
                             .padding(padding)
                             .padding(SCREEN_PADDING)
                         ) {

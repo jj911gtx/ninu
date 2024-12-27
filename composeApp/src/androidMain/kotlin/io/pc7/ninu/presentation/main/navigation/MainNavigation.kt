@@ -15,6 +15,7 @@ import io.pc7.ninu.presentation.favourites.EditFavouritesViewModel
 import io.pc7.ninu.presentation.favourites.EditFavouritesViewModelAndroid
 import io.pc7.ninu.presentation.favourites.PerfumeInfoScreen
 import io.pc7.ninu.presentation.lab.LabMainScreen
+import io.pc7.ninu.presentation.lab.LabSaveMidPointScreen
 import io.pc7.ninu.presentation.main.HomeScreen
 import io.pc7.ninu.presentation.perfumeDetails.PerfumeMainScreen
 import io.pc7.ninu.presentation.perfumeDetails.PerfumeMainViewModelAndroid
@@ -62,8 +63,23 @@ fun MainNavigation(
             LabMainScreen(
                 navBack = {navController.navigateUp()},
                 navNext = { fragrances: Array<Fragrance>, intensity: Int ->
-                    navController.navigate(MainNavigationRoutes.PerfumeSave(fragrances = fragrances))
+                    navController.navigate(MainNavigationRoutes.LabSaveMidPoint(fragrances = fragrances))
                 },
+            )
+        }
+        composable<MainNavigationRoutes.LabSaveMidPoint>(
+            typeMap = mapOf(
+                typeOf<Array<Fragrance>>() to CustomNavType.fragranceArrayType,
+            )
+        ) {
+            val fragrances = it.toRoute<MainNavigationRoutes.LabSaveMidPoint>()
+            LabSaveMidPointScreen(
+                navToSave = { navController.navigate(MainNavigationRoutes.PerfumeSave(fragrances = fragrances.fragrances)) },
+                navBack = {navController.navigateUp()},
+                navToHome = {navController.navigate(MainNavigationRoutes.HomeScreen){
+                    popUpTo<MainNavigationRoutes.HomeScreen>()
+                } }
+
             )
         }
         composable<MainNavigationRoutes.PerfumeSave>(

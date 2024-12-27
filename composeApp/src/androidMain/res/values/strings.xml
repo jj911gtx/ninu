@@ -75,6 +75,11 @@
 
     <string name="great_for">Great for</string>
     <string name="makes_you_feel">Makes you feel</string>
+    <string name="save">Save</string>
+    <string name="try_another_one">Try another one</string>
+    <string name="back_to_home">Back to home</string>
+    <string name="perfume_ready">Perfume ready</string>
+    <string name="just_spray_from_your_NINU">Just spray from your NINU!</string>
 
 
     <string name="name">Name</string>
@@ -113,15 +118,3 @@
     <string name="do_this_later">Do this later</string>
     <string name="or">or</string>
 </resources>
-
-
-<!--
-    login
-    registration
-    favourites
-    lab
-    pairing
-
-
-
--->

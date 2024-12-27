@@ -107,9 +107,9 @@ class LabMainViewModel(
         fun initializeState(): LabMainState =
             LabMainState(
                 fragrances = listOf(
-                    LabFragrance(name = "Casual", percentage = 50, sku = 1),
-                    LabFragrance(name = "Work", percentage = 5, sku = 2),
-                    LabFragrance(name = "Elegant", percentage = 45, sku = 3),
+                    LabFragrance(name = "Casual", percentage = 30, sku = 1),
+                    LabFragrance(name = "Work", percentage = 50, sku = 2),
+                    LabFragrance(name = "Elegant", percentage = 20, sku = 3),
                 ),
                 intensity = 1,
             )

@@ -18,9 +18,8 @@ fun BackgroundHandling(
     val activity = LocalContext.current as Activity
 
     LaunchedEffect(Unit) {
-        activity.window.setBackgroundDrawableResource(android.R.color.transparent)
+
         activity.setStatusBar()
-        activity.setBackground()
     }
 
 //    DisposableEffect(Unit) {
@@ -46,6 +45,12 @@ fun Activity.setBottomBar(black: Boolean){
 }
 
 @SuppressLint("UseCompatLoadingForDrawables")
-fun Activity.setBackground(){
+fun Activity.setBackgroundImage(){
     window.setBackgroundDrawable(this.getDrawable(R.drawable.ozadje))
+}
+
+
+@SuppressLint("UseCompatLoadingForDrawables")
+fun Activity.removeBackgroundImage(){
+    window.setBackgroundDrawableResource(android.R.color.transparent)
 }

@@ -1,6 +1,7 @@
 package io.pc7.ninu.presentation.lab
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,6 +39,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,7 +52,10 @@ import io.pc7.ninu.domain.model.perfume.Fragrance
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButton
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
+import io.pc7.ninu.presentation.components.util.LaunchDisposeEffect
 import io.pc7.ninu.presentation.components.util.ObserveAsEvents
+import io.pc7.ninu.presentation.components.util.removeBackgroundImage
+import io.pc7.ninu.presentation.components.util.setBackgroundImage
 import io.pc7.ninu.presentation.lab.graphs.CircularSlider
 import io.pc7.ninu.presentation.lab.graphs.DonutChart
 import io.pc7.ninu.presentation.lab.graphs.colors
@@ -69,6 +74,8 @@ fun LabMainScreen(
     navNext: (Array<Fragrance>, Int) -> Unit,
     viewModel: LabMainViewModel = koinViewModel<LabMainViewModelAndroid>().viewModel,
 ) {
+
+
 
     ObserveAsEvents(flow = viewModel.events) {event ->
         when(event){
@@ -93,6 +100,12 @@ private fun LabMainScreen(
     action: (LabMainAction) -> Unit,
     navBack: () -> Unit,
 ) {
+
+    val activity = LocalContext.current as Activity
+    LaunchDisposeEffect(
+        launched = { activity.setBackgroundImage()},
+        disposed = { activity.removeBackgroundImage()}
+    )
 
     val fragrances = state.fragrances ?: emptyList()
     var circularSliderState = rememberCircularSliderState(

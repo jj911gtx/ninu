@@ -45,7 +45,8 @@ fun NINUTheme(
 
     MaterialTheme(
         colorScheme = colorScheme.copy(
-            surface = Color.Transparent,//io.pc7.ninu.presentation.theme.custom.colorScheme.black,
+            surface = io.pc7.ninu.presentation.theme.custom.colorScheme.black,
+            background = io.pc7.ninu.presentation.theme.custom.colorScheme.black,
             onSurface = io.pc7.ninu.presentation.theme.custom.colorScheme.white,
             onBackground = io.pc7.ninu.presentation.theme.custom.colorScheme.white,
         ),

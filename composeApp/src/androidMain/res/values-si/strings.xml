@@ -1,0 +1,110 @@
+<resources>
+    <string name="app_name">NINU</string>
+
+    <!--    login and registration   -->
+    <string name="create_your_account">Ustvarite svoj račun</string>
+    <string name="email">E-pošta</string>
+    <string name="password">Geslo</string>
+    <string name="confirm_password">Potrdite geslo</string>
+    <string name="retype_new_password">Znova vnesite novo geslo</string>
+    <string name="remember_me">Zapomni si me</string>
+    <string name="login">Prijava</string>
+    <string name="register">Registracija</string>
+    <string name="or_continue_with">ali nadaljujte z</string>
+    <string name="register_here">Registrirajte se tukaj</string>
+    <string name="already_have_account">Že imate račun?</string>
+    <string name="verify">Preverite</string>
+    <string name="code_has_been_send_to">Koda je bila poslana na</string>
+    <string name="resend_code_in">Ponovno pošlji kodo čez</string>
+    <string name="resend_code">Ponovno pošlji kodo</string>
+    <string name="new_password">Novo geslo</string>
+    <string name="sign_up">Prijavi se</string>
+    <string name="username">Uporabniško ime</string>
+    <string name="add_profile_image">Dodajte profilno sliko</string>
+    <string name="yay_success">Juhu, uspešno!</string>
+    <string name="start_using">Začnite uporabljati</string>
+
+    <!--    Other   -->
+    <string name="ninu_selections">Izbire NINU</string>
+    <string name="ninu_selection">Izbira NINU</string>
+    <string name="edit">Uredi</string>
+    <string name="your_favourites">Vaši priljubljeni</string>
+    <string name="add_to_favourites">Dodaj med priljubljene</string>
+    <string name="edit_mix">Uredi mešanico</string>
+    <string name="fragrance_ratio">Razmerje dišave</string>
+    <string name="load_scent">Naloži vonj</string>
+    <string name="last_uploaded">Nazadnje naloženo</string>
+
+    <!--    Lab     -->
+    <string name="intensity">Intenzivnost</string>
+    <string name="active">Aktivno</string>
+
+    <!--    Pairing     -->
+    <string name="device_info">Informacije o napravi</string>
+    <string name="scan_serial_number">Skenirajte serijsko številko, ki se običajno nahaja na dnu naprave NINU.</string>
+    <string name="proceed">Nadaljuj</string>
+    <string name="enter_serial_number">Vnesite serijsko številko</string>
+    <string name="pairing">Povezovanje</string>
+    <string name="device_serial_number">Serijska številka naprave</string>
+    <string name="warranty">Garancija</string>
+    <string name="firmware_versions">Različice vdelane programske opreme</string>
+    <string name="press_and_hold_power_button">Pritisnite in držite gumb za vklop na napravi NINU.</string>
+    <string name="where_bought">Kje ste jo kupili?</string>
+    <string name="online">Na spletu</string>
+    <string name="gift">Darilo</string>
+    <string name="store">Trgovina</string>
+    <string name="date_of_purchase">Datum nakupa</string>
+    <string name="image_selected">Slika izbrana</string>
+    <string name="proof_of_purchase">Dokaz o nakupu</string>
+
+    <string name="take_photo">Posnemi fotografijo</string>
+    <string name="chose_photo">Izberi fotografijo</string>
+
+    <string name="write_successful">Pisanje uspešno</string>
+    <string name="write_error">Napaka pri pisanju</string>
+    <string name="uploaded">Naloženo</string>
+    <string name="name_your_fragrance">Poimenujte svojo dišavo</string>
+    <string name="chose_icon">Izberi ikono</string>
+
+    <string name="great_for">Odlično za</string>
+    <string name="makes_you_feel">Vas spravi v</string>
+    <string name="save">Shrani</string>
+    <string name="try_another_one">Poskusi še enega</string>
+    <string name="back_to_home">Nazaj na domačo stran</string>
+    <string name="perfume_ready">Parfum pripravljen</string>
+    <string name="just_spray_from_your_NINU">Samo razpršite iz svojega NINU!</string>
+
+    <string name="name">Ime</string>
+    <string name="surname">Priimek</string>
+    <string name="date_of_birth">Datum rojstva</string>
+
+    <!--    Settings    -->
+    <string name="settings">Moje nastavitve</string>
+    <string name="about_me">O meni</string>
+    <string name="follow_ninu">Sledite NINU</string>
+    <string name="language">Jezik</string>
+    <string name="change_password">Spremeni geslo</string>
+
+    <string name="my_profile">Moj profil</string>
+    <string name="change_profile_photo">Spremeni profilno sliko</string>
+
+    <string name="languages">Jeziki</string>
+    <string name="change">Spremeni</string>
+    <!--    end settings    -->
+
+    <!--    Statistics  -->
+    <string name="avg_weekly_use">Povprečna tedenska uporaba</string>
+    <string name="days_above_avg">Dnevi nad povprečjem</string>
+    <string name="trending">V trendu</string>
+    <string name="most_used">Največ uporabljeno</string>
+    <string name="recent_used">Nedavno uporabljeno</string>
+    <string name="opened_date">Datum odprtja</string>
+    <string name="fragrance_description">Opis dišave</string>
+    <string name="fragrance_status">Stanje dišave</string>
+    <string name="fragrance_set_in_use">Komplet dišav v uporabi</string>
+
+    <string name="confirm">Potrdi</string>
+    <string name="done">Končano</string>
+    <string name="do_this_later">Naredite to kasneje</string>
+    <string name="or">ali</string>
+</resources>

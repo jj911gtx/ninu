@@ -128,7 +128,7 @@ private fun PerfumeSaveScreen(
         },
         navBack = navBack,
         navToLab = navToLab,
-        buttonText = "Save"
+        buttonText = stringResource(R.string.save)
     )
 
 }
