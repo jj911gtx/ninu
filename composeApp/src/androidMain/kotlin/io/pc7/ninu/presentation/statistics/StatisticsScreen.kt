@@ -29,8 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.domain.model.perfume.PerfumeUseData
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
@@ -80,17 +82,17 @@ private fun StatisticsScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             CardBracket(onClick = { /*TODO*/ }) {
-                BracketRowText(text = "Average weekly use", rightText = "6,5")
+                BracketRowText(text = stringResource(R.string.avg_weekly_use), rightText = "6,5")
             }
             CardBracket(onClick = { /*TODO*/ }) {
-                BracketRowText(text = "Days above average", rightText = "10")
+                BracketRowText(text = stringResource(R.string.days_above_avg), rightText = "10")
             }
 
             var trendingExtended by remember { mutableStateOf(false) }
             CardBracket(
                 onClick = { trendingExtended = !trendingExtended}
             ) {
-                BracketRowText(text = "Trending", rightText = "+10%")
+                BracketRowText(text = stringResource(R.string.trending), rightText = "+10%")
                 AnimatedVisibility(
                     visible = trendingExtended,
                     enter = expandVertically() + fadeIn(),
@@ -111,7 +113,7 @@ private fun StatisticsScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Recent usage",
+                text = stringResource(R.string.recent_used),
                 style = MaterialTheme.typography.labelLarge,
                 color = colorScheme.white,
                 modifier = Modifier
@@ -156,7 +158,7 @@ private fun Graph(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Most used",
+                    text = stringResource(R.string.most_used),
                     style = MaterialTheme.typography.labelLarge,
                     modifier = Modifier
                         .weight(1f)
@@ -202,8 +204,8 @@ private fun Graph(
                 verticalArrangement = Arrangement.spacedBy(7.dp)
             ) {
                 Item(name = "Elegant", percentage = 13)
-                Item(name = "Elegant", percentage = 13)
-                Item(name = "Elegant", percentage = 13)
+                Item(name = "Work", percentage = 13)
+                Item(name = "Casual", percentage = 13)
             }
         }
     }

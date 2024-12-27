@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -189,7 +190,7 @@ private fun HomeScreen(
                     .fillMaxWidth(0.9f)
             ) {
                 Text(
-                    text = "Edit NINU selections",
+                    text = "${stringResource(R.string.edit)} ${stringResource(R.string.ninu_selections)}",
                     style = MaterialTheme.typography.labelMedium,
                     color = colorScheme.white
                 )
@@ -299,8 +300,8 @@ private fun RowScope.NINUSelectionItem(
             borderColor = number.toColor()
         )
         Text(text = if(number != NINUSelection.N)
-                        "NINU selection $number"
-                    else "Last UPLOADED",
+                        "${stringResource(R.string.ninu_selection)} $number"
+                    else stringResource(R.string.last_uploaded),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.displaySmall,
             color = colorScheme.white

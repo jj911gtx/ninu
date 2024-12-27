@@ -11,8 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
@@ -54,7 +56,7 @@ private fun ChangePasswordScreen(
     )}
 
     Column {
-        ButtonTopLeftBack(onClick = navBack, text = "Change password")
+        ButtonTopLeftBack(onClick = navBack, text = stringResource(R.string.change_password))
         ScrollableColumn(
             modifier = Modifier
                 .weight(1f)
@@ -64,7 +66,7 @@ private fun ChangePasswordScreen(
             NINUPasswordTextInput(
                 password = state.currentPassword,
                 onUpdate = {action(ChangePasswordAction.OnCurrentPasswordUpdate(it))},
-                placeholder = "Password",
+                placeholder = stringResource(R.string.change_password),
                 onUnfocus = {action(ChangePasswordAction.OnCurrentPasswordUnfocus)},
                 keyboardActions = keyboardActions,
                 imeAction = ImeAction.Next
@@ -72,7 +74,7 @@ private fun ChangePasswordScreen(
             NINUPasswordTextInput(
                 password = state.newPassword,
                 onUpdate = {action(ChangePasswordAction.OnNewPasswordUpdate(it))},
-                placeholder = "Confirm password",
+                placeholder = stringResource(R.string.confirm_password),
                 onUnfocus = {action(ChangePasswordAction.OnNewPasswordUnfocus)},
                 keyboardActions = keyboardActions,
                 imeAction = ImeAction.Next
@@ -80,7 +82,7 @@ private fun ChangePasswordScreen(
             NINUPasswordTextInput(
                 password = state.confirmNewPassword,
                 onUpdate = {action(ChangePasswordAction.OnConfirmNewPasswordUpdate(it))},
-                placeholder = "Retype new password",
+                placeholder = stringResource(R.string.retype_new_password),
                 onUnfocus = {action(ChangePasswordAction.OnConfirmNewPasswordUnfocus)},
                 keyboardActions = keyboardActions,
                 imeAction = ImeAction.Done
@@ -89,7 +91,7 @@ private fun ChangePasswordScreen(
         }
         DefaultButtonText(
             onClick = { action(ChangePasswordAction.ConfirmChange) },
-            text = "Change",
+            text = stringResource(R.string.change),
             isEnabled = state.currentPassword.errors.isEmpty()
                     && state.newPassword.errors.isEmpty()
                     && state.confirmNewPassword.errors.isEmpty(),

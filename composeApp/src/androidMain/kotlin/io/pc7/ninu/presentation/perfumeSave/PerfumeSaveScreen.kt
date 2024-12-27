@@ -15,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.pc7.ninu.presentation.theme.custom.colorScheme
@@ -45,8 +46,8 @@ fun PerfumeSaveScreen(
                 Toast.makeText(
                     context,
                     when(event.success){
-                        true -> "Write Successful"
-                        false -> "Write error"
+                        true -> context.getString(R.string.write_successful)
+                        false -> context.getString(R.string.write_error)
                     },
                     Toast.LENGTH_LONG
                 ).show()
@@ -92,7 +93,7 @@ private fun PerfumeSaveScreen(
                 NINUTextField(
                     value =state.name,
                     onUpdate = { action(PerfumeMainAction.OnUpdateName(it)) },
-                    placeholderText = "Name your fragrance"
+                    placeholderText = stringResource(R.string.name_your_fragrance)
 
                 )
 
@@ -101,7 +102,7 @@ private fun PerfumeSaveScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Text(text = "Chose icon", color = colorScheme.primaryLightest,
+                Text(text = stringResource(R.string.chose_icon), color = colorScheme.primaryLightest,
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Row(

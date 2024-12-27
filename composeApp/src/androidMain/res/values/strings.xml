@@ -6,6 +6,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="retype_new_password">Retype new password</string>
     <string name="remember_me">Remember me</string>
     <string name="login">Log in</string>
     <string name="register">Register</string>
@@ -32,7 +33,29 @@
     <string name="edit_mix">Edit mix</string>
     <string name="fragrance_ratio">Fragrance ratio</string>
     <string name="load_scent">Load scent</string>
+    <string name="last_uploaded">Last UPLOADED</string>
 
+<!--    Lab     -->
+    <string name="intensity">Intensity</string>
+    <string name="active">Active</string>
+
+<!--    Pairing     -->
+    <string name="device_info">Device info</string>
+    <string name="scan_serial_number">Scan the serial number that is usually located at the bottom of your NINU device.</string>
+    <string name="proceed">Proceed</string>
+    <string name="enter_serial_number">Enter serial number</string>
+    <string name="pairing">Pairing</string>
+    <string name="device_serial_number">Device serial number</string>
+    <string name="warranty">Warranty</string>
+    <string name="firmware_versions">Firmware versions</string>
+    <string name="press_and_hold_power_button">Press and hold power button on your NINU device.</string>
+    <string name="where_bought">Where did you buy it?</string>
+    <string name="online">Online</string>
+    <string name="gift">Gift</string>
+    <string name="store">Store</string>
+    <string name="date_of_purchase">Date of purchase</string>
+    <string name="image_selected">Image selected</string>
+    <string name="proof_of_purchase">Proof of purchase</string>
 
 
 
@@ -44,18 +67,47 @@
 
 
 
+    <string name="write_successful">Write Successful</string>
+    <string name="write_error">Write error</string>
     <string name="uploaded">Uploaded</string>
+    <string name="name_your_fragrance">Name your fragrance</string>
+    <string name="chose_icon">Chose icon</string>
+
+    <string name="great_for">Great for</string>
+    <string name="makes_you_feel">Makes you feel</string>
 
 
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="date_of_birth">Date of birth</string>
 
+<!--    Settings    -->
+    <string name="settings">My settings</string>
+    <string name="about_me">About me</string>
+    <string name="follow_ninu">Follow NINU</string>
+    <string name="language">Language</string>
+    <string name="change_password">Change password</string>
+
+    <string name="my_profile">My profile</string>
+    <string name="change_profile_photo">Change profile photo</string>
+
+    <string name="languages">Languages</string>
+    <string name="change">Change</string>
+<!--    end settings    -->
+
+<!--    Statistics  -->
+    <string name="avg_weekly_use">Average weekly use</string>
+    <string name="days_above_avg">Days above average</string>
+    <string name="trending">Trending</string>
+    <string name="most_used">Most used</string>
+    <string name="recent_used">Recent used</string>
+
 
 
     <string name="confirm">Confirm</string>
     <string name="done">Done</string>
     <string name="do_this_later">Do this later</string>
+    <string name="or">or</string>
 </resources>
 
 
@@ -63,6 +115,9 @@
     login
     registration
     favourites
+    lab
+    pairing
+
 
 
 -->

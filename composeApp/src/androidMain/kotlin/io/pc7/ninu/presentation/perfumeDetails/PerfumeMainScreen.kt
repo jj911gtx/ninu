@@ -9,9 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.components.util.ObserveAsEvents
 import io.pc7.ninu.presentation.perfumeDetailsGeneral.PerfumeMainAction
@@ -32,14 +34,15 @@ fun PerfumeMainScreen(
 
 
     val context = LocalContext.current
+
     ObserveAsEvents(flow = viewModel.events) {event ->
         when(event){
             is PerfumeMainEvent.SaveRespond -> {
                 Toast.makeText(
                     context,
                     when(event.success){
-                        true -> "Write Successful"
-                        false -> "Write error"
+                        true -> context.getString(R.string.write_successful)
+                        false -> context.getString(R.string.write_error)
                     },
                     Toast.LENGTH_LONG
                 ).show()
@@ -74,7 +77,7 @@ private fun PerfumeMainScreen(
         action = action,
         navBack = navBack,
         navToLab = navToLab,
-        buttonText = "Load scent"
+        buttonText = stringResource(R.string.load_scent)
     ){
 
         Column(

@@ -40,6 +40,7 @@ import io.pc7.ninu.presentation.pairing.screens.PairingDefaultScreen
 import io.pc7.ninu.presentation.theme.NINUTheme
 import java.io.File
 import android.os.Environment
+import androidx.compose.ui.res.stringResource
 import io.pc7.ninu.presentation.components.other.TakeChosePhoto
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -100,7 +101,7 @@ private fun PurchaseInfoScreen(
     val context = LocalContext.current
 
     PairingDefaultScreen(
-        backText = "Pairing",
+        backText = stringResource(R.string.pairing),
         navBack = navBack,
 //        bracketContentWithTxt = {
 //            Image(painter = painterResource(id = R.drawable.device), contentDescription = "Device",
@@ -138,18 +139,18 @@ private fun PurchaseInfoScreen(
                             verticalArrangement = Arrangement.spacedBy(30.dp, Alignment.Top)
                         ) {
                             Item(
-                                title = "Device Serial Number",
+                                title = stringResource(R.string.device_serial_number),
                                 text = "j70kh7ikbasf900asf84jsf"
                             )
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(20.dp)
                             ) {
                                 Item(
-                                    title = "Warranty",
+                                    title = stringResource(R.string.warranty),
                                     text = "2 years"
                                 )
                                 Item(
-                                    title = "Firmware versions",
+                                    title = stringResource(R.string.firmware_versions),
                                     text = "1.4.1"
                                 )
                             }
@@ -164,7 +165,7 @@ private fun PurchaseInfoScreen(
                                     modifier = Modifier.size(200.dp))
                             }
                         },
-                        text = "Press and hold power button on your NINU device.",
+                        text = stringResource(R.string.press_and_hold_power_button),
 
                     )
 
@@ -182,7 +183,7 @@ private fun PurchaseInfoScreen(
         val whereBought = MyInput<String>(value = whereBoughtState.value ?: "", errors = whereBoughtState.errors, displayErrors = whereBoughtState.displayErrors)
         NINUinputFieldNoText(
             value = whereBought,
-            placeholderText = "Where did you buy it?",
+            placeholderText = stringResource(R.string.where_bought),
             onClick = { displayWhereBoughtOptions = true },
         )
         if(displayWhereBoughtOptions){
@@ -194,20 +195,23 @@ private fun PurchaseInfoScreen(
                     displayWhereBoughtOptions = false
                 }
             ) {
+                val online = stringResource(R.string.online)
                 NINUModalBottomSheetItem(
-                    text = "Online",
-                    selected = selectedItem == "Online",
-                    onClick = { selectedItem = "Online" }
+                    text = online,
+                    selected = selectedItem == online,
+                    onClick = { selectedItem = online }
                 )
+                val gift = stringResource(R.string.gift)
                 NINUModalBottomSheetItem(
-                    text = "Gift",
-                    selected =  selectedItem == "Gift",
-                    onClick = { selectedItem = "Gift" }
+                    text = gift,
+                    selected =  selectedItem == gift,
+                    onClick = { selectedItem = gift }
                 )
+                val store = stringResource(R.string.store)
                 NINUModalBottomSheetItem(
-                    text = "Store",
-                    selected =  selectedItem == "Store",
-                    onClick = { selectedItem = "Store" }
+                    text = store,
+                    selected =  selectedItem == store,
+                    onClick = { selectedItem = store }
                 )
             }
         }
@@ -220,7 +224,7 @@ private fun PurchaseInfoScreen(
         val dateOfPurchase = MyInput<String>(value = dateOfPurchaseState.value?.toStringSlash() ?: "", errors = dateOfPurchaseState.errors, displayErrors = dateOfPurchaseState.displayErrors)
         NINUinputFieldNoText(
             value = dateOfPurchase,
-            placeholderText = "Date of purchase",
+            placeholderText = stringResource(R.string.date_of_purchase),
             onClick = { showCalendar.value = true },
             suffix = {
                 Icon(painter = painterResource(id = R.drawable.icon_calendar), contentDescription = null,
@@ -235,7 +239,7 @@ private fun PurchaseInfoScreen(
 
         val proofOfPurchaseState = state.proofOfPurchase
         val proofOfPurchase = MyInput<String>(
-            value = if (proofOfPurchaseState.value != null) "Image selected" else "", 
+            value = if (proofOfPurchaseState.value != null) stringResource(R.string.image_selected) else "",
             errors = proofOfPurchaseState.errors, 
             displayErrors = proofOfPurchaseState.displayErrors
         )
@@ -243,7 +247,7 @@ private fun PurchaseInfoScreen(
         val photoSelectOptionBottomSheetDisplay = remember { mutableStateOf(false) }
         NINUinputFieldNoText(
             value = proofOfPurchase,
-            placeholderText = "Proof of purchase",
+            placeholderText = stringResource(R.string.proof_of_purchase),
             onClick = {
                 photoSelectOptionBottomSheetDisplay.value = true
             },
@@ -268,9 +272,7 @@ private fun PurchaseInfoScreen(
         TakeChosePhoto(
             photoSelectOptionBottomSheetDisplay = photoSelectOptionBottomSheetDisplay,
             onUpdate = {action(PurchaseInfoAction.OnProofOfPurchaseUpdate(it))}
-
         )
-
 
     }
 }

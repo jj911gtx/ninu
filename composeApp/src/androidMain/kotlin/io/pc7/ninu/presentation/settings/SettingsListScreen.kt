@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,7 +40,7 @@ fun SettingsListScreen(
 
 
     ScrollableColumn {
-        ButtonTopLeftBack(onClick = navBack, text = "My Settings")
+        ButtonTopLeftBack(onClick = navBack, text = stringResource(R.string.settings))
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -48,17 +49,17 @@ fun SettingsListScreen(
         ) {
             SettingsItem(
                 icon = R.drawable.icon_profile_checked,
-                text = "About me",
+                text = stringResource(R.string.about_me),
                 onClick = { navController.navigate(SettingsNavigationRoutes.AboutMe) }
             )
             SettingsItem(
                 icon = R.drawable.icon_mouse_point,
-                text = "Follow NINU",
+                text = stringResource(R.string.follow_ninu),
                 onClick = { navController.navigate(SettingsNavigationRoutes.FollowNINU) }
             )
             SettingsItem(
                 icon = R.drawable.icon_mouse_point,
-                text = "Language",
+                text = stringResource(R.string.language),
                 onClick = { navController.navigate(SettingsNavigationRoutes.Language) }
             )
 //            SettingsItem(
@@ -73,7 +74,7 @@ fun SettingsListScreen(
 //            )
             SettingsItem(
                 icon = R.drawable.icon_lock,
-                text = "Change password",
+                text = stringResource(R.string.change_password),
                 onClick = { navController.navigate(SettingsNavigationRoutes.ChangePassword) }
             )
 //            SettingsItem(

@@ -27,10 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.components.main.input.text.NINUTextField
 import io.pc7.ninu.presentation.components.other.GrayBracketWithText
@@ -84,7 +86,7 @@ private fun ScanScreen(
     )
 
     PairingDefaultScreen(
-        backText = "Device info",
+        backText = stringResource(R.string.device_info),
         navBack = navBack,
         bracketContent = {
             Box {
@@ -154,7 +156,7 @@ private fun ScanScreen(
                 ) {
                     GrayBracketWithText(
                         content = { },
-                        text = "Scan the serial number that is usually located at the bottom of your NINU device.",
+                        text = stringResource(R.string.scan_serial_number),
                         onClick = {
                             permissionLauncher.requestCameraPermission()
                         }
@@ -198,12 +200,12 @@ private fun ScanScreen(
         buttonOnCLick = {
             action(ScanAction.OnProceed)
         },
-        buttonText =  "Proceed",
+        buttonText = stringResource(R.string.proceed),
         isButtonEnabled = state.serialNumber.value.isNotEmpty(),
     ){
         if(!rememberKeyboardVisibility().value){
             Text(
-                text = "or",
+                text = stringResource(R.string.or),
                 color = colorScheme.primaryLight,
                 style = MaterialTheme.typography.bodyMedium
 
@@ -215,7 +217,7 @@ private fun ScanScreen(
         NINUTextField(
             value = state.serialNumber ,
             onUpdate = {action(ScanAction.OnSerialNumberUpdate(it))},
-            placeholderText = "Enter serial number",
+            placeholderText = stringResource(R.string.enter_serial_number),
         )
 
     }

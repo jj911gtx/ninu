@@ -22,8 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.domain.mapper.toDisplayString
 import io.pc7.ninu.domain.model.util.Language
@@ -62,7 +64,7 @@ private fun LanguageSelectionScreen(
     navBack: () -> Unit,
 ){
     ScrollableColumn {
-        ButtonTopLeftBack(onClick = navBack, text = "Languages")
+        ButtonTopLeftBack(onClick = navBack, text = stringResource(R.string.languages))
 
         LanguageItem(
             language = Language.English,

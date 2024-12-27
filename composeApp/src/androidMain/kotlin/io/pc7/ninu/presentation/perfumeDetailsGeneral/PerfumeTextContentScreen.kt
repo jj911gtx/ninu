@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -92,11 +93,11 @@ fun PerfumeTextContentScreen(
         content()
 
         Paragraph(
-            title = "Great for",
+            title = stringResource(R.string.great_for),
             text = "spring coffee in the city, hot summer days and drinks after work"
         )
         Paragraph(
-            title = "Makes you feel",
+            title = stringResource(R.string.makes_you_feel),
             text = "joyfull, energised, outgoing, relaxed"
         )
     }

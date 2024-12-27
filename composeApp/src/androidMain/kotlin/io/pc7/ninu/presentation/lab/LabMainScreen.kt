@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.pc7.ninu.presentation.theme.custom.colorScheme
@@ -48,6 +49,7 @@ import io.pc7.ninu.domain.model.lab.LabFragrance
 import io.pc7.ninu.domain.model.perfume.Fragrance
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButton
+import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
 import io.pc7.ninu.presentation.components.util.ObserveAsEvents
 import io.pc7.ninu.presentation.lab.graphs.CircularSlider
 import io.pc7.ninu.presentation.lab.graphs.DonutChart
@@ -194,7 +196,7 @@ private fun LabMainScreen(
 
             ) {
                 Text(
-                    text = "Intensity",
+                    text = stringResource(R.string.intensity),
                     color = colorScheme.white,
                     modifier = Modifier
                 )
@@ -304,7 +306,7 @@ private fun LabMainScreen(
 
 
         }
-        DefaultButton(
+        DefaultButtonText(
             onClick = {
                 if (circularSliderState.value.editorData.value != null) {
                     circularSliderState.value.editorData.value = null
@@ -312,17 +314,14 @@ private fun LabMainScreen(
                     action(LabMainAction.LoadScent)
                 }
             },
+            text = if (circularSliderState.value.editorData.value != null) stringResource(R.string.confirm) else stringResource(R.string.load_scent),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(
                     top = 10.dp
                 )
                 .fillMaxWidth(1f),
-        ) {
-            Text(
-                text = if (circularSliderState.value.editorData.value != null) "Confirm" else "Load scent"
-            )
-        }
+        )
     }
 
 
@@ -390,7 +389,7 @@ fun PerfumeContentCard(
                             color = colorScheme.white
                         )
                         if (selected){
-                            Text(text = "   ${"ACTIVE"}",
+                            Text(text = "   ${stringResource(R.string.active)}",
                                 color = colorScheme.secondaryLight
                             )
                         }

@@ -1,4 +1,4 @@
-package ninu.other.settings.main
+package io.pc7.ninu.presentation.settings
 
 
 import kotlinx.coroutines.CoroutineScope

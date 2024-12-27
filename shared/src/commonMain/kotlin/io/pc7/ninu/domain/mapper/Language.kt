@@ -5,6 +5,6 @@ import io.pc7.ninu.domain.model.util.Language
 fun Language.toDisplayString(): String{
     return when(this){
         Language.English -> "English"
-        Language.Slovenia -> "Slovenian"
+        Language.Slovenia -> "Slovenščina"
     }
 }

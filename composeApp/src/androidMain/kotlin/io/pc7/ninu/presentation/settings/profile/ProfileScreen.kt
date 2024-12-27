@@ -12,8 +12,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.components.ProfileImage
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
@@ -45,7 +47,7 @@ private fun ProfileScreen(
 
 
     Column {
-        ButtonTopLeftBack(onClick = navBack, text = "My profile", modifier = Modifier.align(Alignment.Start))
+        ButtonTopLeftBack(onClick = navBack, text = stringResource(R.string.my_profile), modifier = Modifier.align(Alignment.Start))
         ScrollableColumn(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -61,7 +63,7 @@ private fun ProfileScreen(
 
             Text(text = state.name)
 
-            Text(text = "Change profile photo",
+            Text(text = stringResource(R.string.change_profile_photo),
                 style = MaterialTheme.typography.bodyMedium,
                 color = colorScheme.secondaryLight2,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -70,22 +72,22 @@ private fun ProfileScreen(
 
 
             ProfileColumnItem(
-                title = "Email",
+                title = stringResource(R.string.email),
                 value = state.email,
                 onClick = {}
             )
             ProfileColumnItem(
-                title = "Name",
+                title = stringResource(R.string.name),
                 value = state.name,
                 onClick = {}
             )
             ProfileColumnItem(
-                title = "Username",
+                title = stringResource(R.string.username),
                 value = state.username,
                 onClick = {}
             )
             ProfileColumnItem(
-                title = "Date of birth",
+                title = stringResource(R.string.date_of_birth),
                 value = state.dateOfBirth.toString(),
                 onClick = {}
             )

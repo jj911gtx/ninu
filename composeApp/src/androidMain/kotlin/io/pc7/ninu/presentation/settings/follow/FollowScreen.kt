@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.pc7.ninu.presentation.theme.custom.colorScheme
@@ -32,7 +33,7 @@ fun FollowScreen(
 ) {
 
     Column {
-        ButtonTopLeftBack(onClick = navBack, text = "Follow NINU")
+        ButtonTopLeftBack(onClick = navBack, text = stringResource(R.string.follow_ninu))
 
         ScrollableColumn {
 
@@ -48,22 +49,22 @@ fun FollowScreen(
             )
             FollowItem(
                 icon = R.drawable.icon_website,
-                text = "Customer Service",
+                text = "Website",
                 onClick = {}
             )
             FollowItem(
                 icon = R.drawable.icon_facebook,
-                text = "Customer Service",
+                text = "Facebook",
                 onClick = {}
             )
             FollowItem(
                 icon = R.drawable.icon_x,
-                text = "Customer Service",
+                text = "X",
                 onClick = {}
             )
             FollowItem(
                 icon = R.drawable.icon_instagram,
-                text = "Customer Service",
+                text = "Instagram",
                 onClick = {}
             )
         }
