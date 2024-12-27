@@ -346,7 +346,7 @@ fun PerfumeContentCard(
     ){
         Card(
             colors = CardDefaults.cardColors(
-                containerColor = if(selected) colorScheme.primary else colorScheme.primary.copy(alpha = 0.5f)
+                containerColor = colorScheme.black
             ),
             shape = RoundedCornerShape(5.dp),
 
@@ -356,6 +356,7 @@ fun PerfumeContentCard(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(if(selected) colorScheme.primary else colorScheme.primary.copy(alpha = 0.5f))
                     .then(
                         if (selected) {
                             Modifier.padding(vertical = 5.dp)

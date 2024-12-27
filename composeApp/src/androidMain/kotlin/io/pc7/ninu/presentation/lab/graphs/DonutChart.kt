@@ -186,11 +186,11 @@ fun DonutChart(
 @Composable
 private fun DonutChartPreview1() {
     val color = arrayOf(
-        colorScheme.white.toArgb(),
-        colorScheme.secondaryLight.toArgb(),
-        colorScheme.secondaryDark.toArgb(),
+        colorScheme.white.toArgb().toLong(),
+        colorScheme.secondaryLight.toArgb().toLong(),
+        colorScheme.secondaryDark.toArgb().toLong(),
     )
-    val percentages = LabMainViewModel.initializeState().fragrances!!.map { it.toDonutChartItem(0xFFFFF00FF) }
+    val percentages = LabMainViewModel.initializeState().fragrances!!.mapIndexed {index, it -> it.toDonutChartItem(color[index]) }
     Box(
         modifier = Modifier.fillMaxSize(1f)
     ) {

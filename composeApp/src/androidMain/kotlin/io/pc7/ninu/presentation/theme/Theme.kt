@@ -8,6 +8,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
@@ -44,7 +45,7 @@ fun NINUTheme(
 
     MaterialTheme(
         colorScheme = colorScheme.copy(
-            surface = io.pc7.ninu.presentation.theme.custom.colorScheme.black,
+            surface = Color.Transparent,//io.pc7.ninu.presentation.theme.custom.colorScheme.black,
             onSurface = io.pc7.ninu.presentation.theme.custom.colorScheme.white,
             onBackground = io.pc7.ninu.presentation.theme.custom.colorScheme.white,
         ),

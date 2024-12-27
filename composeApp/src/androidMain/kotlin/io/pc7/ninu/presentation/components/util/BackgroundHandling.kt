@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 
 
@@ -46,5 +47,5 @@ fun Activity.setBottomBar(black: Boolean){
 
 @SuppressLint("UseCompatLoadingForDrawables")
 fun Activity.setBackground(){
-//    window.setBackgroundDrawable(this.getDrawable(R.drawable.ozadje))
+    window.setBackgroundDrawable(this.getDrawable(R.drawable.ozadje))
 }
