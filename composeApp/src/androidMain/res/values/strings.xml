@@ -101,6 +101,10 @@
     <string name="trending">Trending</string>
     <string name="most_used">Most used</string>
     <string name="recent_used">Recent used</string>
+    <string name="opened_date">Opened date</string>
+    <string name="fragrance_description">Fragrance description</string>
+    <string name="fragrance_status">Fragrance status</string>
+    <string name="fragrance_set_in_use">Fragrance set in use</string>
 
 
 

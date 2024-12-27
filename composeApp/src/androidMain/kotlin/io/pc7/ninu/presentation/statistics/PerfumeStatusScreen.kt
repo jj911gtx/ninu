@@ -15,10 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.components.charts.BarChart
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack
@@ -52,7 +54,7 @@ private fun PerfumeStatus(
         modifier = Modifier
     ) {
         ButtonTopLeftBack(onClick = navBack,
-            text = "Perfume status"
+            text = stringResource(R.string.fragrance_status)
         )
 
 
@@ -60,7 +62,7 @@ private fun PerfumeStatus(
             onClick = {}
         ){
             BracketRowText(
-                text = "Fragrance set in use",
+                text = stringResource(R.string.fragrance_set_in_use),
                 rightText = "AURA"
             )
         }
@@ -159,7 +161,7 @@ fun RowScope.GraphColumn(
             modifier = Modifier.weight(1f)
         )
         Text(
-            text = "Opened date\n${"22.9.2022"}",
+            text = "${stringResource(R.string.opened_date)}\n${"22.9.2022"}",
             style = MaterialTheme.typography.bodyMedium.copy(fontSize = (MaterialTheme.typography.bodyMedium.fontSize.value - 1).sp),
             textAlign = TextAlign.Center,
             color = colorScheme.primaryMedium
@@ -167,7 +169,7 @@ fun RowScope.GraphColumn(
 
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = "Fragrance description",
+            text = stringResource(R.string.fragrance_description),
             style = MaterialTheme.typography.labelMedium.copy(fontSize = (MaterialTheme.typography.labelMedium.fontSize.value + 1).sp),
             color = colorScheme.secondaryLight1,
             textAlign = TextAlign.Center,
