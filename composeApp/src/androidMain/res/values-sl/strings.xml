@@ -2,7 +2,7 @@
     <string name="app_name">NINU</string>
 
     <!--    login and registration   -->
-    <string name="create_your_account">Ustvarite svoj račun</string>
+    <string name="create_your_account">Ustvari račun</string>
     <string name="email">E-pošta</string>
     <string name="password">Geslo</string>
     <string name="confirm_password">Potrdite geslo</string>
@@ -72,20 +72,20 @@
     <string name="try_another_one">Poskusi še enega</string>
     <string name="back_to_home">Nazaj na domačo stran</string>
     <string name="perfume_ready">Parfum pripravljen</string>
-    <string name="just_spray_from_your_NINU">Samo razpršite iz svojega NINU!</string>
+    <string name="just_spray_from_your_NINU">Samo razpršite iz naprave NINU!</string>
 
     <string name="name">Ime</string>
     <string name="surname">Priimek</string>
     <string name="date_of_birth">Datum rojstva</string>
 
     <!--    Settings    -->
-    <string name="settings">Moje nastavitve</string>
+    <string name="settings">Nastavitve</string>
     <string name="about_me">O meni</string>
     <string name="follow_ninu">Sledite NINU</string>
     <string name="language">Jezik</string>
     <string name="change_password">Spremeni geslo</string>
 
-    <string name="my_profile">Moj profil</string>
+    <string name="my_profile">Profil</string>
     <string name="change_profile_photo">Spremeni profilno sliko</string>
 
     <string name="languages">Jeziki</string>

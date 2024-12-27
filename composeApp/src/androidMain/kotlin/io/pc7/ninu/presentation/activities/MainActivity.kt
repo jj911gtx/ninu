@@ -1,5 +1,6 @@
 package io.pc7.ninu.presentation.activities
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,13 +25,15 @@ import io.pc7.ninu.presentation.theme.NINUTheme
 import io.pc7.ninu.presentation.main.navigation.SideNavigationBar
 import io.pc7.ninu.presentation.theme.SCREEN_PADDING
 import io.pc7.ninu.presentation.main.navigation.MainNavigation
+import io.pc7.ninu.presentation.util.getLanguage
+import io.pc7.ninu.presentation.util.setLocale
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-//    override fun attachBaseContext(newBase: Context) {
-//        val language = getLanguage(newBase)
-//        super.attachBaseContext(setLocale(newBase, language))
-//    }
+    override fun attachBaseContext(newBase: Context) {
+        val language = getLanguage(newBase)
+        super.attachBaseContext(setLocale(newBase, language))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

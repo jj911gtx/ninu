@@ -99,6 +99,7 @@ private fun LanguageItem(
     ) {
         Text(text = language.toDisplayString(),
             style = MaterialTheme.typography.titleMedium,
+            color = colorScheme.white,
             modifier = Modifier.weight(1f)
         )
 

@@ -25,7 +25,7 @@ fun getLanguage(context: Context): String?{
 
 
 fun setLocale(context: Context, language: String?): Context {
-    val locale = Locale(language)
+    val locale = Locale(language ?: "en")
     Locale.setDefault(locale)
 
     val config = context.resources.configuration
