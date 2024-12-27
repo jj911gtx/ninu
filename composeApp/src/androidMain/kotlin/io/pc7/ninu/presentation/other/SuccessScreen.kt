@@ -16,8 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
 import io.pc7.ninu.presentation.theme.NINUTheme
@@ -26,7 +28,7 @@ import io.pc7.ninu.presentation.theme.NINUTheme
 @Composable
 fun SuccessScreen(
     navNext: () -> Unit,
-    buttonText: String= "Start using",
+    buttonText: String= stringResource(R.string.start_using),
 ) {
 
     BoxWithConstraints(
@@ -38,10 +40,10 @@ fun SuccessScreen(
             verticalArrangement = Arrangement.spacedBy(15.dp),
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .offset(y = offsetYInDp) // Offset by 20% of the height
+                .offset(y = offsetYInDp)
         ) {
             Icon(
-                painter = painterResource(id = io.pc7.ninu.R.drawable.icon_party_popper),
+                painter = painterResource(id = R.drawable.icon_party_popper),
                 contentDescription = null,
                 tint = colorScheme.secondaryDark2,
                 modifier = Modifier
@@ -50,7 +52,7 @@ fun SuccessScreen(
             Spacer(modifier = Modifier.heightIn(10.dp))
 
             Text(
-                text = "Yay, success!",
+                text = stringResource(R.string.yay_success),
                 style = MaterialTheme.typography.headlineLarge,
                 color = colorScheme.white
             )

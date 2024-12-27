@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -82,7 +83,7 @@ private fun RegistrationScreen(
     ) {
 
         ButtonTopLeftBack(
-            onClick = navBack, text = "Create your account",
+            onClick = navBack, text = stringResource(R.string.create_your_account),
             modifier = Modifier
                 .align(Alignment.Start)
         )
@@ -96,7 +97,7 @@ private fun RegistrationScreen(
             NINUTextField(
                 value = state.name,
                 onUpdate = { action(RegistrationAction.OnNameUpdate(it)) },
-                placeholderText = "Name",
+                placeholderText = stringResource(R.string.name),
                 keyboardType = KeyboardType.Text,
                 keyboardActions = KeyboardActions(
                     onNext = {
@@ -115,7 +116,7 @@ private fun RegistrationScreen(
             NINUTextField(
                 value = state.surname,
                 onUpdate = { action(RegistrationAction.OnSurnameUpdate(it)) },
-                placeholderText = "Surname",
+                placeholderText = stringResource(R.string.surname),
                 keyboardType = KeyboardType.Text,
                 keyboardActions = KeyboardActions(
                     onNext = {
@@ -135,7 +136,7 @@ private fun RegistrationScreen(
             NINUTextField(
                 value = state.email,
                 onUpdate = { action(RegistrationAction.OnEmailUpdate(it)) },
-                placeholderText = "Email",
+                placeholderText = stringResource(R.string.email),
                 keyboardType = KeyboardType.Email,
                 keyboardActions = KeyboardActions(
                     onNext = {
@@ -157,7 +158,7 @@ private fun RegistrationScreen(
             NINUTextField(
                 value = state.password,
                 onUpdate = { action(RegistrationAction.OnPasswordUpdate(it)) },
-                placeholderText = "Password",
+                placeholderText = stringResource(R.string.password),
                 textHide = !passwordVisible,
                 prefix = {
                     Icon(
@@ -205,7 +206,7 @@ private fun RegistrationScreen(
             onClick = {
                 action(RegistrationAction.OnSignup)
             },
-            text = "Sign up",
+            text = stringResource(R.string.sign_up),
             isEnabled = state.email.errors.isEmpty()
                     && state.password.errors.isEmpty()
                     && state.name.errors.isEmpty()

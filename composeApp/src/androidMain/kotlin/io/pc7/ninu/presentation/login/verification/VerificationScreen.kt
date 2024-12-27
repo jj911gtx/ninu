@@ -22,11 +22,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.data.network.error.DataError
 import io.pc7.ninu.domain.model.util.Resource
@@ -83,7 +85,7 @@ private fun VerificationScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         ButtonTopLeftBack(
-            onClick = navBack, text = "Verify",
+            onClick = navBack, text = stringResource(R.string.verify),
             modifier = Modifier
                 .align(Alignment.Start)
 
@@ -93,7 +95,7 @@ private fun VerificationScreen(
 
 
         Text(
-            text = "Code has been send to\n${state.email}",
+            text = "${stringResource(R.string.code_has_been_send_to)}\n${state.email}",
             style = MaterialTheme.typography.bodyLarge,
             color = colorScheme.white,
             textAlign = TextAlign.Center,
@@ -116,13 +118,13 @@ private fun VerificationScreen(
             else -> {}
         }
         if(state.timeOut != null){
-            Text(text = "Resend code in ${state.timeOut} s",
+            Text(text = "${stringResource(R.string.resend_code_in)} ${state.timeOut} s",
                 style = MaterialTheme.typography.headlineSmall.copy(fontSize = 18.sp),
                 color = colorScheme.primaryLight
             )
         }else{
 
-            Text(text = "Resend code",
+            Text(text = stringResource(R.string.resend_code),
                 style = MaterialTheme.typography.headlineSmall.copy(fontSize = 18.sp),
                 color = colorScheme.white,
                 modifier = Modifier
@@ -137,7 +139,7 @@ private fun VerificationScreen(
 
         DefaultButtonText(
             onClick = { action(VerificationAction.Verify) },
-            text = "Verify",
+            text = stringResource(R.string.verify),
             isEnabled = state.code.length == 4
         )
 

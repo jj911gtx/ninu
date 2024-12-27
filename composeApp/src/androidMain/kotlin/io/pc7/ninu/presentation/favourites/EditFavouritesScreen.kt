@@ -24,8 +24,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.domain.model.perfume.NINUSelection
 import io.pc7.ninu.domain.model.perfume.PerfumeUseData
@@ -69,7 +71,7 @@ private fun EditFavouritesScreen(
     Column {
         ButtonTopLeftBack(
             onClick = navBack,
-            text = "Edit NINU selections"
+            text = "${stringResource(R.string.edit)} ${stringResource(R.string.ninu_selections)}"
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(7.dp)
@@ -80,7 +82,7 @@ private fun EditFavouritesScreen(
             PerfumeSelectionBracket(ninuSelection = NINUSelection.N3, onEdit ={activeEdit = 3}, active = activeEdit == null || activeEdit == 3)
             PerfumeSelectionBracket(ninuSelection = NINUSelection.N,  onEdit ={activeEdit = 4}, active = activeEdit == null || activeEdit == 4)
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "Your favourites",
+            Text(text = stringResource(R.string.your_favourites),
                 style = MaterialTheme.typography.labelLarge,
                 color = colorScheme.white
             )
@@ -120,7 +122,6 @@ private fun PerfumeSelectionBracket(
     CardBracket(
         onClick = { /*TODO*/ },
         modifier = Modifier.graphicsLayer {
-            // Adjust opacity based on the boolean value
             alpha = if (active) 1f else 0.5f
         }
     ) {
@@ -137,14 +138,14 @@ private fun PerfumeSelectionBracket(
 
             )
             Spacer(modifier = Modifier.width(10.dp))
-            Text(text = "NINU Selection $ninuSelection",
+            Text(text = "${stringResource(R.string.ninu_selections)} $ninuSelection",
                 style = MaterialTheme.typography.labelLarge,
                 color = colorScheme.white,
                 modifier = Modifier
                     .weight(1f)
             )
 
-            Text(text = "Edit",
+            Text(text = stringResource(R.string.edit),
                 style = MaterialTheme.typography.displayLarge,
                 color = colorScheme.secondaryLight1,
                 modifier = Modifier.clickable(onClick = onEdit)

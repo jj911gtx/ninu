@@ -5,11 +5,64 @@
     <string name="create_your_account">Create your account</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
     <string name="remember_me">Remember me</string>
     <string name="login">Log in</string>
     <string name="register">Register</string>
     <string name="or_continue_with">or continue with</string>
     <string name="register_here">Register here</string>
     <string name="already_have_account">Already have an account?</string>
+    <string name="verify">Verify</string>
+    <string name="code_has_been_send_to">Code has been send to</string>
+    <string name="resend_code_in">Resend code in</string>
+    <string name="resend_code">Resend code</string>
+    <string name="new_password">New password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="username">Username</string>
+    <string name="add_profile_image">Add profile image</string>
+    <string name="yay_success">Yay, success!</string>
+    <string name="start_using">Start using</string>
 
+<!--    Other   -->
+    <string name="ninu_selections">NINU selections</string>
+    <string name="ninu_selection">NINU selection</string>
+    <string name="edit">Edit</string>
+    <string name="your_favourites">Your favourites</string>
+    <string name="add_to_favourites">Add to favourites</string>
+    <string name="edit_mix">Edit mix</string>
+    <string name="fragrance_ratio">Fragrance ratio</string>
+    <string name="load_scent">Load scent</string>
+
+
+
+
+
+
+    <string name="take_photo">Take photo</string>
+    <string name="chose_photo">Chose photo</string>
+
+
+
+
+    <string name="uploaded">Uploaded</string>
+
+
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="date_of_birth">Date of birth</string>
+
+
+
+    <string name="confirm">Confirm</string>
+    <string name="done">Done</string>
+    <string name="do_this_later">Do this later</string>
 </resources>
+
+
+<!--
+    login
+    registration
+    favourites
+
+
+-->

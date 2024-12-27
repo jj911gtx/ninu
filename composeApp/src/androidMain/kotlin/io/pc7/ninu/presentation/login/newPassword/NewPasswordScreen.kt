@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,7 +63,7 @@ private fun NewPasswordScreen(
 ) {
     Column {
         ButtonTopLeftBack(
-            onClick = navBack, text = "New password",
+            onClick = navBack, text = stringResource(R.string.new_password),
             modifier = Modifier
                 .align(Alignment.Start)
         )
@@ -81,7 +82,7 @@ private fun NewPasswordScreen(
             NINUTextField(
                 value = state.password,
                 onUpdate = { action(NewPasswordAction.OnNewPasswordUpdate(it)) },
-                placeholderText = "Password",
+                placeholderText = stringResource(R.string.password),
                 textHide = !passwordVisible,
                 prefix = {
                     Icon(
@@ -120,7 +121,7 @@ private fun NewPasswordScreen(
             NINUTextField(
                 value = state.confirmPassword,
                 onUpdate = { action(NewPasswordAction.OnConfirmNewPasswordUpdate(it)) },
-                placeholderText = "Confirm password",
+                placeholderText = stringResource(R.string.confirm_password),
                 textHide = !confirmNewPasswordVisible,
                 prefix = {
                     Icon(
@@ -158,7 +159,7 @@ private fun NewPasswordScreen(
 
             DefaultButtonText(
                 onClick = { action(NewPasswordAction.Confirm) },
-                text = "Confirm",
+                text = stringResource(R.string.confirm),
                 isEnabled = state.buttonEnabled
             )
         }

@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.pc7.ninu.presentation.theme.custom.colorScheme
@@ -75,7 +76,7 @@ fun UserInfoInputScreen(
     ) {
         ButtonTopLeftBack(
             onClick = back,
-            text = "Create your account",
+            text = stringResource(R.string.create_your_account),
             modifier = Modifier
                 .align(Alignment.Start)
         )
@@ -87,7 +88,7 @@ fun UserInfoInputScreen(
             NINUTextField(
                 value = state.username,
                 onUpdate = {action(UserInfoInputAction.OnUsernameChange(it))},
-                placeholderText = "Username",
+                placeholderText = stringResource(R.string.username),
                 prefix = {
                     Icon(
                         painter = painterResource(id = R.drawable.icon_verified_user),
@@ -104,7 +105,7 @@ fun UserInfoInputScreen(
             )
             NINUinputFieldNoText(
                 value = MyInput(state.dateOfBirth.value?.toTextString() ?: ""),
-                placeholderText = "Date of birth",
+                placeholderText = stringResource(R.string.date_of_birth),
                 suffix = {
                     Icon(
                         painter = painterResource(id = R.drawable.icon_image_plus),
@@ -137,7 +138,7 @@ fun UserInfoInputScreen(
                     next()
                 }
             },
-            text = if(inputsFilled(state)) "Done" else "Do this later",
+            text = if(inputsFilled(state)) stringResource(R.string.done) else stringResource(R.string.do_this_later),
             displayDisabled = !inputsFilled(state),
         )
 
@@ -158,8 +159,8 @@ fun AddProfileImage(
 
     val isProfileImage = profileImage.value != null
     NINUinputFieldNoText(
-        value = MyInput(if(isProfileImage) "Uploaded" else ""),
-        placeholderText = "Add profile image",
+        value = MyInput(if(isProfileImage) stringResource(R.string.uploaded) else ""),
+        placeholderText = stringResource(R.string.add_profile_image),
         suffix = {
             Icon(
                 painter = painterResource(id = if(isProfileImage) R.drawable.icon_check else R.drawable.icon_image_plus),

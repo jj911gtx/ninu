@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,7 +57,7 @@ private fun PerfumeInfoScreen(
         onEditMix = navToLab,
         buttonEnabled = true,
         onButtonClick = navBack,
-        buttonText = "Load scent"
+        buttonText = stringResource(R.string.load_scent)
     ) {
 
         Text(
@@ -80,7 +81,7 @@ private fun PerfumeInfoScreen(
         }
 
         Text(
-            text = "Fragrance ratio",
+            text = stringResource(R.string.fragrance_ratio),
             color = colorScheme.white, //TODO
 
         )

@@ -13,7 +13,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.FileProvider
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.util.permission.managePermissionPermissionDisplay
 import io.pc7.ninu.presentation.util.permission.requestCameraPermission
 import java.io.File
@@ -94,13 +96,13 @@ fun TakeChosePhoto(
             onConfirm = null
         ) {
             NINUModalBottomSheetItem(
-                text = "Take photo",
+                text = stringResource(R.string.take_photo),
                 onClick = {
                     permissionLauncher.requestCameraPermission()
                 }
             )
             NINUModalBottomSheetItem(
-                text = "Choose photo",
+                text = stringResource(R.string.chose_photo),
                 onClick = {
                     galleryLauncher.launch("image/*")
                     photoSelectOptionBottomSheetDisplay.value = false
