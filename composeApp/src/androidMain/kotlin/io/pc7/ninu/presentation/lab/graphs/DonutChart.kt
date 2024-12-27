@@ -186,7 +186,7 @@ private fun DrawScope.drawText(
 ) {
     if (percentage >= 5) {
         val text = "${percentage.toInt()}%"
-        val fontSize = (150 / 6).sp
+        val fontSize = (150 / 7).sp
 
         // Determine text color based on background color
         val isWhiteBackground = Color(colors.first) == colorScheme.white && 

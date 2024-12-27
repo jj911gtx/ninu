@@ -12,7 +12,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
@@ -20,26 +22,20 @@ import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.lab.screen.UpdateGraphPercentages
 import kotlin.math.*
 
-
 @Composable
 fun rememberCircularSliderState(
     percentages: List<Int>,
     savePercentages: (List<Int>) -> Unit,
-):MutableState<CircularSliderAdapter> {
+): MutableState<CircularSliderAdapter> {
     return remember {
-
         mutableStateOf(
             CircularSliderAdapter(
                 percentages = percentages,
                 savePercentages = savePercentages
             )
         )
-
     }
-
 }
-
-
 
 /**
  * @param startAngle radians
@@ -49,23 +45,12 @@ fun rememberCircularSliderState(
 fun CircularSlider(
     modifier: Modifier = Modifier,
     strokeWidth: Float = 200f,
-    sliderColor: Color = Color(0xFFE57373),//TODO pass this variable
-//    startAngle: Double,
-//    endAngle: Double,
+    sliderColor: Color = Color(0xFFE57373),
     state: CircularSliderAdapter,
-//    action: (LabMainAction.UpdatePercentages) -> Unit,
 ) {
-
     state.editorData.value?.let { editorData ->
 
-
-        /**
-         * true     -> end
-         * false    -> start */
-        var selectedPoint by remember {
-            mutableStateOf<Point?>(null)
-        }
-
+        var selectedPoint by remember { mutableStateOf<Point?>(null) }
 
         fun updatePercentages(
             selectedPoint: Point?,
@@ -74,12 +59,8 @@ fun CircularSlider(
         ) {
             selectedPoint?.let {
                 when (it) {
-                    Point.START -> {
-                        state.updatePercentages(UpdateGraphPercentages.Start(angle = angle))
-                    }
-
-                    Point.END ->
-                        state.updatePercentages(UpdateGraphPercentages.End(angle = angle))
+                    Point.START -> state.updatePercentages(UpdateGraphPercentages.Start(angle = angle))
+                    Point.END -> state.updatePercentages(UpdateGraphPercentages.End(angle = angle))
                 }
             }
         }
@@ -104,7 +85,7 @@ fun CircularSlider(
                     )
                 }
                 .pointerInput(Unit) {
-                    detectDragGestures { change, dragAmount ->
+                    detectDragGestures { change, _ ->
                         selectedPoint?.let { selectedPoint ->
                             val position = getPointRadians(size, change.position)
                             updatePercentages(selectedPoint, state, position)
@@ -117,20 +98,18 @@ fun CircularSlider(
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
                     .aspectRatio(1f),
-
-                ) {
+            ) {
                 val radius = size.minDimension / 2
                 val center = Offset(size.width / 2, size.height / 2)
 
                 drawCircle(
-                    color = Color.Transparent,
+                    color = colorScheme.primaryDarkest,
                     radius = radius,
                     style = Stroke(strokeWidth)
                 )
 
                 val endAngle = editorData.endAngle
                 val startAngle = editorData.startAngle
-
 
                 val sweepAngleRadians = if (endAngle >= startAngle) {
                     endAngle - startAngle
@@ -143,7 +122,7 @@ fun CircularSlider(
 
                 drawArc(
                     color = sliderColor,
-                    startAngle = (startAngleDegrees - 90f).toFloat(), // Adjust the angle to start at the top (12 o'clock position)
+                    startAngle = (startAngleDegrees - 90f).toFloat(),
                     sweepAngle = sweepAngleDegrees.toFloat(),
                     useCenter = false,
                     size = Size(radius * 2, radius * 2),
@@ -151,16 +130,78 @@ fun CircularSlider(
                 )
 
                 drawHandleAtAngle(startAngle, radius, size, strokeWidth)
-
                 drawHandleAtAngle(endAngle, radius, size, strokeWidth)
 
+                drawPlusMinusSymbols(startAngle, endAngle, radius, size)
             }
-
         }
     }
 }
 
+private fun DrawScope.drawPlusMinusSymbols(
+    startAngle: Double,
+    endAngle: Double,
+    radius: Float,
+    size: Size,
+) {
+    val plusAngleOffset = Math.toRadians(20.0)
+    val minusAngleOffset = Math.toRadians(14.0)
 
+    val startXPlus = radius * cos(startAngle - plusAngleOffset - Math.PI / 2).toFloat() + size.width / 2
+    val startYPlus = radius * sin(startAngle - plusAngleOffset - Math.PI / 2).toFloat() + size.height / 2
+
+    val startXMinus = radius * cos(startAngle + minusAngleOffset - Math.PI / 2).toFloat() + size.width / 2
+    val startYMinus = radius * sin(startAngle + minusAngleOffset - Math.PI / 2).toFloat() + size.height / 2
+
+
+
+
+
+
+
+    val endXPlus = radius * cos(endAngle + plusAngleOffset - Math.PI / 2).toFloat() + size.width / 2
+    val endYPlus = radius * sin(endAngle + plusAngleOffset - Math.PI / 2).toFloat() + size.height / 2
+
+    val endXMinus = radius * cos(endAngle - minusAngleOffset - Math.PI / 2).toFloat() + size.width / 2
+    val endYMinus = radius * sin(endAngle - minusAngleOffset - Math.PI / 2).toFloat() + size.height / 2
+
+    drawContext.canvas.nativeCanvas.apply {
+        val paint = android.graphics.Paint().apply {
+            color = android.graphics.Color.WHITE
+            textSize = 80f
+            textAlign = android.graphics.Paint.Align.CENTER
+        }
+
+        drawTextInBox("+", startXPlus, startYPlus, paint)
+        drawTextInBox("-", startXMinus, startYMinus, paint)
+        drawTextInBox("+", endXPlus, endYPlus, paint)
+        drawTextInBox("-", endXMinus, endYMinus, paint)
+    }
+}
+
+private fun android.graphics.Canvas.drawTextInBox(
+    text: String,
+    x: Float,
+    y: Float,
+    paint: android.graphics.Paint
+) {
+    val textWidth = paint.measureText(text)
+    val textHeight = paint.descent() - paint.ascent()
+    val boxPadding = 10f
+
+    drawRect(
+        x - textWidth / 2 - boxPadding,
+        y - textHeight / 2 - boxPadding,
+        x + textWidth / 2 + boxPadding,
+        y + textHeight / 2 + boxPadding,
+        android.graphics.Paint().apply {
+            color = android.graphics.Color.TRANSPARENT
+            style = android.graphics.Paint.Style.FILL
+        }
+    )
+
+    drawText(text, x, y - (paint.ascent() + paint.descent()) / 2, paint)
+}
 
 fun calculateDistanceToHandle(
     angle: Double,
@@ -211,14 +252,10 @@ private fun getPointRadians(
     return (radians + (2 * Math.PI).toFloat()) % (2 * Math.PI)
 }
 
-enum class Point{
+enum class Point {
     START,
     END;
 }
-
-
-
-
 
 @Preview(widthDp = 500, heightDp = 500)
 @Composable
@@ -227,18 +264,15 @@ private fun CircularSliderPreview() {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
-        ){
-            var startAngle =  20.0
+        ) {
+            var startAngle = 20.0
             var endAngle = 120.0
             startAngle = Math.toRadians(startAngle)
             endAngle = Math.toRadians(endAngle)
             CircularSlider(
-                state = CircularSliderAdapter(percentages = listOf(10,40), savePercentages = {})
-
+                state = CircularSliderAdapter(percentages = listOf(10, 40), savePercentages = {})
             )
-
         }
-
     }
 }
 
