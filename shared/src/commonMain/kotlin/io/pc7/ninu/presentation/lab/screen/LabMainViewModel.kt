@@ -47,17 +47,17 @@ class LabMainViewModel(
             try{
                 val fragrances = _state.value.fragrances
                 fragrances?.let {
-                    eventChannel.send(LabMainEvents.NavigateNext(it.map { it.toFragrance() }.toTypedArray(), _state.value.intensity))
-//                    val respond = perfumeCommunication.uploadCartridgesDoseVolume(
-//                        cartridge1Percentage = fragrances[0].percentage,
-//                        cartridge2Percentage = fragrances[1].percentage,
-//                        cartridge3Percentage = fragrances[2].percentage,
-//                        intensity = _state.value.intensity
-//                    )
-//                    _state.update { it.copy(upload = Resource.Result(respond)) }
-//                    if(respond is BleResult.Success){
-//                        eventChannel.send(LabMainEvents.NavigateNext(it.map { it.toFragrance() }.toTypedArray(), _state.value.intensity))
-//                    }
+//                    eventChannel.send(LabMainEvents.NavigateNext(it.map { it.toFragrance() }.toTypedArray(), _state.value.intensity))
+                    val respond = perfumeCommunication.uploadCartridgesDoseVolume(
+                        cartridge1Percentage = fragrances[0].percentage,
+                        cartridge2Percentage = fragrances[1].percentage,
+                        cartridge3Percentage = fragrances[2].percentage,
+                        intensity = _state.value.intensity
+                    )
+                    _state.update { it.copy(upload = Resource.Result(respond)) }
+                    if(respond is BleResult.Success){
+                        eventChannel.send(LabMainEvents.NavigateNext(it.map { it.toFragrance() }.toTypedArray(), _state.value.intensity))
+                    }
                 }
 
 

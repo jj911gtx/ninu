@@ -47,7 +47,7 @@
     <string name="pairing">Povezovanje</string>
     <string name="device_serial_number">Serijska številka naprave</string>
     <string name="warranty">Garancija</string>
-    <string name="firmware_versions">Različice vdelane programske opreme</string>
+    <string name="firmware_versions">Različica programske opreme</string>
     <string name="press_and_hold_power_button">Pritisnite in držite gumb za vklop na napravi NINU.</string>
     <string name="where_bought">Kje ste jo kupili?</string>
     <string name="online">Na spletu</string>
@@ -102,6 +102,29 @@
     <string name="fragrance_description">Opis dišave</string>
     <string name="fragrance_status">Stanje dišave</string>
     <string name="fragrance_set_in_use">Komplet dišav v uporabi</string>
+
+<!--    AI  -->
+    <string name="ai_assistant">AI Asistent</string>
+    <string name="ai">AI</string>
+    <string name="surprise_me">Preseneti Me</string>
+
+    <string name="feel_how">Kako Se Počutiš</string>
+    <string name="where_to">Kam</string>
+
+<!--    Bottom nav -->
+    <string name="home">Domov</string>
+    <string name="lab">Laboratorij</string>
+    <string name="premade">Predpripravljeno</string>
+    <string name="more">Več</string>
+
+    <string name="work">Delo</string>
+    <string name="casual">Priložnostno</string>
+    <string name="elegant">Elegantno</string>
+    <string name="fresh">Sveže</string>
+    <string name="inspired">Navdihnjeno</string>
+    <string name="sensual">Čutno</string>
+
+    <string name="statistics">Statistika</string>
 
     <string name="confirm">Potrdi</string>
     <string name="done">Končano</string>

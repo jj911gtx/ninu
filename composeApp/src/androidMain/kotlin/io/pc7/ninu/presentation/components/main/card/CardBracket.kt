@@ -17,7 +17,7 @@ fun CardBracket(
     selected: Boolean = false,
     selectedContainerColor: Color? = null,
     unselectedContainerColor: Color? = null,
-    cornerShape: Dp = 5.dp,
+    cornerShape: Dp = 10.dp,
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {

@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -49,6 +50,18 @@ fun  NINUTextField(
     keyboardActions: KeyboardActions = KeyboardActions(),
     imeAction: ImeAction = ImeAction.Unspecified,
     onUnfocus: () -> Unit = {},
+
+    //colors
+    focusedContainerColor: Color = colorScheme.black,
+    unfocusedContainerColor: Color = colorScheme.black,
+    focusedTextColor: Color = colorScheme.white,
+    unfocusedTextColor: Color = colorScheme.white,
+    disabledTextColor: Color = colorScheme.primaryLight,
+    disabledContainerColor: Color = colorScheme.black,
+
+    borderOkColor: Color = colorScheme.white,
+    borderEmptyColor: Color = colorScheme.primaryLight,
+
 ) {
 
 
@@ -75,13 +88,15 @@ fun  NINUTextField(
             suffix = suffix,
             visualTransformation = if (!textHide) VisualTransformation.None else BiggerCircleVisualTransformation(),
             colors = TextFieldDefaults.colors(
-                focusedContainerColor = colorScheme.black,
-                unfocusedContainerColor = colorScheme.black,
-                focusedTextColor = colorScheme.white,
-                unfocusedTextColor = colorScheme.white,
-                disabledTextColor = colorScheme.primaryLight,
-                disabledContainerColor = colorScheme.black,
-//            focusedIndicatorColor = colorScheme.white
+                focusedContainerColor = focusedContainerColor,
+                unfocusedContainerColor = unfocusedContainerColor,
+                focusedTextColor = focusedTextColor,
+                unfocusedTextColor = unfocusedTextColor,
+                disabledTextColor = disabledTextColor,
+                disabledContainerColor = disabledContainerColor,
+                focusedIndicatorColor = Color.Transparent,
+                cursorColor = colorScheme.white
+
             ),
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
             keyboardActions = keyboardActions,
@@ -102,8 +117,12 @@ fun  NINUTextField(
                 }
                 .clip(RoundedCornerShape(10.dp))
                 .border(
-                    width = 2.dp,
-                    color = value.getColor(),
+                    width = 1.5.dp,
+                    color = if(value.errors.isNotEmpty() && value.displayErrors){
+                        colorScheme.errorDark
+                    }else{
+                        if(value.value.isNotEmpty()) borderOkColor else borderEmptyColor
+                    },
                     shape = RoundedCornerShape(10.dp)
                 )
                 .fillMaxWidth()

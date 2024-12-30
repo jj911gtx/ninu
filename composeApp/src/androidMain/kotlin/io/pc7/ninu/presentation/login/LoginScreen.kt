@@ -93,7 +93,7 @@ private fun LoginScreen(
     ) {
         ButtonTopLeftBack(
             onClick = navBack,
-            text = stringResource(R.string.create_your_account),
+            text = stringResource(R.string.login),
             modifier = Modifier
                 .align(Alignment.Start)
         )
@@ -264,7 +264,6 @@ private fun LoginScreen(
                                 .fillMaxSize()
                         )
                     }
-
                 }
 
                 Text(

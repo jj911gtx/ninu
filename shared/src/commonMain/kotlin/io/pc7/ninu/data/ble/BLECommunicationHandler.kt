@@ -16,6 +16,10 @@ expect class BLECommunicationHandler {
     @OptIn(ExperimentalUuidApi::class)
     suspend fun writeCharacteristic(serviceUuid: Uuid, characteristicUUID: Uuid, value: ByteArray): BleResult<Unit>
 
-    suspend fun connectSuspending(): BleResult<Unit>
+    suspend fun connectSuspending(macAddress: String? = null): BleResult<Unit>
+
+
+    fun connect()
+    fun isBluetoothEnabled(): Boolean
 }
 

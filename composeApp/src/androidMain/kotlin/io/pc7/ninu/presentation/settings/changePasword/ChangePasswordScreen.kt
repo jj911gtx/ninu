@@ -19,7 +19,9 @@ import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
 import io.pc7.ninu.presentation.components.main.input.text.NINUPasswordTextInput
+import io.pc7.ninu.presentation.components.util.ObserveAsEvents
 import io.pc7.ninu.presentation.settings.changePassword.ChangePasswordAction
+import io.pc7.ninu.presentation.settings.changePassword.ChangePasswordEvent
 import io.pc7.ninu.presentation.settings.changePassword.ChangePasswordState
 import io.pc7.ninu.presentation.settings.changePassword.ChangePasswordViewModel
 import io.pc7.ninu.presentation.theme.NINUTheme
@@ -31,6 +33,11 @@ fun ChangePasswordScreen(
 
 ){
 
+    ObserveAsEvents(flow = viewModel.events) {event ->
+        when(event){
+            ChangePasswordEvent.Confirm -> navBack()
+        }
+    }
     ChangePasswordScreen(
         state = viewModel.state.collectAsState().value,
         action = { viewModel.action(it) },

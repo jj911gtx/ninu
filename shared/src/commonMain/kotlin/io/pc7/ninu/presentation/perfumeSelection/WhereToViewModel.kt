@@ -8,6 +8,7 @@ import io.pc7.ninu.domain.model.util.ResultMy
 import kotlinx.coroutines.CoroutineScope
 import io.pc7.ninu.data.network.model.perfumeSelection.PerfumeSelectionItem
 import io.pc7.ninu.domain.model.perfumeSelection.PerfumeSelectionDisplay
+import io.pc7.ninu.domain.model.perfumeSelection.PerfumeSelectionSealedClass
 import io.pc7.ninu.domain.model.util.Resource
 import kotlinx.coroutines.flow.update
 
@@ -18,7 +19,7 @@ class WhereToViewModel(
 ): PerfumeSelectionViewModel(coroutineScope, perfumeRepository) {
 
 
-    override val headers: List<String> = List(3){ WhereToSections.entries[it].toString() }
+    override val headers: List<PerfumeSelectionSealedClass> = List(3){ WhereToSections.entries[it] }
 
 
     private fun create(name: String, id: Int): PerfumeSelectionDisplay{

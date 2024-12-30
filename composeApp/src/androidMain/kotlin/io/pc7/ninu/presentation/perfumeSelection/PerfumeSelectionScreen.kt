@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -23,6 +24,7 @@ import io.pc7.ninu.domain.model.perfumeSelection.PerfumeSelectionDisplay
 import io.pc7.ninu.presentation.components.util.ObserveAsEvents
 import io.pc7.ninu.presentation.main.navigation.MainNavigationRoutes
 import io.pc7.ninu.presentation.theme.NINUTheme
+import io.pc7.ninu.presentation.util.toStringId
 
 
 @Composable
@@ -43,7 +45,7 @@ fun PerfumeSelectionScreen(
 
     PerfumeSelectionScreen(
         state = viewModel.state.collectAsState().value,
-        headers = viewModel.headers,
+        headers = viewModel.headers.map { stringResource(it.toStringId()) },
         action = viewModel::action,
 
     )

@@ -10,6 +10,7 @@ import androidx.navigation.toRoute
 import io.pc7.ninu.data.network.model.navigation.NavigatePerfumeMain
 import io.pc7.ninu.domain.model.perfume.Fragrance
 import io.pc7.ninu.presentation.activities.PairingActivity
+import io.pc7.ninu.presentation.ai.aiNavigation
 import io.pc7.ninu.presentation.favourites.EditFavouritesScreen
 import io.pc7.ninu.presentation.favourites.EditFavouritesViewModel
 import io.pc7.ninu.presentation.favourites.EditFavouritesViewModelAndroid
@@ -22,6 +23,7 @@ import io.pc7.ninu.presentation.perfumeDetails.PerfumeMainViewModelAndroid
 import io.pc7.ninu.presentation.perfumeSave.PerfumeSaveScreen
 import io.pc7.ninu.presentation.perfumeSelection.FeelHowViewModelAndroid
 import io.pc7.ninu.presentation.perfumeSelection.PerfumeSelectionScreen
+import io.pc7.ninu.presentation.perfumeSelection.PremadeOptionScreen
 import io.pc7.ninu.presentation.perfumeSelection.WhereToViewModeAndroid
 import io.pc7.ninu.presentation.settings.settingsNavigation
 import io.pc7.ninu.presentation.statistics.PerfumeStatusScreen
@@ -107,6 +109,8 @@ fun MainNavigation(
 
 
         settingsNavigation(navController)
+
+        aiNavigation(navController)
 //
 //        composable<MainNavigationRoutes.Onboarding> {
 //            OnboardingScreen()
@@ -140,6 +144,15 @@ fun MainNavigation(
 //        }
 //
 
+
+
+        composable<MainNavigationRoutes.Premade>{
+            PremadeOptionScreen(
+                navWhereTo = { navController.navigate(MainNavigationRoutes.WhereTo) },
+                navFeelHow = { navController.navigate(MainNavigationRoutes.FeelHow) }
+
+            )
+        }
         composable<MainNavigationRoutes.WhereTo>{
             PerfumeSelectionScreen(
                 viewModel = koinViewModel<WhereToViewModeAndroid>().viewModel,

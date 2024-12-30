@@ -15,6 +15,9 @@ object MainNavigationRoutes {
     @Serializable
     data object Onboarding
 
+
+    @Serializable
+    data object Premade
     @Serializable
     data object WhereTo
     @Serializable
@@ -63,5 +66,10 @@ object MainNavigationRoutes {
         val id: Int,
         val name: String,
     )
+
+
+
+    @Serializable
+    data object Ai
 
 }

@@ -46,20 +46,23 @@ import io.pc7.ninu.presentation.pairing.screens.PairingDefaultScreen
 import io.pc7.ninu.presentation.theme.NINUTheme
 import io.pc7.ninu.presentation.util.BarcodeAnalyzer
 import io.pc7.ninu.presentation.util.permission.managePermissionPermissionDisplay
+import io.pc7.ninu.presentation.util.permission.requestBluetoothPermissions
 import io.pc7.ninu.presentation.util.permission.requestCameraPermission
 
 
 @Composable
 fun ScanScreen(
     viewModel: ScanViewModel,
-    navNext: () -> Unit,
+    navNext: (String) -> Unit,
     navBack: () -> Unit,
 ) {
 
 
     ObserveAsEvents(flow = viewModel.events) {event ->
         when(event){
-            ScanEvent.NavNext -> navNext()
+            is ScanEvent.NavNext -> {
+                navNext(event.deviceMac)
+            }
         }
     }
 
@@ -68,7 +71,6 @@ fun ScanScreen(
         action = {viewModel.action(it)},
         navBack,
     )
-
 }
 
 @Composable
@@ -78,11 +80,15 @@ private fun ScanScreen(
     navBack: () -> Unit
 ) {
 
-
-
     var scanEnabled by remember { mutableStateOf(false) }
-    val permissionLauncher = managePermissionPermissionDisplay(
+    val cameraPermissionLauncher = managePermissionPermissionDisplay(
         onAllPermissionsGranted = {scanEnabled = true}
+    )
+
+    val bluetoothPermissionLauncher = managePermissionPermissionDisplay(
+        onAllPermissionsGranted = {
+            action(ScanAction.OnProceed)
+        }
     )
 
     PairingDefaultScreen(
@@ -158,7 +164,7 @@ private fun ScanScreen(
                         content = { },
                         text = stringResource(R.string.scan_serial_number),
                         onClick = {
-                            permissionLauncher.requestCameraPermission()
+                            cameraPermissionLauncher.requestCameraPermission()
                         }
                     )
                 }
@@ -198,7 +204,7 @@ private fun ScanScreen(
 //        },
         onClickHelp = { /*TODO*/ },
         buttonOnCLick = {
-            action(ScanAction.OnProceed)
+            bluetoothPermissionLauncher.requestBluetoothPermissions()
         },
         buttonText = stringResource(R.string.proceed),
         isButtonEnabled = state.serialNumber.value.isNotEmpty(),

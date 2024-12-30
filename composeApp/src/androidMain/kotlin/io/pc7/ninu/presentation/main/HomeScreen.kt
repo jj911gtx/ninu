@@ -27,7 +27,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,7 +50,6 @@ import io.pc7.ninu.presentation.components.other.CircleBracketOutlinedColor
 import io.pc7.ninu.presentation.components.util.LaunchDisposeEffect
 import io.pc7.ninu.presentation.components.util.removeBackgroundImage
 import io.pc7.ninu.presentation.components.util.setBackgroundImage
-import io.pc7.ninu.presentation.components.util.setBottomBar
 import io.pc7.ninu.presentation.home.HomeScreenAction
 import io.pc7.ninu.presentation.home.HomeScreenState
 import io.pc7.ninu.presentation.home.HomeScreenViewModel
@@ -60,12 +58,7 @@ import io.pc7.ninu.presentation.main.components.InfoBracketType
 import io.pc7.ninu.presentation.main.components.LinePagerIndicator
 import io.pc7.ninu.presentation.theme.NINUTheme
 import io.pc7.ninu.presentation.util.mapper.toColor
-import ninu.other.home.HomeScreenViewModelAndroid
 import org.koin.androidx.compose.koinViewModel
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 
 
 @Composable
@@ -87,10 +80,10 @@ fun HomeScreen(
         mutableStateOf(false)
     }
     Column {
-        Button(onClick = { changeScreen = !changeScreen }) {
-            Text(text = "Change Screen")
-        }
-        if(changeScreen){
+//        Button(onClick = { changeScreen = !changeScreen }) {
+//            Text(text = "Change Screen")
+//        }
+        if(viewModel.state.collectAsState().value.deviceConnected){
             HomeScreen(
                 state = viewModel.state.collectAsState().value,
                 action = {viewModel.action(it)},

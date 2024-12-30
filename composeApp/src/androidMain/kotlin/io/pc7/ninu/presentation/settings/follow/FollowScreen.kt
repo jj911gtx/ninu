@@ -95,7 +95,8 @@ private fun FollowItem(
         )
         Spacer(modifier = Modifier.width(15.dp))
         Text(text = text,
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyLarge,
+            color = colorScheme.white
         )
     }
 

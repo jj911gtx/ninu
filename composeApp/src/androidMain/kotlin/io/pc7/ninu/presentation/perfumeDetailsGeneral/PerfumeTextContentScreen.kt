@@ -91,15 +91,8 @@ fun PerfumeTextContentScreen(
     ){
 
         content()
+        GreatForMakesYouFeelContent()
 
-        Paragraph(
-            title = stringResource(R.string.great_for),
-            text = "spring coffee in the city, hot summer days and drinks after work"
-        )
-        Paragraph(
-            title = stringResource(R.string.makes_you_feel),
-            text = "joyfull, energised, outgoing, relaxed"
-        )
     }
 }
 
@@ -129,6 +122,21 @@ private fun UnderCardRow(
         )
     }
     HorizontalDivider(color = colorScheme.custom3D3D3D)
+}
+
+@Composable
+fun GreatForMakesYouFeelContent(
+    modifier: Modifier = Modifier,
+
+) {
+    Paragraph(
+        title = stringResource(R.string.great_for),
+        text = "spring coffee in the city, hot summer days and drinks after work"
+    )
+    Paragraph(
+        title = stringResource(R.string.makes_you_feel),
+        text = "joyfull, energised, outgoing, relaxed"
+    )
 }
 
 @Composable

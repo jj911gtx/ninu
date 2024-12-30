@@ -21,6 +21,7 @@ import io.pc7.ninu.data.ble.service.PerfumeService.CHARACTERISTIC_SN_2_UUID
 import io.pc7.ninu.data.ble.service.PerfumeService.CHARACTERISTIC_SN_3_UUID
 import io.pc7.ninu.data.ble.service.PerfumeUUIDs
 import io.pc7.ninu.data.ble.whenHandle
+import kotlinx.coroutines.delay
 import kotlinx.datetime.LocalDate
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -79,10 +80,14 @@ class PerfumeBleCommunication(
         }
         val percentages = scaleToTarget(listOf(cartridge1Percentage, cartridge2Percentage, cartridge3Percentage), intensity*10)
 
+        val x1 = writeDoseVolume(FragranceIndex.FRAGRANCE_1, percentages[0])
+        delay(300)
+        val x2 = writeDoseVolume(FragranceIndex.FRAGRANCE_1, percentages[1])
+        delay(300)
+        val x3 = writeDoseVolume(FragranceIndex.FRAGRANCE_1, percentages[2])
+
         val writeResponds = listOf(
-            writeDoseVolume(FragranceIndex.FRAGRANCE_1, percentages[0]),
-            writeDoseVolume(FragranceIndex.FRAGRANCE_2, percentages[1]),
-            writeDoseVolume(FragranceIndex.FRAGRANCE_3, percentages[2]),
+            x1,x2,x3
         )
         writeResponds.forEach {
             if(it !is BleResult.Success){

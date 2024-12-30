@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
@@ -24,10 +26,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.R
 import androidx.navigation.NavController
+import io.pc7.ninu.presentation.ai.AiNavigationRoutes
 import io.pc7.ninu.presentation.components.navigation.isRoute
 import io.pc7.ninu.presentation.components.navigation.path
 import io.pc7.ninu.presentation.components.util.LaunchDisposeEffect
@@ -43,6 +47,8 @@ fun BottomNavigationBar(
 
     val activity = LocalContext.current as Activity
 
+
+
     if(path.checkPathHasBottomBar()){
         LaunchDisposeEffect(
             launched = { activity.setBottomBar(false) },
@@ -57,7 +63,7 @@ fun BottomNavigationBar(
             ) {
                 BarItem(
                     icon = R.drawable.icon_home,
-                    name = "Home",
+                    name = stringResource(R.string.home),
                     isSelected = path.isRoute(MainNavigationRoutes.HomeScreen),
                     onClick = {
                         navController.navigate(MainNavigationRoutes.HomeScreen){
@@ -67,7 +73,7 @@ fun BottomNavigationBar(
                 )
                 BarItem(
                     icon = R.drawable.icon_flask,
-                    name = "Lab",
+                    name = stringResource(R.string.lab),
                     isSelected = path.isRoute(MainNavigationRoutes.Lab),
                     onClick = {
                         navController.navigate(MainNavigationRoutes.Lab){
@@ -76,24 +82,32 @@ fun BottomNavigationBar(
                     }
                 )
                 BarItem(
-                    icon = R.drawable.icon_cart,
-                    name = "Where to",
-                    isSelected = path.isRoute(MainNavigationRoutes.WhereTo),
+                    icon = R.drawable.icon_person,
+                    name = stringResource(R.string.premade),
+                    isSelected = path.isRoute(MainNavigationRoutes.Premade),
                     onClick = {
-                        navController.navigate(MainNavigationRoutes.WhereTo)
+                        navController.navigate(MainNavigationRoutes.Premade)
                     }
                 )
+//                BarItem(
+//                    icon = R.drawable.icon_user,
+//                    name = "Feel How",
+//                    isSelected = path.isRoute(MainNavigationRoutes.FeelHow),
+//                    onClick = {
+//                        navController.navigate(MainNavigationRoutes.FeelHow)
+//                    }
+//                )
                 BarItem(
-                    icon = R.drawable.icon_user,
-                    name = "Feel How",
-                    isSelected = path.isRoute(MainNavigationRoutes.FeelHow),
+                    icon = R.drawable.icon_ai_bold,
+                    name = stringResource(R.string.ai),
+                    isSelected = path.isRoute(MainNavigationRoutes.Ai),
                     onClick = {
-                        navController.navigate(MainNavigationRoutes.FeelHow)
+                        navController.navigate(MainNavigationRoutes.Ai)
                     }
                 )
                 BarItem(
                     icon = R.drawable.icon_bars,
-                    name = "More",
+                    name = stringResource(R.string.more),
                     isSelected = false,
                     onClick = openCloseSidebar
                 )
@@ -114,6 +128,7 @@ private fun String?.checkPathHasBottomBar(
             MainNavigationRoutes.Onboarding,
             MainNavigationRoutes.Lab,
             MainNavigationRoutes.PerfumeSave,
+            AiNavigationRoutes.AiChat,
         )
     }
 
@@ -154,11 +169,16 @@ fun RowScope.BarItem(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
-                Icon(
-                    painter = painterResource(id = icon),
-                    contentDescription = null,
-                    tint = color
-                )
+                Box(modifier = Modifier.size(30.dp)){
+                    Icon(
+                        painter = painterResource(id = icon),
+                        contentDescription = null,
+                        tint = color,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
+
+                }
                 Text(
                     text = name,
                     color = color,

@@ -78,9 +78,9 @@ fun cameraPermissions(): MutableList<MutableState<PermissionRationalState>> {
     return savedPermissions
 }
 
-private fun ActivityResultLauncher<Array<String>>.requestPermissions() {
+fun ActivityResultLauncher<Array<String>>.requestBluetoothPermissions() {
 
-    val requiredPermissions = getBTPermissionsForBuildSDK().map { it.permission } + Manifest.permission.CAMERA
+    val requiredPermissions = getBTPermissionsForBuildSDK().map { it.permission }
 
 
     if (requiredPermissions.isNotEmpty()) {

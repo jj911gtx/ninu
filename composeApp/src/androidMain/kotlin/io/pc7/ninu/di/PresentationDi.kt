@@ -2,6 +2,8 @@ package io.pc7.ninu.di
 
 import io.pc7.ninu.data.network.model.navigation.NavigatePerfumeMain
 import io.pc7.ninu.data.network.repository.PerfumeRepository
+import io.pc7.ninu.presentation.ai.screens.AiChatViewModelAndroid
+import io.pc7.ninu.presentation.ai.screens.AiSurpriseMeViewModelAndroid
 import io.pc7.ninu.presentation.favourites.EditFavouritesViewModelAndroid
 import io.pc7.ninu.presentation.lab.LabMainViewModelAndroid
 import io.pc7.ninu.presentation.perfumeDetails.PerfumeMainViewModelAndroid
@@ -9,10 +11,9 @@ import io.pc7.ninu.presentation.perfumeSelection.FeelHowViewModelAndroid
 import io.pc7.ninu.presentation.perfumeSelection.WhereToViewModeAndroid
 import io.pc7.ninu.presentation.settings.changePasword.ChangePasswordViewModelAndroid
 import io.pc7.ninu.presentation.settings.profile.ProfileViewModelAndroid
-import io.pc7.ninu.presentation.statistics.PerfumeStatusViewModel
 import io.pc7.ninu.presentation.statistics.PerfumeStatusViewModelAndroid
 import io.pc7.ninu.presentation.statistics.StatisticsViewModeAndroid
-import ninu.other.home.HomeScreenViewModelAndroid
+import io.pc7.ninu.presentation.main.HomeScreenViewModelAndroid
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
@@ -41,5 +42,10 @@ val presentationDi = module {
     viewModelOf(::StatisticsViewModeAndroid)
     viewModelOf(::PerfumeStatusViewModelAndroid)
     viewModelOf(::EditFavouritesViewModelAndroid)
+
+
+
+    viewModelOf(::AiChatViewModelAndroid)
+    viewModelOf(::AiSurpriseMeViewModelAndroid)
 
 }

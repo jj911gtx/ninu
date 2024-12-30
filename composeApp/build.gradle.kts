@@ -52,6 +52,9 @@ kotlin {
             implementation(libs.koin.androidx.compose)
 
 
+            implementation(libs.androidx.room.runtime)
+
+
 
 
 

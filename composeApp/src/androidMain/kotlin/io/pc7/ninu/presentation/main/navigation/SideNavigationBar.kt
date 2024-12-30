@@ -21,11 +21,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import io.pc7.ninu.R
 import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.presentation.activities.LoginActivity
 import io.pc7.ninu.presentation.activities.PairingActivity
@@ -112,32 +114,32 @@ fun SideNavigationBar(
             ) {
                 val context = LocalContext.current
                 NavBarItemText(
-                    text = "Pairing",
+                    text = stringResource(R.string.pairing),
                     onClick = {
                         val intent = Intent(context, PairingActivity::class.java)
                         context.startActivity(intent)
                     }
                 )
                 NavBarItemText(
-                    text = "Login",
+                    text = stringResource(R.string.login),
                     onClick = {
                         val intent = Intent(context, LoginActivity::class.java)
                         context.startActivity(intent)
                     }
                 )
                 NavBarItemText(
-                    text = "Registration",
+                    text = stringResource(R.string.register),
                     onClick = {
                         val intent = Intent(context, RegistrationActivity::class.java)
                         context.startActivity(intent)
                     }
                 )
                 NavBarItemText(
-                    text = "Settings",
+                    text = stringResource(R.string.settings),
                     onClick = { navController.navigate(SettingsNavigationRoutes.Main) }
                 )
                 NavBarItemText(
-                    text = "Statistics",
+                    text = stringResource(R.string.statistics),
                     onClick = { navController.navigate(MainNavigationRoutes.Statistics) }
                 )
 

@@ -1,5 +1,6 @@
 package io.pc7.ninu.presentation.pairing.screens.purchaseInfo
 
+import android.app.Activity
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -41,7 +42,13 @@ import io.pc7.ninu.presentation.theme.NINUTheme
 import java.io.File
 import android.os.Environment
 import androidx.compose.ui.res.stringResource
+import io.pc7.ninu.data.ble.model.BleError
+import io.pc7.ninu.data.ble.model.BleResult
+import io.pc7.ninu.domain.model.util.Resource
 import io.pc7.ninu.presentation.components.other.TakeChosePhoto
+import io.pc7.ninu.presentation.components.util.ObserveAsEvents
+import io.pc7.ninu.presentation.util.EnableBluetooth
+import io.pc7.ninu.presentation.util.launchEnableBle
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -51,6 +58,28 @@ fun PurchaseInfoScreen(
     viewModel: PurchaseInfoViewModel,
     navBack: () -> Unit,
 ) {
+
+    val activity = LocalContext.current as Activity
+
+    val blueToothLauncher = EnableBluetooth(
+        onBluetoothResult = { result ->
+            if(result){
+                viewModel.connect()
+            }else{
+                navBack()
+            }
+        }
+    )
+
+    ObserveAsEvents(flow = viewModel.events) {event ->
+        when(event){
+            PurchaseInfoViewModel.Screen2Event.EnableBluetooth -> {
+                blueToothLauncher.launchEnableBle()
+            }
+
+            PurchaseInfoViewModel.Screen2Event.RegistrationConfirmed -> activity.finish()
+        }
+    }
 
     PurchaseInfoScreen(
         state = viewModel.state.collectAsState().value,
@@ -79,7 +108,6 @@ fun PurchaseInfoScreen(
 
 
 private fun createImageFile(context: Context): File {
-    // Create an image file name
     val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
     val imageFileName = "JPEG_${timeStamp}_"
     val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -110,70 +138,68 @@ private fun PurchaseInfoScreen(
 //            )
 //        },
         bracketContent = {
-            when(state.deviceConnected){
-                true -> {
-                    @Composable
-                    fun Item(
-                        title: String,
-                        text: String,
+            val deviceConnected = state.deviceConnected
+            if(deviceConnected is Resource.Result && deviceConnected.data is BleResult.Success) {
+                @Composable
+                fun Item(
+                    title: String,
+                    text: String,
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(2.dp)
-                        ) {
-                            Text(text = title,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = colorScheme.primaryLighter
-                            )
-                            Text(text = text,
-                                style = MaterialTheme.typography.headlineSmall,
-                                color = colorScheme.white
-                            )
-                        }
+                        Text(
+                            text = title,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = colorScheme.primaryLighter
+                        )
+                        Text(
+                            text = text,
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = colorScheme.white
+                        )
                     }
-                    GrayBracket {
-                        Column(
-                            modifier = Modifier
-                                .aspectRatio(1f)
-                                .fillMaxWidth()
-                            ,
-                            verticalArrangement = Arrangement.spacedBy(30.dp, Alignment.Top)
+                }
+                GrayBracket {
+                    Column(
+                        modifier = Modifier
+                            .aspectRatio(1f)
+                            .fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(30.dp, Alignment.Top)
+                    ) {
+                        Item(
+                            title = stringResource(R.string.device_serial_number),
+                            text = "j70kh7ikbasf900asf84jsf"
+                        )
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(20.dp)
                         ) {
                             Item(
-                                title = stringResource(R.string.device_serial_number),
-                                text = "j70kh7ikbasf900asf84jsf"
+                                title = stringResource(R.string.warranty),
+                                text = "2 years"
                             )
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(20.dp)
-                            ) {
-                                Item(
-                                    title = stringResource(R.string.warranty),
-                                    text = "2 years"
-                                )
-                                Item(
-                                    title = stringResource(R.string.firmware_versions),
-                                    text = "1.4.1"
-                                )
-                            }
+                            Item(
+                                title = stringResource(R.string.firmware_versions),
+                                text = "1.4.1"
+                            )
                         }
                     }
                 }
-                false -> {
-                    GrayBracketWithText(
-                        content = {
-                            Column {
-                                Image(painter = painterResource(id = R.drawable.device), contentDescription = "Device",
-                                    modifier = Modifier.size(200.dp))
-                            }
-                        },
-                        text = stringResource(R.string.press_and_hold_power_button),
+            }else{
+                GrayBracketWithText(
+                    content = {
+                        Column {
+                            Image(painter = painterResource(id = R.drawable.device), contentDescription = "Device",
+                                modifier = Modifier.size(200.dp))
+                        }
+                    },
+                    text = stringResource(R.string.press_and_hold_power_button),
 
                     )
-
-                }
             }
         } ,
         onClickHelp = { /*TODO*/ },
-        buttonOnCLick = { /*TODO*/ },
+        buttonOnCLick = { action(PurchaseInfoAction.OnRegister) },
         buttonText = "Register",
         isButtonEnabled = true,
     ) {
@@ -283,7 +309,7 @@ private fun PurchaseInfoScreen(
 private fun Screen2Preview() {
     NINUTheme {
         PurchaseInfoScreen(
-            state = PurchaseInfoState(deviceConnected = true),
+            state = PurchaseInfoState(deviceConnected = Resource.Result(BleResult.Error(BleError.NoAddressInitialized))),
             action = {},
             navBack = {}
         )

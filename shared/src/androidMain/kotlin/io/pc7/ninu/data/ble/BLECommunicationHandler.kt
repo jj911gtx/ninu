@@ -2,6 +2,7 @@ package io.pc7.ninu.data.ble
 
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCallback
@@ -10,6 +11,7 @@ import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothProfile
 import android.bluetooth.BluetoothStatusCodes
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import io.pc7.ninu.data.ble.model.BleConnectionStatus
 import io.pc7.ninu.data.ble.model.BleError
@@ -40,12 +42,17 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 import kotlin.uuid.toJavaUuid
 
+
 actual class BLECommunicationHandler(
-    private val context: Context
+    private val context: Context,
 ) {
-    private val adapter: BluetoothAdapter = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
+    private val adapter: BluetoothAdapter by lazy { (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter }
     var gatt: BluetoothGatt? = null
 
+    @SuppressLint("MissingPermission")
+    actual fun isBluetoothEnabled(): Boolean {
+        return adapter.isEnabled
+    }
 
 
     private val _notifyFlow = MutableSharedFlow<ByteArray>()
@@ -64,15 +71,12 @@ actual class BLECommunicationHandler(
     private val characteristicWriteDeferreds = mutableMapOf<UUID, CompletableDeferred<Unit>>()
 
 
+    actual fun connect() {
+
+    }
 
     private var address: String? = null
 
-    @SuppressLint("MissingPermission")
-    fun connect(address: String = "00:12:32:17:62:31"){
-        this.address = address
-        val device = adapter.getRemoteDevice(address)
-        device.connectGatt(context, false, gattCallback)
-    }
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     @SuppressLint("MissingPermission")
@@ -132,7 +136,7 @@ actual class BLECommunicationHandler(
         override fun onCharacteristicChanged(
             gatt: BluetoothGatt,
             characteristic: BluetoothGattCharacteristic,
-            value: ByteArray
+            value: ByteArray,
         ) {
             super.onCharacteristicChanged(gatt, characteristic, value)
 
@@ -184,12 +188,16 @@ actual class BLECommunicationHandler(
     @SuppressLint("MissingPermission")
     actual suspend fun writeCharacteristic(serviceUuid: Uuid, characteristicUUID: Uuid, value: ByteArray): BleResult<Unit> {
         return operationMutex.withLock {
+
             safeCall {
                 suspendCancellableCoroutine { continuation ->
+
                     val characteristicUuid = characteristicUUID.toJavaUuid()
 
                     val deferred = CompletableDeferred<Unit>()
                     characteristicWriteDeferreds[characteristicUuid] = deferred
+
+                    val service = gatt!!.getService(serviceUuid.toJavaUuid())
 
                     val characteristic = gatt?.getService(serviceUuid.toJavaUuid())?.getCharacteristic(characteristicUuid)
                     if(characteristic == null){
@@ -216,7 +224,7 @@ actual class BLECommunicationHandler(
                         characteristic.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
                         val success = gatt?.writeCharacteristic(characteristic)
                         success?.let {
-                            if (!success) {
+                            if (success) {
                                 continuation.resume(Unit)
                                 return@suspendCancellableCoroutine
                             }
@@ -261,10 +269,14 @@ actual class BLECommunicationHandler(
     }
 
     @SuppressLint("MissingPermission")
-    actual suspend fun connectSuspending(): BleResult<Unit> {
+    actual suspend fun connectSuspending(macAddress: String?): BleResult<Unit> {
+        macAddress?.let {
+            address = macAddress
+        }
         if(address == null){
             return BleResult.Error(BleError.NoAddressInitialized)
         }
+        val address = this.address
         return suspendCancellableCoroutine { continuation ->
             if (_bleConnection.value == BleConnectionStatus.Connecting) {
                 continuation.resume(BleResult.Error(BleError.Connecting))
@@ -315,7 +327,11 @@ actual class BLECommunicationHandler(
     }
 
     companion object {
-        private const val CONNECTION_TIMEOUT = 30_000L // 30 seconds
+        private const val CONNECTION_TIMEOUT = 10_000L
     }
+
+
+
+
 }
 

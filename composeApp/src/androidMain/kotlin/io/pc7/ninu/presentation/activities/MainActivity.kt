@@ -16,7 +16,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
+import io.pc7.ninu.data.ble.repository.BleCommunication
+import io.pc7.ninu.database.Dao
 import io.pc7.ninu.presentation.components.util.BackgroundHandling
 import io.pc7.ninu.presentation.components.util.removeBackgroundImage
 import io.pc7.ninu.presentation.components.util.setBackgroundImage
@@ -27,7 +30,9 @@ import io.pc7.ninu.presentation.theme.SCREEN_PADDING
 import io.pc7.ninu.presentation.main.navigation.MainNavigation
 import io.pc7.ninu.presentation.util.getLanguage
 import io.pc7.ninu.presentation.util.setLocale
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.getKoin
 
 class MainActivity : ComponentActivity() {
     override fun attachBaseContext(newBase: Context) {
@@ -35,8 +40,15 @@ class MainActivity : ComponentActivity() {
         super.attachBaseContext(setLocale(newBase, language))
     }
 
+    val bleCommunication: BleCommunication = getKoin().get()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            bleCommunication.connect()
+//        }
 
 
         removeBackgroundImage()

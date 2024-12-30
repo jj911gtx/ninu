@@ -111,7 +111,28 @@
     <string name="fragrance_status">Fragrance status</string>
     <string name="fragrance_set_in_use">Fragrance set in use</string>
 
+<!--    AI  -->
+    <string name="ai_assistant">AI Assistant</string>
+    <string name="ai">Ai</string>
+    <string name="surprise_me">Surprise Me</string>
 
+    <string name="feel_how">Feel How</string>
+    <string name="where_to">Where to</string>
+
+<!--    Bottom nav -->
+    <string name="home">Home</string>
+    <string name="lab">Lab</string>
+    <string name="premade">Premade</string>
+    <string name="more">More</string>
+
+    <string name="work">Work</string>
+    <string name="casual">Casual</string>
+    <string name="elegant">Elegant</string>
+    <string name="fresh">Fresh</string>
+    <string name="inspired">Inspired</string>
+    <string name="sensual">Sensual</string>
+
+    <string name="statistics">Statistics</string>
 
     <string name="confirm">Confirm</string>
     <string name="done">Done</string>

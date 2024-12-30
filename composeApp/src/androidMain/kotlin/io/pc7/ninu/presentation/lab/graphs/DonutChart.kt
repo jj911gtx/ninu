@@ -26,6 +26,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -33,6 +34,7 @@ import io.pc7.ninu.presentation.theme.custom.colorScheme
 import io.pc7.ninu.domain.mapper.toDonutChartItem
 import io.pc7.ninu.domain.model.lab.DonutChartItem
 import io.pc7.ninu.presentation.lab.screen.LabMainViewModel
+import io.pc7.ninu.presentation.theme.montserratFontFamily
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.pow
@@ -177,7 +179,6 @@ fun DonutChart(
     }
 }
 
-// Helper function to draw text
 private fun DrawScope.drawText(
     percentage: Float,
     offset: Offset,
@@ -186,9 +187,9 @@ private fun DrawScope.drawText(
 ) {
     if (percentage >= 5) {
         val text = "${percentage.toInt()}%"
-        val fontSize = (150 / 7).sp
 
-        // Determine text color based on background color
+        val fontSize = (150 / 10).sp
+
         val isWhiteBackground = Color(colors.first) == colorScheme.white && 
                                Color(colors.second) == colorScheme.white
         val textColor = if (isWhiteBackground) colorScheme.black else colorScheme.white
@@ -197,7 +198,9 @@ private fun DrawScope.drawText(
             text = AnnotatedString(text),
             style = TextStyle(
                 color = textColor,
-                fontSize = fontSize
+                fontSize = fontSize,
+                fontFamily = montserratFontFamily,
+                fontWeight = FontWeight.SemiBold
             )
         )
 

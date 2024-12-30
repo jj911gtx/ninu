@@ -1,9 +1,11 @@
 package io.pc7.ninu.presentation.theme.custom
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TileMode
 import io.pc7.ninu.presentation.theme.custom.NINUColorScheme
 
-val x = Color(0xFF784742)
+val x = Color(0xFF141414)
 val colorScheme = NINUColorScheme(
     successDark = Color(0xff156755),
     successMedium = Color(0xff26BB9A),
@@ -40,3 +42,11 @@ val colorScheme = NINUColorScheme(
 
     custom3D3D3D = Color(0xFF3d3d3d),
 )
+
+
+inline fun getPrimaryGradient(tileMode: TileMode = TileMode.Clamp): Brush{
+    return Brush.linearGradient(
+        colors = listOf(colorScheme.secondaryLight, colorScheme.secondaryDark),
+        tileMode = tileMode
+    )
+}

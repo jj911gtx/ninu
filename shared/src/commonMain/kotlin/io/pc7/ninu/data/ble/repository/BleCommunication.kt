@@ -7,10 +7,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-abstract class BleCommunication(
+class BleCommunication(
     private val bleCommunicationHandler: BLECommunicationHandler
 ) : CoroutineScope {
     protected val job = Job()
@@ -18,19 +20,31 @@ abstract class BleCommunication(
 
 
 
-    suspend fun isConnected(): Boolean{
-        return bleCommunicationHandler.bleConnection.value == BleConnectionStatus.Connected
+    private val _connected = MutableStateFlow(false)
+    val connected = _connected.asStateFlow()
+
+
+    fun isBluetoothEnabled(): Boolean{
+        return bleCommunicationHandler.isBluetoothEnabled()
+    }
+
+    init {
+        launch {
+            bleCommunicationHandler.bleConnection.collect{
+                _connected.value = it == BleConnectionStatus.Connected
+            }
+        }
     }
 
     /**
      * return if connected*/
-    suspend fun connect() = flow<BleConnectingInfo>{
-        if(isConnected()){
-            emit(BleConnectingInfo.Success)
+    suspend fun connect(macAddress: String = "4F:11:1F:DA:03:28"): BleResult<Unit>{
+        return if(connected.value){
+            BleResult.Success(Unit)
         }else{
-            when(bleCommunicationHandler.connectSuspending()){
-                is BleResult.Error -> emit(BleConnectingInfo.Error)
-                is BleResult.Success -> emit(BleConnectingInfo.Success)
+            when(val result = bleCommunicationHandler.connectSuspending(macAddress)){
+                is BleResult.Error -> result
+                is BleResult.Success -> BleResult.Success(Unit)
             }
         }
     }

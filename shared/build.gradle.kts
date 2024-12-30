@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -35,9 +37,12 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.auth)
-//            ktor-client-android = {module = "io.ktor:ktor-client-android", version.ref="ktor"}
+
 
             implementation(libs.ktor.client.cio)
+
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.sqlite.bundled)
 
         }
     }
@@ -55,3 +60,13 @@ android {
     }
 }
 
+dependencies {
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+    add("kspIosX64", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}

@@ -28,7 +28,11 @@ actual class BLECommunicationHandler {
         TODO("Not yet implemented")
     }
 
-    actual suspend fun connectSuspending(): BleResult<Unit> {
+    actual suspend fun connectSuspending(macAddress: String?): BleResult<Unit> {
         TODO("Not yet implemented")
+    }
+
+    actual fun isBluetoothEnabled(): Boolean {
+        TODO()
     }
 }

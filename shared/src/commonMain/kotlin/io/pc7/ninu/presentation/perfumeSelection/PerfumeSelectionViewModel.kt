@@ -12,6 +12,7 @@ import io.pc7.ninu.data.network.model.perfumeSelection.PerfumeSelectionItem
 import io.pc7.ninu.data.network.model.perfumeSelection.PerfumeSelectionSkuDoseVolume
 import io.pc7.ninu.domain.mapper.toFragrance
 import io.pc7.ninu.domain.model.perfumeSelection.PerfumeSelectionDisplay
+import io.pc7.ninu.domain.model.perfumeSelection.PerfumeSelectionSealedClass
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
@@ -33,7 +34,7 @@ abstract class PerfumeSelectionViewModel(
     }
 
 
-    abstract val headers: List<String>
+    abstract val headers: List<PerfumeSelectionSealedClass>
 
     override fun action(action: Action) {
         when(action){

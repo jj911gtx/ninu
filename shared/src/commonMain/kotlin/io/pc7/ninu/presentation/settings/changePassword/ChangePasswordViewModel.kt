@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class ChangePasswordViewModel(
     coroutineScope: CoroutineScope? = null
@@ -52,6 +53,10 @@ class ChangePasswordViewModel(
 
     private fun updatePassword(){
         displayErrorsOnAllInputs()
+        viewModelScope.launch {
+            eventChannel.send(ChangePasswordEvent.Confirm)
+        }
+
     }
 
 
@@ -126,7 +131,7 @@ data class ChangePasswordState(
 
 
 sealed class ChangePasswordEvent {
-
+    data object Confirm: ChangePasswordEvent()
 
 }
 
