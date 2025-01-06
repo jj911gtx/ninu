@@ -39,7 +39,9 @@ class NewPasswordViewModel(
         if(checkAllPasswords(password, confirmPassword)){
             viewModelScope.launch {
                 updateState { it.copy(respond = Resource.Loading) }
-                authRepository.updatePassword(password).handle(
+                authRepository.updatePassword(
+                    password = password, newPassword = confirmPassword //TODO update password by token
+                ).handle(
                     onSuccess = {
                         updateState { it.copy(respond = null) }
                         eventChannel.send(NewPasswordEvent.ChangeSuccessful)

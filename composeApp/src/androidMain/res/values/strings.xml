@@ -134,6 +134,9 @@
 
     <string name="statistics">Statistics</string>
 
+
+    <string name="country">Country</string>
+
     <string name="confirm">Confirm</string>
     <string name="done">Done</string>
     <string name="do_this_later">Do this later</string>

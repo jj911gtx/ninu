@@ -35,4 +35,7 @@ actual class BLECommunicationHandler {
     actual fun isBluetoothEnabled(): Boolean {
         TODO()
     }
+
+    actual fun connect() {
+    }
 }

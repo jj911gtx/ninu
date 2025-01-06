@@ -23,7 +23,6 @@ import io.pc7.ninu.presentation.components.main.card.XCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NINUModalSheet(
-    modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
     onConfirm: (() -> Unit)?,
     content: @Composable ColumnScope.() -> Unit,

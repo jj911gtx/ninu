@@ -1,17 +1,27 @@
 package io.pc7.ninu.presentation.register.userInfo
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,9 +33,13 @@ import io.pc7.ninu.domain.model.input.MyInput
 import io.pc7.ninu.presentation.components.main.ScrollableColumn
 import io.pc7.ninu.presentation.components.main.buttons.ButtonTopLeftBack
 import io.pc7.ninu.presentation.components.main.buttons.DefaultButtonText
+import io.pc7.ninu.presentation.components.main.card.CardBracket
 import io.pc7.ninu.presentation.components.main.input.datePicker.CalendarDatePicker
 import io.pc7.ninu.presentation.components.main.input.text.NINUTextField
 import io.pc7.ninu.presentation.components.main.input.text.NINUinputFieldNoText
+import io.pc7.ninu.presentation.components.other.CountriesSelectModalBottomSheet
+import io.pc7.ninu.presentation.components.other.NINUModalBottomSheetItem
+import io.pc7.ninu.presentation.components.other.NINUModalSheet
 import io.pc7.ninu.presentation.components.other.TakeChosePhoto
 import io.pc7.ninu.presentation.components.util.ObserveAsEvents
 import io.pc7.ninu.presentation.theme.NINUTheme
@@ -126,6 +140,34 @@ fun UserInfoInputScreen(
 
 
 
+            var displayCountries by remember { mutableStateOf(false) }
+            NINUinputFieldNoText(
+                value = MyInput(state.selectedCountry.value?.name ?: ""),
+                placeholderText = stringResource(R.string.country),
+                suffix = {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.icon_image_plus),
+//                        contentDescription = null
+//                    )
+                },
+                onClick = {
+                    displayCountries = true
+                }
+            )
+            if(displayCountries){
+                CountriesSelectModalBottomSheet(
+                    onDismiss = {displayCountries = false},
+                    selectedCountry = state.selectedCountry.value,
+                    countries = state.countries,
+                    onSelectCountry = {
+                        action(UserInfoInputAction.OnUpdateCountry(it))
+                    }
+
+                )
+            }
+
+
+
         }
 
         Spacer(modifier = Modifier.weight(2f))
@@ -141,6 +183,8 @@ fun UserInfoInputScreen(
             text = if(inputsFilled(state)) stringResource(R.string.done) else stringResource(R.string.do_this_later),
             displayDisabled = !inputsFilled(state),
         )
+
+
 
     }
 

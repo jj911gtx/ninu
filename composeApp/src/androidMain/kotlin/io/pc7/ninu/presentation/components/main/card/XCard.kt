@@ -1,5 +1,6 @@
 package io.pc7.ninu.presentation.components.main.card
 
+import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,8 +45,9 @@ fun XCard(
 
     Box(
         modifier = modifier
-            .clip(XCardShape())
+            .clip(if(Build.VERSION.SDK_INT >= 33) XCardShape() else RoundedCornerShape(20.dp))
             .background(color = colorScheme.primary)
+
             .then(
                 onClick?.let {
                     Modifier.clickable(onClick = onClick)
@@ -77,6 +80,26 @@ fun XCard(
 
 
 }
+
+private class BracketXX : Shape {
+    override fun createOutline(
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density
+    ): Outline {
+        val path = Path().apply {
+            // Start at the top-left corner
+            moveTo(0f, 0f)
+            lineTo(size.width, 0f) // Top edge
+            lineTo(size.width, size.height) // Right edge
+            lineTo(0f, size.height) // Bottom edge
+            close() // Close the path to connect the last point to the first
+        }
+
+        return Outline.Generic(path)
+    }
+}
+
 
 
 private class XCardShape : Shape {
@@ -159,6 +182,7 @@ private class XCardShape : Shape {
                 forceMoveTo = false
             )
             lineTo(0f, cornerRadius)
+            close()
         }
         return Outline.Generic(path)
     }

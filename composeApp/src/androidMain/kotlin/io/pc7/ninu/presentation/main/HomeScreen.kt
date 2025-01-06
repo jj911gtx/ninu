@@ -80,10 +80,10 @@ fun HomeScreen(
         mutableStateOf(false)
     }
     Column {
-//        Button(onClick = { changeScreen = !changeScreen }) {
-//            Text(text = "Change Screen")
-//        }
-        if(viewModel.state.collectAsState().value.deviceConnected){
+        Button(onClick = { changeScreen = !changeScreen }) {
+            Text(text = "Change Screen")
+        }
+        if(changeScreen/*viewModel.state.collectAsState().value.deviceConnected*/){
             HomeScreen(
                 state = viewModel.state.collectAsState().value,
                 action = {viewModel.action(it)},

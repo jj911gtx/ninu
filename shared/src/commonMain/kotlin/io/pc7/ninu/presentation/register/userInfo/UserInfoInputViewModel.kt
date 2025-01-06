@@ -11,7 +11,7 @@ class UserInfoInputViewModel(
     repository: AuthRepository
 ): ViewModelBase<UserInfoInputState,UserInfoInputAction,UserInfoInputEvent>(
     coroutineScope,
-    UserInfoInputState()
+    UserInfoInputState.create()
 ) {
 
     private var profileImageByteArray: ByteArray? = null
@@ -25,6 +25,7 @@ class UserInfoInputViewModel(
             }
             is UserInfoInputAction.OnUsernameChange -> _state.update { it.copy(username = it.username.update(action.username)) }
             UserInfoInputAction.UploadData -> uploadDate()
+            is UserInfoInputAction.OnUpdateCountry -> _state.update { it.copy(selectedCountry = it.selectedCountry.update(action.country) ) }
         }
     }
     
